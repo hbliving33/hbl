@@ -1,5 +1,5 @@
 // HBLiving offline support.  Pages always try the network first, so updates show right away.
-const CACHE = "hbl-7a1501f317";
+const CACHE = "hbl-f50c90e0c5";
 const CORE = ["./", "index.html", "manifest.webmanifest", "assets/img/mark.svg", "assets/img/icon-192.png"];
 self.addEventListener("install", (e) => { e.waitUntil(caches.open(CACHE).then((c) => c.addAll(CORE)).then(() => self.skipWaiting())); });
 self.addEventListener("activate", (e) => {

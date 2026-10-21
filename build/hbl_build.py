@@ -16,44 +16,27 @@ def ver(path):
 
 # ---------- Hero illustration: golden hour at the pier ----------
 def pier_scene():
-    pil = ''.join(f'<path d="M{x} 236 V{268 + (x % 3) * 2}"/>' for x in range(470, 1300, 34))
-    birds = ''.join(f'<path d="M{x} {y} q6 -6 12 0 q6 -6 12 0"/>' for x, y in [(300, 120), (336, 104), (380, 132), (1120, 90)])
-    return f'''<svg class="scene" viewBox="0 0 1440 360" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    pil = ''.join(f'<path d="M{x} 250 V{280 + (x % 3) * 2}"/>' for x in range(560, 1380, 30))
+    return f'''<svg class="scene" viewBox="0 0 1440 320" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
   <defs>
-    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe9a0"/><stop offset=".5" stop-color="#ffc14d"/><stop offset=".85" stop-color="#f5873a"/><stop offset="1" stop-color="#e0522b"/></linearGradient>
-    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1f7fa6"/><stop offset="1" stop-color="#0d4f6e"/></linearGradient>
-    <radialGradient id="sun" r=".5"><stop offset="0" stop-color="#fff4d6"/><stop offset=".6" stop-color="#ffd27a"/><stop offset="1" stop-color="#ffb35a"/></radialGradient>
+    <linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#14110e"/><stop offset=".55" stop-color="#3a1d12"/><stop offset=".85" stop-color="#b5431f"/><stop offset="1" stop-color="#f08a2c"/></linearGradient>
+    <linearGradient id="deep" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1c3b3a"/><stop offset="1" stop-color="#0d1c1c"/></linearGradient>
+    <radialGradient id="sunr" r=".5"><stop offset="0" stop-color="#ffe7a1"/><stop offset=".7" stop-color="#f8b800"/><stop offset="1" stop-color="#e88a12"/></radialGradient>
   </defs>
-  <rect width="1440" height="360" fill="url(#sky)"/>
-  <circle class="sunglow" cx="880" cy="214" r="120" fill="#ffe28a" opacity=".45"/>
-  <clipPath id="sunc"><circle cx="880" cy="214" r="62"/></clipPath>
-  <g clip-path="url(#sunc)"><rect x="810" y="150" width="140" height="30" fill="#d62b1f"/><rect x="810" y="180" width="140" height="24" fill="#f8b800"/><rect x="810" y="204" width="140" height="30" fill="#138a43"/></g>
-  <g class="birds" fill="none" stroke="{INK}" stroke-width="2.2" stroke-linecap="round" opacity=".55">{birds}</g>
-  <rect y="226" width="1440" height="134" fill="url(#sea)"/>
-  <path d="M760 240 H1000 M790 254 H970 M820 268 H940" stroke="#ffe07a" stroke-width="4" stroke-linecap="round" opacity=".6"/>
-  <!-- pier on pilings -->
-  <g class="pier" stroke="{INK}" stroke-width="5" stroke-linecap="round">{pil}</g>
-  <path d="M440 232 H1300" stroke="{INK}" stroke-width="9" stroke-linecap="round"/>
-  <path d="M440 222 H1300" stroke="{INK}" stroke-width="2" opacity=".7"/>
-  <path d="M1214 232 V204 H1290 V232Z" fill="{INK}"/><path d="M1208 205 L1252 184 L1296 205Z" fill="#d62b1f"/><rect x="1238" y="212" width="12" height="10" fill="#f8b800"/><rect x="1258" y="212" width="12" height="10" fill="#f8b800"/>
-  <!-- beach and palms -->
-  <path d="M0 262 C 160 250 300 252 470 270 L 470 360 H0Z" fill="#f0d3a4"/>
-  <path d="M0 290 C 180 278 330 284 520 306 L 560 360 H0Z" fill="#f6e2bf"/>
-  <g fill="none" stroke="{INK}" stroke-linecap="round">
-    <path d="M150 300 C 146 250 150 210 164 170" stroke-width="7"/>
-    <path d="M232 300 C 236 262 232 232 222 204" stroke-width="6"/>
+  <rect width="1440" height="320" fill="url(#dusk)"/>
+  <circle cx="980" cy="246" r="120" fill="#f8b800" opacity=".10"/>
+  <circle cx="980" cy="246" r="54" fill="url(#sunr)"/>
+  <rect y="244" width="1440" height="76" fill="url(#deep)"/>
+  <path d="M900 256 H1060 M930 268 H1030 M955 280 H1005" stroke="#f8b800" stroke-width="3" stroke-linecap="round" opacity=".55"/>
+  <g stroke="#0b0a08" stroke-width="5" stroke-linecap="round">{pil}</g>
+  <path d="M540 247 H1390" stroke="#0b0a08" stroke-width="8" stroke-linecap="round"/>
+  <path d="M1300 247 V224 H1372 V247Z M1294 225 L1336 208 L1378 225Z" fill="#0b0a08"/>
+  <path d="M0 270 C 200 258 360 260 560 282 L 600 320 H0Z" fill="#0f0d0b"/>
+  <g fill="none" stroke="#0b0a08" stroke-linecap="round"><path d="M180 286 C 176 240 180 204 194 168" stroke-width="7"/><path d="M262 286 C 266 250 262 224 252 198" stroke-width="6"/></g>
+  <g fill="#0b0a08">
+    <path d="M194 168 c-22 -10 -48 -4 -60 12 c18 -8 40 -8 60 -6 c-16 -14 -38 -22 -56 -14 c22 0 42 6 56 14 c2 -20 -10 -38 -26 -44 c12 12 22 28 26 40 c12 -18 36 -26 58 -18 c-22 4 -40 12 -52 24 c24 -6 44 2 56 18 c-18 -12 -40 -14 -62 -8z"/>
+    <path transform="translate(96.8 63.6) scale(.8)" d="M194 168 c-22 -10 -48 -4 -60 12 c18 -8 40 -8 60 -6 c-16 -14 -38 -22 -56 -14 c22 0 42 6 56 14 c2 -20 -10 -38 -26 -44 c12 12 22 28 26 40 c12 -18 36 -26 58 -18 c-22 4 -40 12 -52 24 c24 -6 44 2 56 18 c-18 -12 -40 -14 -62 -8z"/>
   </g>
-  <g fill="#1b7a3c">
-    <path d="M164 170 c-22 -10 -48 -4 -60 12 c18 -8 40 -8 60 -6 c-16 -14 -38 -22 -56 -14 c22 0 42 6 56 14 c2 -20 -10 -38 -26 -44 c12 12 22 28 26 40 c12 -18 36 -26 58 -18 c-22 4 -40 12 -52 24 c24 -6 44 2 56 18 c-18 -12 -40 -14 -62 -8z"/>
-    <path transform="translate(90.8 68) scale(.8)" d="M164 170 c-22 -10 -48 -4 -60 12 c18 -8 40 -8 60 -6 c-16 -14 -38 -22 -56 -14 c22 0 42 6 56 14 c2 -20 -10 -38 -26 -44 c12 12 22 28 26 40 c12 -18 36 -26 58 -18 c-22 4 -40 12 -52 24 c24 -6 44 2 56 18 c-18 -12 -40 -14 -62 -8z"/>
-  </g>
-  <!-- surfer on a small wave -->
-  <path class="swell" d="M520 318 C 600 296 660 296 700 318 C 720 330 760 330 800 316" fill="none" stroke="#e9fbff" stroke-width="5" stroke-linecap="round" opacity=".9"/>
-  <g class="surfer" transform="translate(640 296)"><path d="M-22 4 Q0 10 24 2" stroke="#d62b1f" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M-22 6.5 Q0 12.5 24 4.5" stroke="#f8b800" stroke-width="2.6" fill="none" stroke-linecap="round"/><path d="M-21 9 Q0 15 23 7" stroke="#138a43" stroke-width="2.6" fill="none" stroke-linecap="round"/><path d="M-4 4 L0 -10 L5 4 M0 -10 L1 -22 M1 -18 L-10 -14 M1 -18 L12 -22" stroke="{INK}" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="2" cy="-27" r="4.4" fill="{INK}"/></g>
-  <path d="M0 326 C 240 314 520 322 760 334 S 1200 328 1440 320" fill="none" stroke="#d62b1f" stroke-width="6"/>
-  <path d="M0 332 C 240 320 520 328 760 340 S 1200 334 1440 326" fill="none" stroke="#f8b800" stroke-width="6"/>
-  <path d="M0 338 C 240 326 520 334 760 346 S 1200 340 1440 332" fill="none" stroke="#138a43" stroke-width="6"/>
-  <path d="M0 342 C 240 330 520 338 760 350 S 1200 344 1440 336 V360 H0Z" fill="{FOAM}"/>
 </svg>'''
 
 
@@ -88,8 +71,8 @@ FORM_TO = ''
 
 NAV = [('#why', 'Why HBLiving'), ('#map', 'Map'), ('#plans', 'Plans'), ('#how', 'How it works'), ('#categories', 'Categories'), ('#faq', 'Questions')]
 CITIES = ['Huntington Beach', 'Fountain Valley', 'Seal Beach', 'Sunset Beach', 'Westminster', 'Costa Mesa', 'Newport Beach']
-CATS = [('🌮', 'Food and drink'), ('🔧', 'Home services'), ('🏄', 'Surf and outdoor'), ('💪', 'Health and fitness'), ('✂️', 'Beauty and spa'),
-        ('🐾', 'Pets'), ('🏡', 'Real estate'), ('🚗', 'Auto'), ('🎨', 'Kids and family'), ('💼', 'Professional services'), ('🛍️', 'Shops and boutiques'), ('🎉', 'Events and entertainment')]
+CATS = [('food', 'Food and drink'), ('tool', 'Home services'), ('wave', 'Surf and outdoor'), ('heart', 'Health and fitness'), ('scissors', 'Beauty and spa'),
+        ('paw', 'Pets'), ('home', 'Real estate'), ('car', 'Auto'), ('kids', 'Kids and family'), ('brief', 'Professional services'), ('bag', 'Shops and boutiques'), ('star', 'Events and entertainment')]
 
 
 def header():
@@ -115,8 +98,15 @@ def footer():
 <script src="assets/js/site.js?v={ver('assets/js/site.js')}"></script>'''
 
 
+ICON = {'pin': '<path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/>', 'tag': '<path d="M3 12V4h8l10 10-8 8Z"/><circle cx="7.5" cy="8.5" r="1.5"/>', 'shake': '<path d="M3 11l4-4 5 3 5-3 4 4-9 9Z"/><path d="M8 14l2 2M11 13l2 2"/>', 'chart': '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>', 'food': '<path d="M5 3v8a2 2 0 0 0 4 0V3M7 11v10M16 3c-2 2-2 7 0 9v9"/>', 'tool': '<path d="M14 6a4 4 0 0 0 5 5l-9 9a2 2 0 0 1-3-3l9-9a4 4 0 0 0-2-2Z"/>', 'wave': '<path d="M2 16c3 0 3-3 6-3s3 3 6 3 3-3 6-3M2 20c3 0 3-3 6-3s3 3 6 3 3-3 6-3M7 10c1-4 6-6 10-4"/>', 'heart': '<path d="M12 20s-8-5-8-11a4.5 4.5 0 0 1 8-2.5A4.5 4.5 0 0 1 20 9c0 6-8 11-8 11Z"/>', 'scissors': '<circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.5 8 20 19M8.5 16 20 5"/>', 'paw': '<circle cx="6" cy="10" r="2"/><circle cx="10" cy="6" r="2"/><circle cx="14" cy="6" r="2"/><circle cx="18" cy="10" r="2"/><path d="M8 18c0-3 2-5 4-5s4 2 4 5-2 2-4 2-4 1-4-2Z"/>', 'home': '<path d="M3 11 12 4l9 7v9H3Z"/><path d="M10 20v-5h4v5"/>', 'car': '<path d="M3 16v-4l2-5h14l2 5v4Z"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/>', 'kids': '<circle cx="12" cy="5" r="2.5"/><path d="M12 8v7M8 11h8M9 21l3-6 3 6"/>', 'brief': '<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V4h6v3M3 12h18"/>', 'bag': '<path d="M5 8h14l-1 13H6Z"/><path d="M9 8a3 3 0 0 1 6 0"/>', 'star': '<path d="m12 3 2.6 5.6 6.1.6-4.6 4.1 1.3 6L12 16.3 6.6 19.3l1.3-6L3.3 9.2l6.1-.6Z"/>'}
+
+
+def ico(n):
+    return f'<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">{ICON[n]}</svg>'
+
+
 def why(icon, title, text):
-    return f'<article class="why"><span class="why-ico" aria-hidden="true">{icon}</span><h3>{title}</h3><p>{text}</p></article>'
+    return f'<article class="why"><span class="why-ico">{ico(icon)}</span><h3>{title}</h3><p>{text}</p></article>'
 
 
 def sample(cat, name, line, city, featured=False):
@@ -139,23 +129,37 @@ home = f'''{head('HBLiving | Local advertising in Huntington Beach', 'Advertise 
 {header()}
 <main>
   <section class="hero">
-    <div class="hero-copy">
-      <p class="kicker">Local advertising for Huntington Beach</p>
-      <h1>Get your business seen <em>in Surf City.</em></h1>
-      <p class="lede">HBLiving puts local businesses in front of the people who live, work and play here.  Plans start at $5 a month, with no contracts and nothing to install.</p>
-      <div class="cta-row"><a class="btn btn-coral" href="#plans">See the plans</a><a class="btn btn-ghost" href="#advertise">Start advertising</a></div>
-      <ul class="cities" aria-label="Areas we cover">{''.join(f'<li>{c}</li>' for c in CITIES)}</ul>
+    <div class="hero-in">
+      <div class="hero-copy">
+        <p class="kicker">Local advertising for Huntington Beach</p>
+        <h1>Put your business <em>on the local map.</em></h1>
+        <p class="lede">HBLiving connects Huntington Beach businesses with the neighbors who live, work and spend here.  Simple plans from $5 a month.  No contracts.</p>
+        <div class="cta-row"><a class="btn btn-coral" href="#advertise">Start advertising</a><a class="btn btn-ghost" href="#plans">View plans</a></div>
+        <ul class="proof"><li><b>From $5</b><span>per month</span></li><li><b>4 areas</b><span>across HB</span></li><li><b>No</b><span>contracts</span></li></ul>
+      </div>
+      <div class="preview" aria-hidden="true">
+        <div class="pv-card">
+          <div class="pv-top"><span class="pv-cat">Food and drink</span><span class="ad-badge">Featured</span></div>
+          <b class="pv-name">Your Business Name</b>
+          <span class="pv-line">Your offer, your hours and what makes you the local favorite.</span>
+          <div class="pv-btns"><span>Call</span><span>Website</span><span>Directions</span></div>
+        </div>
+        <div class="pv-stats">
+          <p>Example monthly report</p>
+          <div><b>1,240</b><span>views</span></div><div><b>86</b><span>clicks</span></div><div><b>31</b><span>calls</span></div>
+        </div>
+      </div>
     </div>
     {pier_scene()}
   </section>
 
   <section class="wrap" id="why">
-    <div class="sec-head"><p class="kicker">Why HBLiving</p><h2>Advertising that's <em>actually local.</em></h2></div>
+    <div class="sec-head"><p class="kicker">Why HBLiving</p><h2>Advertising that's actually local.</h2></div>
     <div class="grid4">
-      {why('📍', 'Only local eyes', 'Every ad is built for Huntington Beach and the towns around it, not shown to people three states away.')}
-      {why('💵', 'Priced for small business', 'Less than the price of a coffee a week.  Big-name ad sites can cost many times as much.')}
-      {why('🤝', 'No contracts', 'Pay month to month and cancel anytime.  Stay because it works, not because you signed something.')}
-      {why('📊', 'See your results', 'Featured advertisers get a simple monthly report: how many people saw the ad, called and clicked.')}
+      {why('pin', 'Only local eyes', 'Every ad is built for Huntington Beach and the towns around it, not shown to people three states away.')}
+      {why('tag', 'Priced for small business', 'Less than the price of a coffee a week.  Big-name ad sites can cost many times as much.')}
+      {why('shake', 'No contracts', 'Pay month to month and cancel anytime.  Stay because it works, not because you signed something.')}
+      {why('chart', 'See your results', 'Featured advertisers get a simple monthly report: how many people saw the ad, called and clicked.')}
     </div>
   </section>
 
@@ -221,7 +225,7 @@ home = f'''{head('HBLiving | Local advertising in Huntington Beach', 'Advertise 
 
   <section class="wrap" id="categories">
     <div class="sec-head"><p class="kicker">Categories</p><h2>Room for <em>every kind of business.</em></h2></div>
-    <ul class="cats">{''.join(f'<li><span aria-hidden="true">{i}</span>{t}</li>' for i, t in CATS)}</ul>
+    <ul class="cats">{''.join(f'<li>{ico(i)}{t}</li>' for i, t in CATS)}</ul>
   </section>
 
   <section class="band" id="faq">
