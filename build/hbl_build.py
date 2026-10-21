@@ -86,7 +86,7 @@ def head(title, desc, extra='', noindex=False):
 # When it is set, the form posts through FormSubmit and lands on thanks.html.
 FORM_TO = ''
 
-NAV = [('#why', 'Why HB Living'), ('#plans', 'Plans'), ('#how', 'How it works'), ('#categories', 'Categories'), ('#faq', 'Questions')]
+NAV = [('#why', 'Why HB Living'), ('#map', 'Map'), ('#plans', 'Plans'), ('#how', 'How it works'), ('#categories', 'Categories'), ('#faq', 'Questions')]
 CITIES = ['Huntington Beach', 'Fountain Valley', 'Seal Beach', 'Sunset Beach', 'Westminster', 'Costa Mesa', 'Newport Beach']
 CATS = [('🌮', 'Food and drink'), ('🔧', 'Home services'), ('🏄', 'Surf and outdoor'), ('💪', 'Health and fitness'), ('✂️', 'Beauty and spa'),
         ('🐾', 'Pets'), ('🏡', 'Real estate'), ('🚗', 'Auto'), ('🎨', 'Kids and family'), ('💼', 'Professional services'), ('🛍️', 'Shops and boutiques'), ('🎉', 'Events and entertainment')]
@@ -134,7 +134,7 @@ form_attrs = (f'action="https://formsubmit.co/{FORM_TO}" method="POST"' if form_
 form_hidden = ('<input type="hidden" name="_subject" value="HB Living: new advertiser request"><input type="hidden" name="_template" value="table">'
                '<input type="hidden" name="_next" value="https://hbliving.com/thanks.html"><input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">') if form_on else ''
 
-home = f'''{head('HB Living | Local advertising in Huntington Beach', 'Advertise your business to Huntington Beach and nearby neighbors from $5 a month.  No contracts, cancel anytime.')}
+home = f'''{head('HB Living | Local advertising in Huntington Beach', 'Advertise your business to Huntington Beach and nearby neighbors from $5 a month.  No contracts, cancel anytime.', '<link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">')}
 <body>
 {header()}
 <main>
@@ -171,6 +171,7 @@ home = f'''{head('HB Living | Local advertising in Huntington Beach', 'Advertise
             <li>Your business in its category</li>
             <li>Name, phone, website and city</li>
             <li>A short description of what you do</li>
+            <li>Your own pin on the HB Living map</li>
             <li>Tap to call and tap for your website</li>
             <li>Update your details anytime</li>
           </ul>
@@ -183,7 +184,8 @@ home = f'''{head('HB Living | Local advertising in Huntington Beach', 'Advertise
           <p class="yearly">or $100 a year, two months free</p>
           <ul>
             <li>Everything in Local Listing</li>
-            <li>Top of your category, with a Featured badge</li>
+            <li>Top of your category and your area, with a Featured badge</li>
+            <li>A bigger, gold-ringed pin on the map</li>
             <li>Your photo or logo on the ad</li>
             <li>Rotating spot on the home page</li>
             <li>Directions button and a special offer line</li>
@@ -205,15 +207,15 @@ home = f'''{head('HB Living | Local advertising in Huntington Beach', 'Advertise
     </ol>
   </section>
 
-  <section class="band band-sand" id="samples">
+  <section class="band band-sand" id="map">
     <div class="wrap">
-      <div class="sec-head"><p class="kicker">What your ad looks like</p><h2>Your business, <em>right here.</em></h2><p class="sub">Sample ads to show the layout.  Your real details go in their place.</p></div>
-      <div class="ads">
-        {sample('Food and drink', 'Your Taco Spot', 'Fish tacos, burritos and cold drinks, two blocks from the sand.  Ask about the Tuesday special.', 'Huntington Beach', True)}
-        {sample('Home services', 'Your Plumbing Company', 'Same-day repairs, water heaters and drains.  Family owned and licensed.', 'Fountain Valley')}
-        {sample('Surf and outdoor', 'Your Surf Shop', 'Boards, wetsuits, rentals and lessons for every age.  Locals discount.', 'Huntington Beach', True)}
-        {sample('Health and fitness', 'Your Fitness Studio', 'Small group classes, personal training and a free first visit.', 'Seal Beach')}
+      <div class="sec-head"><p class="kicker">The HB Living map</p><h2>Every ad gets <em>a pin on the map.</em></h2><p class="sub">Huntington Beach in four areas.  Tap an area to zoom in, or tap an ad to find it on the map.  These are sample ads to show how it works.</p></div>
+      <div class="chips" id="terrChips" role="group" aria-label="Areas"></div>
+      <div class="map-wrap">
+        <div class="map-box"><div id="hbMap" role="region" aria-label="Map of Huntington Beach areas and businesses"></div><p class="terr-info" id="terrInfo"></p></div>
+        <ol class="mad-list" id="adList" aria-label="Ads in this area"></ol>
       </div>
+      <p class="map-note">Area lines follow ZIP codes, so the edges are approximate.</p>
     </div>
   </section>
 
@@ -229,6 +231,7 @@ home = f'''{head('HB Living | Local advertising in Huntington Beach', 'Advertise
         <details><summary>How do I pay?</summary><p>After you approve your ad, we send you a secure link to pay by card, monthly or for the year.</p></details>
         <details><summary>Is there a contract?</summary><p>No.  Plans are month to month and you can cancel anytime.  Yearly plans are paid up front for two free months.</p></details>
         <details><summary>Can I change my ad later?</summary><p>Yes.  Send us new hours, a new offer or a new photo and we'll update it.</p></details>
+        <details><summary>What are the four areas?</summary><p>Downtown and the Pier, Harbour and Sunset Beach, North HB and Central Park, and Southeast HB.  They follow Huntington Beach's ZIP codes, so your ad shows in your own area and across the whole city.</p></details>
         <details><summary>Who sees my ad?</summary><p>People looking for local businesses in Huntington Beach and nearby towns: Fountain Valley, Seal Beach, Sunset Beach, Westminster, Costa Mesa and Newport Beach.</p></details>
         <details><summary>What do I need to get started?</summary><p>Just your business name, phone, website or social page, and a sentence or two about what you do.  A logo or photo helps for Featured ads.</p></details>
       </div>
@@ -253,6 +256,9 @@ home = f'''{head('HB Living | Local advertising in Huntington Beach', 'Advertise
   </section>
 </main>
 {footer()}
+<script src="assets/vendor/leaflet/leaflet.js"></script>
+<script src="assets/js/map-data.js?v={ver('assets/js/map-data.js')}"></script>
+<script src="assets/js/map.js?v={ver('assets/js/map.js')}"></script>
 </body>
 </html>
 '''
@@ -269,6 +275,6 @@ thanks = f'''{head('Thanks | HB Living', 'Thanks for your interest in advertisin
 (ROOT / 'index.html').write_text(home)
 (ROOT / 'thanks.html').write_text(thanks)
 import re as _re
-_h = hashlib.md5(b''.join((ROOT / f).read_bytes() for f in ['index.html', 'thanks.html', 'assets/css/site.css', 'assets/js/site.js', 'assets/img/mark.svg'])).hexdigest()[:10]
+_h = hashlib.md5(b''.join((ROOT / f).read_bytes() for f in ['index.html', 'thanks.html', 'assets/css/site.css', 'assets/js/site.js', 'assets/js/map.js', 'assets/js/map-data.js', 'assets/img/mark.svg'])).hexdigest()[:10]
 _sw = (ROOT / 'sw.js').read_text(); (ROOT / 'sw.js').write_text(_re.sub(r'const CACHE = "[^"]*";', f'const CACHE = "hbl-{_h}";', _sw))
 print('built index.html and thanks.html, cache', _h)
