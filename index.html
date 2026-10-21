@@ -15,15 +15,15 @@
 <meta name="apple-mobile-web-app-title" content="HB Living">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/site.css?v=ae93f7c5">
-
+<link rel="stylesheet" href="assets/css/site.css?v=bb151b85">
+<link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
 </head>
 <body>
 <header class="top">
   <div class="top-in">
     <a class="brand" href="index.html"><img src="assets/img/mark.svg" alt="" width="40" height="40"><span>HB <em>Living</em></span></a>
     <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
-    <nav id="nav" class="nav" aria-label="Main"><a href="#why">Why HB Living</a><a href="#plans">Plans</a><a href="#how">How it works</a><a href="#categories">Categories</a><a href="#faq">Questions</a><a class="nav-cta" href="#advertise">Advertise</a></nav>
+    <nav id="nav" class="nav" aria-label="Main"><a href="#why">Why HB Living</a><a href="#map">Map</a><a href="#plans">Plans</a><a href="#how">How it works</a><a href="#categories">Categories</a><a href="#faq">Questions</a><a class="nav-cta" href="#advertise">Advertise</a></nav>
   </div>
 </header>
 <main>
@@ -96,6 +96,7 @@
             <li>Your business in its category</li>
             <li>Name, phone, website and city</li>
             <li>A short description of what you do</li>
+            <li>Your own pin on the HB Living map</li>
             <li>Tap to call and tap for your website</li>
             <li>Update your details anytime</li>
           </ul>
@@ -108,7 +109,8 @@
           <p class="yearly">or $100 a year, two months free</p>
           <ul>
             <li>Everything in Local Listing</li>
-            <li>Top of your category, with a Featured badge</li>
+            <li>Top of your category and your area, with a Featured badge</li>
+            <li>A bigger, gold-ringed pin on the map</li>
             <li>Your photo or logo on the ad</li>
             <li>Rotating spot on the home page</li>
             <li>Directions button and a special offer line</li>
@@ -130,31 +132,15 @@
     </ol>
   </section>
 
-  <section class="band band-sand" id="samples">
+  <section class="band band-sand" id="map">
     <div class="wrap">
-      <div class="sec-head"><p class="kicker">What your ad looks like</p><h2>Your business, <em>right here.</em></h2><p class="sub">Sample ads to show the layout.  Your real details go in their place.</p></div>
-      <div class="ads">
-        <article class="ad ad-feat">
-      <div class="ad-top"><span class="ad-cat">Food and drink</span><span class="ad-badge">Featured</span></div>
-      <h3>Your Taco Spot</h3><p>Fish tacos, burritos and cold drinks, two blocks from the sand.  Ask about the Tuesday special.</p>
-      <div class="ad-foot"><span class="ad-city">Huntington Beach</span><span class="ad-links"><span>Call</span><span>Website</span><span>Directions</span></span></div>
-    </article>
-        <article class="ad">
-      <div class="ad-top"><span class="ad-cat">Home services</span></div>
-      <h3>Your Plumbing Company</h3><p>Same-day repairs, water heaters and drains.  Family owned and licensed.</p>
-      <div class="ad-foot"><span class="ad-city">Fountain Valley</span><span class="ad-links"><span>Call</span><span>Website</span></span></div>
-    </article>
-        <article class="ad ad-feat">
-      <div class="ad-top"><span class="ad-cat">Surf and outdoor</span><span class="ad-badge">Featured</span></div>
-      <h3>Your Surf Shop</h3><p>Boards, wetsuits, rentals and lessons for every age.  Locals discount.</p>
-      <div class="ad-foot"><span class="ad-city">Huntington Beach</span><span class="ad-links"><span>Call</span><span>Website</span><span>Directions</span></span></div>
-    </article>
-        <article class="ad">
-      <div class="ad-top"><span class="ad-cat">Health and fitness</span></div>
-      <h3>Your Fitness Studio</h3><p>Small group classes, personal training and a free first visit.</p>
-      <div class="ad-foot"><span class="ad-city">Seal Beach</span><span class="ad-links"><span>Call</span><span>Website</span></span></div>
-    </article>
+      <div class="sec-head"><p class="kicker">The HB Living map</p><h2>Every ad gets <em>a pin on the map.</em></h2><p class="sub">Huntington Beach in four areas.  Tap an area to zoom in, or tap an ad to find it on the map.  These are sample ads to show how it works.</p></div>
+      <div class="chips" id="terrChips" role="group" aria-label="Areas"></div>
+      <div class="map-wrap">
+        <div class="map-box"><div id="hbMap" role="region" aria-label="Map of Huntington Beach areas and businesses"></div><p class="terr-info" id="terrInfo"></p></div>
+        <ol class="mad-list" id="adList" aria-label="Ads in this area"></ol>
       </div>
+      <p class="map-note">Area lines follow ZIP codes, so the edges are approximate.</p>
     </div>
   </section>
 
@@ -170,6 +156,7 @@
         <details><summary>How do I pay?</summary><p>After you approve your ad, we send you a secure link to pay by card, monthly or for the year.</p></details>
         <details><summary>Is there a contract?</summary><p>No.  Plans are month to month and you can cancel anytime.  Yearly plans are paid up front for two free months.</p></details>
         <details><summary>Can I change my ad later?</summary><p>Yes.  Send us new hours, a new offer or a new photo and we'll update it.</p></details>
+        <details><summary>What are the four areas?</summary><p>Downtown and the Pier, Harbour and Sunset Beach, North HB and Central Park, and Southeast HB.  They follow Huntington Beach's ZIP codes, so your ad shows in your own area and across the whole city.</p></details>
         <details><summary>Who sees my ad?</summary><p>People looking for local businesses in Huntington Beach and nearby towns: Fountain Valley, Seal Beach, Sunset Beach, Westminster, Costa Mesa and Newport Beach.</p></details>
         <details><summary>What do I need to get started?</summary><p>Just your business name, phone, website or social page, and a sentence or two about what you do.  A logo or photo helps for Featured ads.</p></details>
       </div>
@@ -197,10 +184,13 @@
   <div class="foot-in">
     <div><a class="brand brand-foot" href="index.html"><img src="assets/img/mark.svg" alt="" width="36" height="36"><span>HB <em>Living</em></span></a>
     <p>Local advertising for Huntington Beach businesses and the towns next door.  Independently owned.  Not affiliated with the City of Huntington Beach.</p></div>
-    <nav aria-label="Footer"><a href="#why">Why HB Living</a><a href="#plans">Plans</a><a href="#how">How it works</a><a href="#categories">Categories</a><a href="#faq">Questions</a><a href="#advertise">Advertise</a></nav>
+    <nav aria-label="Footer"><a href="#why">Why HB Living</a><a href="#map">Map</a><a href="#plans">Plans</a><a href="#how">How it works</a><a href="#categories">Categories</a><a href="#faq">Questions</a><a href="#advertise">Advertise</a></nav>
     <small>&copy; 2026 HB Living.</small>
   </div>
 </footer>
 <script src="assets/js/site.js?v=99b20961"></script>
+<script src="assets/vendor/leaflet/leaflet.js"></script>
+<script src="assets/js/map-data.js?v=7e76857e"></script>
+<script src="assets/js/map.js?v=826ac550"></script>
 </body>
 </html>
