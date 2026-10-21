@@ -1,4 +1,4 @@
-"""25 logo concepts for HB Living, written to logos.html (not linked, noindex).  Concept 1 is the temporary site mark."""
+"""25 logo concepts for HBLiving, written to logos.html (not linked, noindex).  Concept 1 is the temporary site mark."""
 import pathlib, math
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -57,7 +57,7 @@ LOGOS = [
   f'<path d="M60 10 C 80 30 82 84 60 112 C 38 84 40 30 60 10Z" fill="{FOAM}" stroke="{INK}" stroke-width="4"/><path d="M60 16 V106" stroke="{CORAL}" stroke-width="2"/>' + text(60, 58, 'H', 20, SEA, SANS, 800) + text(60, 82, 'B', 20, SEA, SANS, 800)),
  ('Badge', 'A round badge, like a beach permit sticker, with the pier in the middle.',
   f'<circle cx="60" cy="60" r="52" fill="{FOAM}" stroke="{INK}" stroke-width="4"/><circle cx="60" cy="60" r="40" fill="{GLASS}"/><path d="M30 58 A30 30 0 0 1 90 58Z" fill="{GOLD}"/>{pier(62, 24, 96, INK, 5, 3)}{wave(84, 30, 90, 3, 3, SEA, 4)}' +
-  f'<path id="bt" d="M16 60 A44 44 0 0 1 104 60" fill="none"/><text font-family="{SANS}" font-weight="800" font-size="10" letter-spacing="2.4" fill="{INK}"><textPath href="#bt" startOffset="50%" text-anchor="middle">HB LIVING</textPath></text>'),
+  f'<path id="bt" d="M16 60 A44 44 0 0 1 104 60" fill="none"/><text font-family="{SANS}" font-weight="800" font-size="10" letter-spacing="2.4" fill="{INK}"><textPath href="#bt" startOffset="50%" text-anchor="middle">HBLIVING</textPath></text>'),
  ('Script Sunset', 'A flowing script wordmark over a low sun.  Easygoing and warm.',
   f'<path d="M20 84 A40 40 0 0 1 100 84Z" fill="{GOLD}" opacity=".9"/>' + text(60, 78, 'HB', 46, INK, SERIF, 700, 0, 'middle', ' font-style="italic"') + wave(98, 18, 102, 3, 3, CORAL, 4)),
  ('Compass Rose', 'A compass pointing west to the water.  Find your way to the coast.',
@@ -104,9 +104,9 @@ cards = ''
 for i, (name, desc, svg) in enumerate(LOGOS, 1):
     cards += f'''
   <article class="lc" id="logo-{i}">
-    <div class="lc-main">{mark(svg, 92)}<div class="lc-word"><b>HB <em>Living</em></b><small>Huntington Beach, California</small></div></div>
+    <div class="lc-main">{mark(svg, 92)}<div class="lc-word"><b>HB<em>Living</em></b><small>Huntington Beach, California</small></div></div>
     <div class="lc-alt">
-      <div class="lc-dark">{mark(svg, 54)}<span>HB Living</span></div>
+      <div class="lc-dark">{mark(svg, 54)}<span>HBLiving</span></div>
       <div class="lc-icon" title="Phone app icon">{mark(svg, 46)}</div>
     </div>
     <h2><span class="lc-num">{i}</span>{name}</h2>
@@ -118,7 +118,7 @@ html = f'''<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Logo Options | HB Living</title>
+<title>Logo Options | HBLiving</title>
 <meta name="robots" content="noindex">
 <link rel="icon" href="assets/img/mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -151,7 +151,7 @@ html = f'''<!doctype html>
 <header>
   <div class="kicker">Logo options</div>
   <h1>Pick a <em>favorite</em>.</h1>
-  <p>Twenty-five ideas for the HB Living logo, in red, gold and green.  Each card shows the logo with the name, on a dark background, and as a phone app icon.  Tell us the number you like, or mix and match.</p>
+  <p>Twenty-five ideas for the HBLiving logo, in red, gold and green.  Each card shows the logo with the name, on a dark background, and as a phone app icon.  Tell us the number you like, or mix and match.</p>
 </header>
 <main class="grid">{cards}
 </main>

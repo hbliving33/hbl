@@ -1,4 +1,4 @@
-// HB Living map: territories, ad pins and the ad list, all linked together.
+// HBLiving map: territories, ad pins and the ad list, all linked together.
 (() => {
   const el = document.getElementById("hbMap");
   if (!el || !window.L) return;

@@ -1,4 +1,4 @@
-// HB Living territories and ads.
+// HBLiving territories and ads.
 // Territory shapes come from US Census ZIP code areas (ZCTA, 2010), so edges are approximate.
 // To add a real advertiser, copy one of the ads below, change the details and remove "sample: true".
 window.HB_TERRITORIES = [
