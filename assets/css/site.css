@@ -233,3 +233,14 @@ section.wrap, .band { padding-top: 72px; padding-bottom: 72px; }
 .cpin { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 8px; background: #161310; border: 2px solid #fff; box-shadow: 0 3px 8px rgba(0, 0, 0, .35); }
 .cpin svg { width: 18px; height: 18px; fill: #f8b800; }
 @media (max-width: 860px) { .comms { grid-template-columns: 1fr; } }
+
+/* The name: HB plus italic Living, wherever it appears in text */
+.nm { white-space: nowrap; } .nm em { font-style: italic; color: #d62b1f; }
+.hero .nm em, .foot .nm em, .adv .nm em, .founding .nm em, .soon-box .nm em { color: #f8b800; }
+.sec-head h2 em .nm em { color: inherit; }
+.mad-links { display: flex; gap: 6px; margin-top: 4px; } .mad-links a { font-size: 13px; font-weight: 700; color: #fff; background: #161310; border-radius: 8px; padding: 5px 11px; text-decoration: none; }
+.rep-form { max-width: 460px; margin-top: 24px; } .rep-bar { display: flex; gap: 14px; align-items: end; justify-content: space-between; margin: 24px 0; }
+.rep-bar label { display: grid; gap: 6px; font-weight: 700; font-size: 14px; } .rep-bar input { font: inherit; padding: 9px 12px; border: 1px solid var(--line); border-radius: 10px; }
+.rep-ad { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px; margin-bottom: 16px; }
+.rep-ad h2 { font-size: 24px; margin-bottom: 10px; } .rep-ad table { width: 100%; border-collapse: collapse; margin-bottom: 14px; }
+.rep-ad th, .rep-ad td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); } .rep-ad th { font-size: 13px; color: var(--muted); } .rep-ad .tot td { font-weight: 800; }

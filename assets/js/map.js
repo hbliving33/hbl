@@ -42,17 +42,25 @@
   chips.innerHTML = `<button type="button" data-t="all" aria-pressed="true">All of HB</button>` + T.map((t) => `<button type="button" data-t="${t.id}" aria-pressed="false" style="--c:${t.color}"><i></i>${esc(t.name)}</button>`).join("");
   let current = "all";
 
+  function links(a) {
+    const L2 = [];
+    if (a.phone) L2.push(`<a href="tel:${esc(a.phone)}" data-ad="${esc(a.id)}" data-kind="call">Call</a>`);
+    if (a.url) L2.push(`<a href="${esc(a.url)}" target="_blank" rel="noopener" data-ad="${esc(a.id)}" data-kind="web">Website</a>`);
+    if (a.lat) L2.push(`<a href="https://maps.google.com/?q=${a.lat},${a.lng}" target="_blank" rel="noopener" data-ad="${esc(a.id)}" data-kind="dir">Directions</a>`);
+    return a.sample ? "" : `<span class="mad-links">${L2.join("")}</span>`;
+  }
   function card(a, i) {
     const t = byId[a.territory];
-    return `<li class="mad${a.featured ? " mad-feat" : ""}" data-i="${i}" style="--c:${t.color}">
+    return `<li class="mad${a.featured ? " mad-feat" : ""}" data-i="${i}" data-ad="${a.sample ? "" : esc(a.id)}" style="--c:${t.color}">
       <div class="mad-top"><span class="mad-cat">${esc(a.cat)}</span>${a.featured ? '<span class="ad-badge">Featured</span>' : ""}</div>
       <b>${esc(a.name)}</b><span class="mad-line">${esc(a.line)}</span>
-      <span class="mad-terr"><i></i>${esc(t.name)}</span>${a.sample ? '<span class="mad-sample">Sample ad</span>' : ""}</li>`;
+      <span class="mad-terr"><i></i>${esc(t.name)}</span>${links(a)}${a.sample ? '<span class="mad-sample">Sample ad</span>' : ""}</li>`;
   }
   function paint() {
     const show = ADS.map((a, i) => [a, i]).filter(([a]) => current === "all" || a.territory === current)
       .sort((x, y) => (y[0].featured ? 1 : 0) - (x[0].featured ? 1 : 0));
     list.innerHTML = show.length ? show.map(([a, i]) => card(a, i)).join("") : '<li class="empty">No ads in this area yet.  Yours could be the first.</li>';
+    if (window.hblTrack) list.querySelectorAll(".mad[data-ad]").forEach((el) => el.dataset.ad && window.hblTrack.watch(el));
     const t = byId[current];
     info.innerHTML = t ? `<b style="color:${t.color}">${esc(t.name)}</b><span>${esc(t.blurb)}  ZIP ${t.zips.join(" and ")}.</span>` : `<b>All of Huntington Beach</b><span>Four areas, one map.  Tap an area to zoom in.</span>`;
     chips.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.t === current));
@@ -71,6 +79,6 @@
     const c = list.querySelector(`.mad[data-i="${i}"]`); if (c && !fly) c.scrollIntoView({ block: "nearest", behavior: "smooth" });
   }
   chips.addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) pick(b.dataset.t); });
-  list.addEventListener("click", (e) => { const c = e.target.closest(".mad"); if (c) highlight(+c.dataset.i, true); });
+  list.addEventListener("click", (e) => { if (e.target.closest("a")) return; const c = e.target.closest(".mad"); if (c) highlight(+c.dataset.i, true); });
   paint();
 })();
