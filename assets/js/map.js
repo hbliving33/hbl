@@ -31,6 +31,13 @@
     return m;
   });
 
+  // Community sites: a house marker for each live community
+  (window.HB_COMMUNITIES || []).filter((c) => c.lat).forEach((c) => {
+    const icon = L.divIcon({ className: "", html: '<span class="cpin" title="Community site"><svg viewBox="0 0 24 24"><path d="M3 11 12 4l9 7v9H3Z"/></svg></span>', iconSize: [30, 30], iconAnchor: [15, 15] });
+    L.marker([c.lat, c.lng], { icon, title: c.name, zIndexOffset: 500 }).addTo(map)
+      .bindPopup(`<b>${esc(c.name)}</b><br>Community site${c.url ? `<br><a href="${esc(c.url)}" target="_blank" rel="noopener">Visit ${esc(c.name)}</a>` : ""}`);
+  });
+
   const list = document.getElementById("adList"), chips = document.getElementById("terrChips"), info = document.getElementById("terrInfo");
   chips.innerHTML = `<button type="button" data-t="all" aria-pressed="true">All of HB</button>` + T.map((t) => `<button type="button" data-t="${t.id}" aria-pressed="false" style="--c:${t.color}"><i></i>${esc(t.name)}</button>`).join("");
   let current = "all";

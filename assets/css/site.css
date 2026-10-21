@@ -221,3 +221,15 @@ section.wrap, .band { padding-top: 72px; padding-bottom: 72px; }
 .cats li .ico { color: #138a43; }
 .nav .nav-cta { border-radius: 10px; }
 .plan ul { align-content: start; }
+
+/* Communities */
+.comms { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.comm { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 24px; display: grid; gap: 10px; align-content: start; box-shadow: 0 1px 2px rgba(22, 19, 16, .05), 0 8px 24px rgba(22, 19, 16, .05); }
+.comm h3 { font-size: 24px; } .comm p { margin: 0; color: var(--muted); } .comm .btn { justify-self: start; margin-top: 6px; }
+.comm-status { justify-self: start; font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; border-radius: 6px; padding: 4px 9px; background: #e3f3e2; color: #138a43; }
+.comm-status.soon { background: #fdf1d0; color: #9a6b00; } .comm-status.join { background: #fbe3df; color: #b51f15; }
+.comm-live { border-top: 4px solid #138a43; } .comm-join { border-top: 4px solid #d62b1f; }
+.comm-note { font-weight: 700; color: #9a6b00; font-size: 14px; }
+.cpin { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 8px; background: #161310; border: 2px solid #fff; box-shadow: 0 3px 8px rgba(0, 0, 0, .35); }
+.cpin svg { width: 18px; height: 18px; fill: #f8b800; }
+@media (max-width: 860px) { .comms { grid-template-columns: 1fr; } }

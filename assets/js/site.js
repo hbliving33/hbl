@@ -9,7 +9,8 @@
 // Plan buttons pre-select the plan in the advertiser form
 document.querySelectorAll("[data-plan]").forEach((a) => a.addEventListener("click", () => {
   const sel = document.getElementById("planSel");
-  if (sel) sel.value = a.dataset.plan === "Featured" ? "Featured, $10 a month" : "Local Listing, $5 a month";
+  const v = { Community: "Community, $5 a month", Both: "Community plus HBLiving, $10 a month", Start: "Start a community site (free)" }[a.dataset.plan];
+  if (sel && v) sel.value = v;
 }));
 
 // App: offline support and automatic updates
@@ -20,3 +21,9 @@ if ("serviceWorker" in navigator) {
   let reloaded = false;
   navigator.serviceWorker.addEventListener("controllerchange", () => { if (!reloaded) { reloaded = true; location.reload(); } });
 }
+
+// A link like index.html?community=Suburbia%20Park#advertise pre-selects the community in the form
+(() => {
+  const c = new URLSearchParams(location.search).get("community"), sel = document.querySelector('select[name="community"]');
+  if (c && sel) [...sel.options].forEach((o) => { if (o.text.toLowerCase().startsWith(c.toLowerCase())) sel.value = o.text; });
+})();
