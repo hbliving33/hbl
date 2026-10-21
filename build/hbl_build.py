@@ -146,7 +146,7 @@ home = f'''{head('HBLiving | Local advertising in Huntington Beach', 'Advertise 
         </div>
         <div class="pv-stats">
           <p>Example monthly report</p>
-          <div><b>1,240</b><span>views</span></div><div><b>86</b><span>clicks</span></div><div><b>31</b><span>calls</span></div>
+          <div><b>1,240</b><span>views</span></div><div><b>86</b><span>website taps</span></div><div><b>31</b><span>call taps</span></div>
         </div>
       </div>
     </div>
@@ -159,7 +159,7 @@ home = f'''{head('HBLiving | Local advertising in Huntington Beach', 'Advertise 
       {why('pin', 'Only local eyes', 'Every ad is built for Huntington Beach and the towns around it, not shown to people three states away.')}
       {why('tag', 'Priced for small business', 'Less than the price of a coffee a week.  Big-name ad sites can cost many times as much.')}
       {why('shake', 'No contracts', 'Pay month to month and cancel anytime.  Stay because it works, not because you signed something.')}
-      {why('chart', 'See your results', 'Featured advertisers get a simple monthly report: how many people saw the ad, called and clicked.')}
+      {why('chart', 'See your results', 'Advertisers on the $10 plan get a simple monthly report: how many people saw the ad and tapped to call, visit the website or get directions.')}
     </div>
   </section>
 
@@ -201,7 +201,7 @@ home = f'''{head('HBLiving | Local advertising in Huntington Beach', 'Advertise 
             <li>Every community site in your area, including new ones as they launch</li>
             <li>Featured badge and a gold-ringed pin on the map</li>
             <li>Your photo or logo and a special offer line</li>
-            <li>Monthly report of views, calls and clicks</li>
+            <li>Monthly report of views and taps to call, visit or get directions</li>
           </ul>
           <a class="btn btn-coral btn-wide" href="#advertise" data-plan="Both">Choose Community plus HBLiving</a>
         </article>
@@ -271,6 +271,7 @@ home = f'''{head('HBLiving | Local advertising in Huntington Beach', 'Advertise 
 </main>
 {footer()}
 <script src="assets/vendor/leaflet/leaflet.js"></script>
+<script src="assets/js/track.js?v={ver('assets/js/track.js')}"></script>
 <script src="assets/js/map-data.js?v={ver('assets/js/map-data.js')}"></script>
 <script src="assets/js/map.js?v={ver('assets/js/map.js')}"></script>
 </body>
@@ -286,9 +287,44 @@ thanks = f'''{head('Thanks | HBLiving', 'Thanks for your interest in advertising
 </html>
 '''
 
+import re as _re2
+def brandify(html):
+    """Wrap HBLiving in page text as HB + italic Living.  Leaves tags, titles, scripts and styles alone."""
+    out, skip = [], 0
+    for part in _re2.split(r'(<[^>]+>)', html):
+        if part.startswith('<'):
+            tag = part[1:].split()[0].rstrip('>').lower() if len(part) > 2 else ''
+            if tag in ('title', 'script', 'style', 'textarea', 'option'): skip += 1
+            elif tag in ('/title', '/script', '/style', '/textarea', '/option'): skip = max(0, skip - 1)
+            out.append(part)
+        else:
+            out.append(part if skip else part.replace('HBLiving', '<span class="nm">HB<em>Living</em></span>'))
+    return ''.join(out)
+report = f'''{head('Monthly report | HBLiving', 'HBLiving advertiser report.', noindex=True)}
+<body>
+{header()}
+<main class="wrap thanks">
+  <p class="kicker">For HBLiving only</p><h1>Monthly <em>report.</em></h1>
+  <form id="repSignin" class="adv-form rep-form" hidden>
+    <label>Admin email<input type="email" name="email" required></label>
+    <button class="btn btn-coral" type="submit">Email me a sign-in link</button>
+  </form>
+  <div id="repMain" hidden><div class="rep-bar"><label>Month <input type="month" id="repMonth"></label><button type="button" class="btn btn-ghost" id="repOut">Sign out</button></div><div id="rep"></div></div>
+  <p id="repMsg" class="form-msg" role="status"></p>
+</main>
+{footer()}
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="assets/js/track.js?v={ver('assets/js/track.js')}"></script>
+<script src="assets/js/map-data.js?v={ver('assets/js/map-data.js')}"></script>
+<script src="assets/js/report.js?v={ver('assets/js/report.js')}"></script>
+</body>
+</html>
+'''
+(ROOT / 'report.html').write_text(brandify(report))
+home = brandify(home); thanks = brandify(thanks)
 (ROOT / 'index.html').write_text(home)
 (ROOT / 'thanks.html').write_text(thanks)
 import re as _re
-_h = hashlib.md5(b''.join((ROOT / f).read_bytes() for f in ['index.html', 'thanks.html', 'assets/css/site.css', 'assets/js/site.js', 'assets/js/map.js', 'assets/js/map-data.js', 'assets/img/mark.svg'])).hexdigest()[:10]
+_h = hashlib.md5(b''.join((ROOT / f).read_bytes() for f in ['index.html', 'thanks.html', 'assets/css/site.css', 'assets/js/site.js', 'assets/js/map.js', 'assets/js/map-data.js', 'assets/js/track.js', 'assets/img/mark.svg'])).hexdigest()[:10]
 _sw = (ROOT / 'sw.js').read_text(); (ROOT / 'sw.js').write_text(_re.sub(r'const CACHE = "[^"]*";', f'const CACHE = "hbl-{_h}";', _sw))
 print('built index.html and thanks.html, cache', _h)
