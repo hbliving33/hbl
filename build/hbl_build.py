@@ -68,13 +68,28 @@ def head(title, desc, extra='', noindex=False):
 {'<meta name="robots" content="noindex">' if noindex else ''}
 <meta name="theme-color" content="{INK}">
 <link rel="icon" href="assets/img/mark.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/img/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="HB Living">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 {FONTS}
 <link rel="stylesheet" href="assets/css/site.css?v={ver('assets/css/site.css')}">
 {extra}
 </head>'''
 
 
-NAV = [('#beaches', 'Beaches'), ('#outside', 'Get outside'), ('#eat', 'Eat and drink'), ('#events', 'Events'), ('#neighborhoods', 'Neighborhoods')]
+
+# ---------- Advertiser form ----------
+# Leave FORM_TO empty until the address that receives advertiser requests is chosen.
+# When it is set, the form posts through FormSubmit and lands on thanks.html.
+FORM_TO = ''
+
+NAV = [('#why', 'Why HB Living'), ('#plans', 'Plans'), ('#how', 'How it works'), ('#categories', 'Categories'), ('#faq', 'Questions')]
+CITIES = ['Huntington Beach', 'Fountain Valley', 'Seal Beach', 'Sunset Beach', 'Westminster', 'Costa Mesa', 'Newport Beach']
+CATS = [('🌮', 'Food and drink'), ('🔧', 'Home services'), ('🏄', 'Surf and outdoor'), ('💪', 'Health and fitness'), ('✂️', 'Beauty and spa'),
+        ('🐾', 'Pets'), ('🏡', 'Real estate'), ('🚗', 'Auto'), ('🎨', 'Kids and family'), ('💼', 'Professional services'), ('🛍️', 'Shops and boutiques'), ('🎉', 'Events and entertainment')]
 
 
 def header():
@@ -83,7 +98,7 @@ def header():
   <div class="top-in">
     <a class="brand" href="index.html"><img src="assets/img/mark.svg" alt="" width="40" height="40"><span>HB <em>Living</em></span></a>
     <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
-    <nav id="nav" class="nav" aria-label="Main">{links}<a class="nav-cta" href="#letter">Get the letter</a></nav>
+    <nav id="nav" class="nav" aria-label="Main">{links}<a class="nav-cta" href="#advertise">Advertise</a></nav>
   </div>
 </header>'''
 
@@ -92,91 +107,147 @@ def footer():
     return f'''<footer class="foot">
   <div class="foot-in">
     <div><a class="brand brand-foot" href="index.html"><img src="assets/img/mark.svg" alt="" width="36" height="36"><span>HB <em>Living</em></span></a>
-    <p>The good life in Huntington Beach, California.  An independent local guide, not an official City of Huntington Beach website.</p></div>
-    <nav aria-label="Footer">{''.join(f'<a href="{h}">{t}</a>' for h, t in NAV)}</nav>
+    <p>Local advertising for Huntington Beach businesses and the towns next door.  Independently owned.  Not affiliated with the City of Huntington Beach.</p></div>
+    <nav aria-label="Footer">{''.join(f'<a href="{h}">{t}</a>' for h, t in NAV)}<a href="#advertise">Advertise</a></nav>
     <small>&copy; {YEAR} HB Living.</small>
   </div>
 </footer>
 <script src="assets/js/site.js?v={ver('assets/js/site.js')}"></script>'''
 
 
-def card(tag, title, text):
-    return f'<article class="card"><span class="card-tag">{tag}</span><h3>{title}</h3><p>{text}</p></article>'
+def why(icon, title, text):
+    return f'<article class="why"><span class="why-ico" aria-hidden="true">{icon}</span><h3>{title}</h3><p>{text}</p></article>'
 
 
-home = f'''{head('HB Living | The good life in Huntington Beach', 'HB Living: a local guide to life in Huntington Beach, California.  Beaches, the outdoors, places to eat, events and neighborhoods.')}
+def sample(cat, name, line, city, featured=False):
+    badge = '<span class="ad-badge">Featured</span>' if featured else ''
+    return f'''<article class="ad{' ad-feat' if featured else ''}">
+      <div class="ad-top"><span class="ad-cat">{cat}</span>{badge}</div>
+      <h3>{name}</h3><p>{line}</p>
+      <div class="ad-foot"><span class="ad-city">{city}</span><span class="ad-links"><span>Call</span><span>Website</span>{'<span>Directions</span>' if featured else ''}</span></div>
+    </article>'''
+
+
+form_on = bool(FORM_TO)
+form_attrs = (f'action="https://formsubmit.co/{FORM_TO}" method="POST"' if form_on
+              else 'onsubmit="event.preventDefault(); this.querySelector(\'.form-msg\').textContent = \'Thanks!  Online requests open very soon.\';"')
+form_hidden = ('<input type="hidden" name="_subject" value="HB Living: new advertiser request"><input type="hidden" name="_template" value="table">'
+               '<input type="hidden" name="_next" value="https://hbliving.com/thanks.html"><input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">') if form_on else ''
+
+home = f'''{head('HB Living | Local advertising in Huntington Beach', 'Advertise your business to Huntington Beach and nearby neighbors from $5 a month.  No contracts, cancel anytime.')}
 <body>
 {header()}
 <main>
   <section class="hero">
     <div class="hero-copy">
-      <p class="kicker">Huntington Beach, California</p>
-      <h1>Life is better <em>at the beach.</em></h1>
-      <p class="lede">HB Living is a local's guide to Huntington Beach.  The best stretches of sand, sunset spots, places to eat, things to do this weekend and the neighborhoods that make it home.</p>
-      <div class="cta-row"><a class="btn btn-coral" href="#beaches">Explore HB</a><a class="btn btn-ghost" href="#letter">Get the weekly letter</a></div>
+      <p class="kicker">Local advertising for Huntington Beach</p>
+      <h1>Get your business seen <em>in Surf City.</em></h1>
+      <p class="lede">HB Living puts local businesses in front of the people who live, work and play here.  Plans start at $5 a month, with no contracts and nothing to install.</p>
+      <div class="cta-row"><a class="btn btn-coral" href="#plans">See the plans</a><a class="btn btn-ghost" href="#advertise">Start advertising</a></div>
+      <ul class="cities" aria-label="Areas we cover">{''.join(f'<li>{c}</li>' for c in CITIES)}</ul>
     </div>
     {pier_scene()}
   </section>
 
-  <section class="wrap" id="beaches">
-    <div class="sec-head"><p class="kicker">Miles of coastline</p><h2>The <em>beaches</em></h2></div>
+  <section class="wrap" id="why">
+    <div class="sec-head"><p class="kicker">Why HB Living</p><h2>Advertising that's <em>actually local.</em></h2></div>
     <div class="grid4">
-      {card('Downtown', 'The Pier and Main Street', 'The heart of town.  Walk the pier, watch the surfers, then head up Main Street for food and shops.')}
-      {card('North', 'Bolsa Chica State Beach', 'Wide, open sand along Pacific Coast Highway, with fire rings and a long bike path.')}
-      {card('Dogs welcome', 'Huntington Dog Beach', 'A stretch of shoreline where dogs can run off leash and make friends.')}
-      {card('South', 'Huntington State Beach', 'Quieter sand running south to the Santa Ana River, with room to spread out.')}
+      {why('📍', 'Only local eyes', 'Every ad is built for Huntington Beach and the towns around it, not shown to people three states away.')}
+      {why('💵', 'Priced for small business', 'Less than the price of a coffee a week.  Big-name ad sites can cost many times as much.')}
+      {why('🤝', 'No contracts', 'Pay month to month and cancel anytime.  Stay because it works, not because you signed something.')}
+      {why('📊', 'See your results', 'Featured advertisers get a simple monthly report: how many people saw the ad, called and clicked.')}
     </div>
   </section>
 
-  <section class="band" id="outside">
-    <div class="wrap split">
-      <div>
-        <div class="sec-head"><p class="kicker">Beyond the sand</p><h2>Get <em>outside</em></h2></div>
-        <p class="body-lg">Huntington Beach is more than the waves.  There are trails, wetlands and a huge city park, all a short ride from the coast.</p>
-      </div>
-      <ul class="list">
-        <li><b>Huntington Central Park</b><span>Lakes, trails, a library and plenty of shade.</span></li>
-        <li><b>Bolsa Chica Ecological Reserve</b><span>Wetland walks and some of the best bird watching on the coast.</span></li>
-        <li><b>The beach bike path</b><span>Miles of flat riding along the sand, sunrise to sunset.</span></li>
-        <li><b>Santa Ana River Trail</b><span>Ride inland from the river mouth along the water.</span></li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="wrap" id="eat">
-    <div class="sec-head"><p class="kicker">Coming soon</p><h2>Eat and <em>drink</em></h2></div>
-    <div class="grid3">
-      {card('Mornings', 'Coffee and breakfast', 'Where locals start the day before a surf or a walk on the sand.')}
-      {card('Casual', 'Tacos and takeout', 'Fish tacos, burritos and beach-day food worth the drive.')}
-      {card('Evenings', 'Sunset tables', 'Spots with a view for when the sky turns orange.')}
-    </div>
-    <p class="note">We're putting together our list now, with real picks from people who live here.</p>
-  </section>
-
-  <section class="wrap split" id="events">
-    <div><div class="sec-head"><p class="kicker">On the calendar</p><h2>This <em>week</em> in HB</h2></div>
-    <p class="body-lg">Farmers markets, surf contests, concerts in the park and the big events that bring the whole town out.  Our weekly roundup is coming soon.</p></div>
-    <div class="soon-box"><b>Weekly events, coming soon</b><span>Sign up for the letter and we'll send the first one your way.</span></div>
-  </section>
-
-  <section class="band band-sand" id="neighborhoods">
+  <section class="band" id="plans">
     <div class="wrap">
-      <div class="sec-head"><p class="kicker">Finding home</p><h2>The <em>neighborhoods</em></h2></div>
-      <div class="grid3">
-        {card('Close to the sand', 'Downtown and the coast', 'Walk to the pier, the beach and Main Street.  Lively, sunny and always something going on.')}
-        {card('Room to grow', 'Family neighborhoods', 'Quiet streets, parks and schools, a short bike ride from the beach.')}
-        {card('On the water', 'Harbor living', 'Homes along the channels, with docks out back and boats at the door.')}
+      <div class="sec-head center"><p class="kicker">Simple pricing</p><h2>Two plans.  <em>No surprises.</em></h2><p class="sub">Pay monthly, or pay for the year and get two months free.</p></div>
+      <div class="plans">
+        <article class="plan">
+          <h3>Local Listing</h3>
+          <p class="price"><b>$5</b><span>per month</span></p>
+          <p class="yearly">or $50 a year, two months free</p>
+          <ul>
+            <li>Your business in its category</li>
+            <li>Name, phone, website and city</li>
+            <li>A short description of what you do</li>
+            <li>Tap to call and tap for your website</li>
+            <li>Update your details anytime</li>
+          </ul>
+          <a class="btn btn-ghost btn-wide" href="#advertise" data-plan="Local Listing">Choose Local Listing</a>
+        </article>
+        <article class="plan plan-feat">
+          <span class="plan-flag">Most popular</span>
+          <h3>Featured</h3>
+          <p class="price"><b>$10</b><span>per month</span></p>
+          <p class="yearly">or $100 a year, two months free</p>
+          <ul>
+            <li>Everything in Local Listing</li>
+            <li>Top of your category, with a Featured badge</li>
+            <li>Your photo or logo on the ad</li>
+            <li>Rotating spot on the home page</li>
+            <li>Directions button and a special offer line</li>
+            <li>Monthly report of views, calls and clicks</li>
+          </ul>
+          <a class="btn btn-coral btn-wide" href="#advertise" data-plan="Featured">Choose Featured</a>
+        </article>
+      </div>
+      <div class="founding"><b>Founding advertisers lock in their price.</b><span>Businesses that join in the first year keep their rate for as long as they stay with us, even if prices go up later.</span></div>
+    </div>
+  </section>
+
+  <section class="wrap" id="how">
+    <div class="sec-head"><p class="kicker">How it works</p><h2>Live in <em>three easy steps.</em></h2></div>
+    <ol class="steps">
+      <li><b>Tell us about your business</b><span>Fill in the short form below.  It takes about two minutes.</span></li>
+      <li><b>We build your ad</b><span>We write it, add your details and send it to you to approve.  No design work on your end.</span></li>
+      <li><b>Go live and get found</b><span>Once you approve and pay, your ad goes up.  Change it whenever you like.</span></li>
+    </ol>
+  </section>
+
+  <section class="band band-sand" id="samples">
+    <div class="wrap">
+      <div class="sec-head"><p class="kicker">What your ad looks like</p><h2>Your business, <em>right here.</em></h2><p class="sub">Sample ads to show the layout.  Your real details go in their place.</p></div>
+      <div class="ads">
+        {sample('Food and drink', 'Your Taco Spot', 'Fish tacos, burritos and cold drinks, two blocks from the sand.  Ask about the Tuesday special.', 'Huntington Beach', True)}
+        {sample('Home services', 'Your Plumbing Company', 'Same-day repairs, water heaters and drains.  Family owned and licensed.', 'Fountain Valley')}
+        {sample('Surf and outdoor', 'Your Surf Shop', 'Boards, wetsuits, rentals and lessons for every age.  Locals discount.', 'Huntington Beach', True)}
+        {sample('Health and fitness', 'Your Fitness Studio', 'Small group classes, personal training and a free first visit.', 'Seal Beach')}
       </div>
     </div>
   </section>
 
-  <section class="wrap" id="letter">
-    <div class="letter">
-      <div><p class="kicker">The HB Living letter</p><h2>The best of the week, <em>once a week.</em></h2><p>Events, new spots and the little things that make Huntington Beach home.  Short, local and free.</p></div>
-      <form class="letter-form" onsubmit="event.preventDefault(); this.querySelector('.form-msg').textContent = 'Thanks!  Sign-ups open soon.';">
-        <label for="em">Email address</label>
-        <div class="row"><input id="em" type="email" required placeholder="you@example.com"><button class="btn btn-coral" type="submit">Sign me up</button></div>
+  <section class="wrap" id="categories">
+    <div class="sec-head"><p class="kicker">Categories</p><h2>Room for <em>every kind of business.</em></h2></div>
+    <ul class="cats">{''.join(f'<li><span aria-hidden="true">{i}</span>{t}</li>' for i, t in CATS)}</ul>
+  </section>
+
+  <section class="band" id="faq">
+    <div class="wrap faq-wrap">
+      <div class="sec-head"><p class="kicker">Questions</p><h2>Good to <em>know.</em></h2></div>
+      <div class="faq">
+        <details><summary>How do I pay?</summary><p>After you approve your ad, we send you a secure link to pay by card, monthly or for the year.</p></details>
+        <details><summary>Is there a contract?</summary><p>No.  Plans are month to month and you can cancel anytime.  Yearly plans are paid up front for two free months.</p></details>
+        <details><summary>Can I change my ad later?</summary><p>Yes.  Send us new hours, a new offer or a new photo and we'll update it.</p></details>
+        <details><summary>Who sees my ad?</summary><p>People looking for local businesses in Huntington Beach and nearby towns: Fountain Valley, Seal Beach, Sunset Beach, Westminster, Costa Mesa and Newport Beach.</p></details>
+        <details><summary>What do I need to get started?</summary><p>Just your business name, phone, website or social page, and a sentence or two about what you do.  A logo or photo helps for Featured ads.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" id="advertise">
+    <div class="adv">
+      <div><p class="kicker">Advertise with HB Living</p><h2>Ready to get <em>found?</em></h2><p>Send us your details and we'll build your ad and send it over for you to approve.  You don't pay anything until you've seen it.</p></div>
+      <form class="adv-form" {form_attrs}>
+        {form_hidden}
+        <div class="row"><label>Business name<input name="business" required maxlength="80"></label><label>Your name<input name="name" required maxlength="60"></label></div>
+        <div class="row"><label>Email<input type="email" name="email" required></label><label>Phone<input type="tel" name="phone" maxlength="20"></label></div>
+        <div class="row"><label>Website or social page <span class="opt">(optional)</span><input name="website" maxlength="120"></label><label>City<select name="city">{''.join(f'<option>{c}</option>' for c in CITIES)}<option>Other nearby</option></select></label></div>
+        <div class="row"><label>Category<select name="category">{''.join(f'<option>{t}</option>' for _, t in CATS)}<option>Something else</option></select></label><label>Plan<select name="plan" id="planSel"><option>Featured, $10 a month</option><option>Local Listing, $5 a month</option><option>Not sure yet</option></select></label></div>
+        <label>Tell us about your business <span class="opt">(optional)</span><textarea name="about" rows="3" maxlength="600"></textarea></label>
+        <button class="btn btn-coral" type="submit">Send my details</button>
         <p class="form-msg" role="status"></p>
+        <p class="fine">We only use your details to set up and manage your ad.  We never sell or share them.</p>
       </form>
     </div>
   </section>
@@ -186,5 +257,18 @@ home = f'''{head('HB Living | The good life in Huntington Beach', 'HB Living: a 
 </html>
 '''
 
+thanks = f'''{head('Thanks | HB Living', 'Thanks for your interest in advertising with HB Living.', noindex=True)}
+<body>
+{header()}
+<main class="wrap thanks"><p class="kicker">Got it</p><h1>Thanks!  <em>We'll be in touch.</em></h1><p class="body-lg">We'll build your ad and send it over for you to approve, usually within a couple of business days.</p><a class="btn btn-coral" href="index.html">Back to HB Living</a></main>
+{footer()}
+</body>
+</html>
+'''
+
 (ROOT / 'index.html').write_text(home)
-print('built index.html')
+(ROOT / 'thanks.html').write_text(thanks)
+import re as _re
+_h = hashlib.md5(b''.join((ROOT / f).read_bytes() for f in ['index.html', 'thanks.html', 'assets/css/site.css', 'assets/js/site.js', 'assets/img/mark.svg'])).hexdigest()[:10]
+_sw = (ROOT / 'sw.js').read_text(); (ROOT / 'sw.js').write_text(_re.sub(r'const CACHE = "[^"]*";', f'const CACHE = "hbl-{_h}";', _sw))
+print('built index.html and thanks.html, cache', _h)
