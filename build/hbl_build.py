@@ -20,13 +20,14 @@ def pier_scene():
     birds = ''.join(f'<path d="M{x} {y} q6 -6 12 0 q6 -6 12 0"/>' for x, y in [(300, 120), (336, 104), (380, 132), (1120, 90)])
     return f'''<svg class="scene" viewBox="0 0 1440 360" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
   <defs>
-    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe08a"/><stop offset=".55" stop-color="#ffb347"/><stop offset="1" stop-color="#f2703a"/></linearGradient>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe9a0"/><stop offset=".5" stop-color="#ffc14d"/><stop offset=".85" stop-color="#f5873a"/><stop offset="1" stop-color="#e0522b"/></linearGradient>
     <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1f7fa6"/><stop offset="1" stop-color="#0d4f6e"/></linearGradient>
     <radialGradient id="sun" r=".5"><stop offset="0" stop-color="#fff4d6"/><stop offset=".6" stop-color="#ffd27a"/><stop offset="1" stop-color="#ffb35a"/></radialGradient>
   </defs>
   <rect width="1440" height="360" fill="url(#sky)"/>
   <circle class="sunglow" cx="880" cy="214" r="120" fill="#ffe28a" opacity=".45"/>
-  <circle cx="880" cy="214" r="62" fill="url(#sun)"/>
+  <clipPath id="sunc"><circle cx="880" cy="214" r="62"/></clipPath>
+  <g clip-path="url(#sunc)"><rect x="810" y="150" width="140" height="30" fill="#d62b1f"/><rect x="810" y="180" width="140" height="24" fill="#f8b800"/><rect x="810" y="204" width="140" height="30" fill="#138a43"/></g>
   <g class="birds" fill="none" stroke="{INK}" stroke-width="2.2" stroke-linecap="round" opacity=".55">{birds}</g>
   <rect y="226" width="1440" height="134" fill="url(#sea)"/>
   <path d="M760 240 H1000 M790 254 H970 M820 268 H940" stroke="#ffe07a" stroke-width="4" stroke-linecap="round" opacity=".6"/>
@@ -34,7 +35,7 @@ def pier_scene():
   <g class="pier" stroke="{INK}" stroke-width="5" stroke-linecap="round">{pil}</g>
   <path d="M440 232 H1300" stroke="{INK}" stroke-width="9" stroke-linecap="round"/>
   <path d="M440 222 H1300" stroke="{INK}" stroke-width="2" opacity=".7"/>
-  <path d="M1214 232 V204 H1290 V232 M1210 204 L1252 186 L1294 204" fill="{INK}" stroke="{INK}" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M1214 232 V204 H1290 V232Z" fill="{INK}"/><path d="M1208 205 L1252 184 L1296 205Z" fill="#d62b1f"/><rect x="1238" y="212" width="12" height="10" fill="#f8b800"/><rect x="1258" y="212" width="12" height="10" fill="#f8b800"/>
   <!-- beach and palms -->
   <path d="M0 262 C 160 250 300 252 470 270 L 470 360 H0Z" fill="#f0d3a4"/>
   <path d="M0 290 C 180 278 330 284 520 306 L 560 360 H0Z" fill="#f6e2bf"/>
@@ -48,7 +49,10 @@ def pier_scene():
   </g>
   <!-- surfer on a small wave -->
   <path class="swell" d="M520 318 C 600 296 660 296 700 318 C 720 330 760 330 800 316" fill="none" stroke="#e9fbff" stroke-width="5" stroke-linecap="round" opacity=".9"/>
-  <g class="surfer" transform="translate(640 296)"><path d="M-22 6 Q0 12 24 4" stroke="{CORAL}" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M-4 4 L0 -10 L5 4 M0 -10 L1 -22 M1 -18 L-10 -14 M1 -18 L12 -22" stroke="{INK}" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="2" cy="-27" r="4.4" fill="{INK}"/></g>
+  <g class="surfer" transform="translate(640 296)"><path d="M-22 4 Q0 10 24 2" stroke="#d62b1f" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M-22 6.5 Q0 12.5 24 4.5" stroke="#f8b800" stroke-width="2.6" fill="none" stroke-linecap="round"/><path d="M-21 9 Q0 15 23 7" stroke="#138a43" stroke-width="2.6" fill="none" stroke-linecap="round"/><path d="M-4 4 L0 -10 L5 4 M0 -10 L1 -22 M1 -18 L-10 -14 M1 -18 L12 -22" stroke="{INK}" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="2" cy="-27" r="4.4" fill="{INK}"/></g>
+  <path d="M0 326 C 240 314 520 322 760 334 S 1200 328 1440 320" fill="none" stroke="#d62b1f" stroke-width="6"/>
+  <path d="M0 332 C 240 320 520 328 760 340 S 1200 334 1440 326" fill="none" stroke="#f8b800" stroke-width="6"/>
+  <path d="M0 338 C 240 326 520 334 760 346 S 1200 340 1440 332" fill="none" stroke="#138a43" stroke-width="6"/>
   <path d="M0 342 C 240 330 520 338 760 350 S 1200 344 1440 336 V360 H0Z" fill="{FOAM}"/>
 </svg>'''
 

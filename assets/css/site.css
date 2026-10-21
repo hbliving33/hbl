@@ -34,11 +34,11 @@ section.wrap, .band { padding-top: 72px; padding-bottom: 72px; }
 }
 
 /* Hero */
-.hero { position: relative; background: linear-gradient(180deg, #ffe9b0, #ffc76a); overflow: hidden; }
+.hero { position: relative; background: #ffe9a0; overflow: hidden; }
 .hero-copy { position: relative; z-index: 2; max-width: 1160px; margin: 0 auto; padding: 64px 20px 0; }
 .hero h1 { font-size: clamp(42px, 7vw, 82px); max-width: 12ch; font-weight: 700; }
 .hero .lede { max-width: 560px; font-size: 19px; color: #3d4f5a; margin: 18px 0 0; }
-.scene { display: block; width: 100%; height: clamp(220px, 32vw, 400px); margin-top: -20px; max-width: none; }
+.scene { display: block; width: 100%; height: clamp(220px, 32vw, 400px); margin-top: -20px; margin-bottom: -2px; max-width: none; }
 .scene .surfer { animation: ride 9s ease-in-out infinite; }
 .scene .birds { animation: drift 30s linear infinite; }
 .scene .sunglow { animation: glow 6s ease-in-out infinite; transform-origin: 880px 214px; }
