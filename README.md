@@ -1,4 +1,4 @@
-# HB Living
+# HBLiving
 
 The website for hbliving.com, a local guide to life in Huntington Beach, California.
 

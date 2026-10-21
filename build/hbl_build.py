@@ -1,4 +1,4 @@
-"""Builds the HB Living site: index.html (home) and logos.html (logo options, not linked, noindex)."""
+"""Builds the HBLiving site: index.html (home) and logos.html (logo options, not linked, noindex)."""
 import pathlib, math, hashlib
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -72,7 +72,7 @@ def head(title, desc, extra='', noindex=False):
 <link rel="apple-touch-icon" href="assets/img/icon-180.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="HB Living">
+<meta name="apple-mobile-web-app-title" content="HBLiving">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 {FONTS}
 <link rel="stylesheet" href="assets/css/site.css?v={ver('assets/css/site.css')}">
@@ -86,7 +86,7 @@ def head(title, desc, extra='', noindex=False):
 # When it is set, the form posts through FormSubmit and lands on thanks.html.
 FORM_TO = ''
 
-NAV = [('#why', 'Why HB Living'), ('#map', 'Map'), ('#plans', 'Plans'), ('#how', 'How it works'), ('#categories', 'Categories'), ('#faq', 'Questions')]
+NAV = [('#why', 'Why HBLiving'), ('#map', 'Map'), ('#plans', 'Plans'), ('#how', 'How it works'), ('#categories', 'Categories'), ('#faq', 'Questions')]
 CITIES = ['Huntington Beach', 'Fountain Valley', 'Seal Beach', 'Sunset Beach', 'Westminster', 'Costa Mesa', 'Newport Beach']
 CATS = [('🌮', 'Food and drink'), ('🔧', 'Home services'), ('🏄', 'Surf and outdoor'), ('💪', 'Health and fitness'), ('✂️', 'Beauty and spa'),
         ('🐾', 'Pets'), ('🏡', 'Real estate'), ('🚗', 'Auto'), ('🎨', 'Kids and family'), ('💼', 'Professional services'), ('🛍️', 'Shops and boutiques'), ('🎉', 'Events and entertainment')]
@@ -96,7 +96,7 @@ def header():
     links = ''.join(f'<a href="{h}">{t}</a>' for h, t in NAV)
     return f'''<header class="top">
   <div class="top-in">
-    <a class="brand" href="index.html"><img src="assets/img/mark.svg" alt="" width="40" height="40"><span>HB <em>Living</em></span></a>
+    <a class="brand" href="index.html"><img src="assets/img/mark.svg" alt="" width="40" height="40"><span>HB<em>Living</em></span></a>
     <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
     <nav id="nav" class="nav" aria-label="Main">{links}<a class="nav-cta" href="#advertise">Advertise</a></nav>
   </div>
@@ -106,10 +106,10 @@ def header():
 def footer():
     return f'''<footer class="foot">
   <div class="foot-in">
-    <div><a class="brand brand-foot" href="index.html"><img src="assets/img/mark.svg" alt="" width="36" height="36"><span>HB <em>Living</em></span></a>
+    <div><a class="brand brand-foot" href="index.html"><img src="assets/img/mark.svg" alt="" width="36" height="36"><span>HB<em>Living</em></span></a>
     <p>Local advertising for Huntington Beach businesses and the towns next door.  Independently owned.  Not affiliated with the City of Huntington Beach.</p></div>
     <nav aria-label="Footer">{''.join(f'<a href="{h}">{t}</a>' for h, t in NAV)}<a href="#advertise">Advertise</a></nav>
-    <small>&copy; {YEAR} HB Living.</small>
+    <small>&copy; {YEAR} HBLiving.</small>
   </div>
 </footer>
 <script src="assets/js/site.js?v={ver('assets/js/site.js')}"></script>'''
@@ -131,10 +131,10 @@ def sample(cat, name, line, city, featured=False):
 form_on = bool(FORM_TO)
 form_attrs = (f'action="https://formsubmit.co/{FORM_TO}" method="POST"' if form_on
               else 'onsubmit="event.preventDefault(); this.querySelector(\'.form-msg\').textContent = \'Thanks!  Online requests open very soon.\';"')
-form_hidden = ('<input type="hidden" name="_subject" value="HB Living: new advertiser request"><input type="hidden" name="_template" value="table">'
+form_hidden = ('<input type="hidden" name="_subject" value="HBLiving: new advertiser request"><input type="hidden" name="_template" value="table">'
                '<input type="hidden" name="_next" value="https://hbliving.com/thanks.html"><input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">') if form_on else ''
 
-home = f'''{head('HB Living | Local advertising in Huntington Beach', 'Advertise your business to Huntington Beach and nearby neighbors from $5 a month.  No contracts, cancel anytime.', '<link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">')}
+home = f'''{head('HBLiving | Local advertising in Huntington Beach', 'Advertise your business to Huntington Beach and nearby neighbors from $5 a month.  No contracts, cancel anytime.', '<link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">')}
 <body>
 {header()}
 <main>
@@ -142,7 +142,7 @@ home = f'''{head('HB Living | Local advertising in Huntington Beach', 'Advertise
     <div class="hero-copy">
       <p class="kicker">Local advertising for Huntington Beach</p>
       <h1>Get your business seen <em>in Surf City.</em></h1>
-      <p class="lede">HB Living puts local businesses in front of the people who live, work and play here.  Plans start at $5 a month, with no contracts and nothing to install.</p>
+      <p class="lede">HBLiving puts local businesses in front of the people who live, work and play here.  Plans start at $5 a month, with no contracts and nothing to install.</p>
       <div class="cta-row"><a class="btn btn-coral" href="#plans">See the plans</a><a class="btn btn-ghost" href="#advertise">Start advertising</a></div>
       <ul class="cities" aria-label="Areas we cover">{''.join(f'<li>{c}</li>' for c in CITIES)}</ul>
     </div>
@@ -150,7 +150,7 @@ home = f'''{head('HB Living | Local advertising in Huntington Beach', 'Advertise
   </section>
 
   <section class="wrap" id="why">
-    <div class="sec-head"><p class="kicker">Why HB Living</p><h2>Advertising that's <em>actually local.</em></h2></div>
+    <div class="sec-head"><p class="kicker">Why HBLiving</p><h2>Advertising that's <em>actually local.</em></h2></div>
     <div class="grid4">
       {why('📍', 'Only local eyes', 'Every ad is built for Huntington Beach and the towns around it, not shown to people three states away.')}
       {why('💵', 'Priced for small business', 'Less than the price of a coffee a week.  Big-name ad sites can cost many times as much.')}
@@ -171,7 +171,7 @@ home = f'''{head('HB Living | Local advertising in Huntington Beach', 'Advertise
             <li>Your business in its category</li>
             <li>Name, phone, website and city</li>
             <li>A short description of what you do</li>
-            <li>Your own pin on the HB Living map</li>
+            <li>Your own pin on the HBLiving map</li>
             <li>Tap to call and tap for your website</li>
             <li>Update your details anytime</li>
           </ul>
@@ -209,7 +209,7 @@ home = f'''{head('HB Living | Local advertising in Huntington Beach', 'Advertise
 
   <section class="band band-sand" id="map">
     <div class="wrap">
-      <div class="sec-head"><p class="kicker">The HB Living map</p><h2>Every ad gets <em>a pin on the map.</em></h2><p class="sub">Huntington Beach in four areas.  Tap an area to zoom in, or tap an ad to find it on the map.  These are sample ads to show how it works.</p></div>
+      <div class="sec-head"><p class="kicker">The HBLiving map</p><h2>Every ad gets <em>a pin on the map.</em></h2><p class="sub">Huntington Beach in four areas.  Tap an area to zoom in, or tap an ad to find it on the map.  These are sample ads to show how it works.</p></div>
       <div class="chips" id="terrChips" role="group" aria-label="Areas"></div>
       <div class="map-wrap">
         <div class="map-box"><div id="hbMap" role="region" aria-label="Map of Huntington Beach areas and businesses"></div><p class="terr-info" id="terrInfo"></p></div>
@@ -240,7 +240,7 @@ home = f'''{head('HB Living | Local advertising in Huntington Beach', 'Advertise
 
   <section class="wrap" id="advertise">
     <div class="adv">
-      <div><p class="kicker">Advertise with HB Living</p><h2>Ready to get <em>found?</em></h2><p>Send us your details and we'll build your ad and send it over for you to approve.  You don't pay anything until you've seen it.</p></div>
+      <div><p class="kicker">Advertise with HBLiving</p><h2>Ready to get <em>found?</em></h2><p>Send us your details and we'll build your ad and send it over for you to approve.  You don't pay anything until you've seen it.</p></div>
       <form class="adv-form" {form_attrs}>
         {form_hidden}
         <div class="row"><label>Business name<input name="business" required maxlength="80"></label><label>Your name<input name="name" required maxlength="60"></label></div>
@@ -263,10 +263,10 @@ home = f'''{head('HB Living | Local advertising in Huntington Beach', 'Advertise
 </html>
 '''
 
-thanks = f'''{head('Thanks | HB Living', 'Thanks for your interest in advertising with HB Living.', noindex=True)}
+thanks = f'''{head('Thanks | HBLiving', 'Thanks for your interest in advertising with HBLiving.', noindex=True)}
 <body>
 {header()}
-<main class="wrap thanks"><p class="kicker">Got it</p><h1>Thanks!  <em>We'll be in touch.</em></h1><p class="body-lg">We'll build your ad and send it over for you to approve, usually within a couple of business days.</p><a class="btn btn-coral" href="index.html">Back to HB Living</a></main>
+<main class="wrap thanks"><p class="kicker">Got it</p><h1>Thanks!  <em>We'll be in touch.</em></h1><p class="body-lg">We'll build your ad and send it over for you to approve, usually within a couple of business days.</p><a class="btn btn-coral" href="index.html">Back to HBLiving</a></main>
 {footer()}
 </body>
 </html>

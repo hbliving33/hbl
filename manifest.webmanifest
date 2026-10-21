@@ -1,6 +1,6 @@
 {
-  "name": "HB Living",
-  "short_name": "HB Living",
+  "name": "HBLiving",
+  "short_name": "HBLiving",
   "description": "Local businesses in Huntington Beach and nearby.",
   "start_url": "./",
   "scope": "./",
