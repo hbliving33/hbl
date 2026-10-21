@@ -5,7 +5,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 YEAR = 2026
 
 # Palette: deep Pacific, sea glass, warm sand, sunset coral, golden hour
-INK, SEA, GLASS, SAND, CORAL, GOLD, FOAM = '#0f2a3a', '#0e6e8c', '#8fd0cf', '#f3e4c8', '#f2765a', '#f6b94a', '#fbf7ef'
+INK, SEA, GLASS, SAND, CORAL, GOLD, FOAM = '#161310', '#138a43', '#9bd8a4', '#f3e4c8', '#d62b1f', '#f8b800', '#fbf7ef'
 
 FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">'
 
@@ -20,16 +20,16 @@ def pier_scene():
     birds = ''.join(f'<path d="M{x} {y} q6 -6 12 0 q6 -6 12 0"/>' for x, y in [(300, 120), (336, 104), (380, 132), (1120, 90)])
     return f'''<svg class="scene" viewBox="0 0 1440 360" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
   <defs>
-    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd9a8"/><stop offset=".55" stop-color="#ffc39a"/><stop offset="1" stop-color="#ffb08f"/></linearGradient>
-    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2c8fa8"/><stop offset="1" stop-color="#0e5f7a"/></linearGradient>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe08a"/><stop offset=".55" stop-color="#ffb347"/><stop offset="1" stop-color="#f2703a"/></linearGradient>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1f7fa6"/><stop offset="1" stop-color="#0d4f6e"/></linearGradient>
     <radialGradient id="sun" r=".5"><stop offset="0" stop-color="#fff4d6"/><stop offset=".6" stop-color="#ffd27a"/><stop offset="1" stop-color="#ffb35a"/></radialGradient>
   </defs>
   <rect width="1440" height="360" fill="url(#sky)"/>
-  <circle class="sunglow" cx="880" cy="214" r="120" fill="#ffe3a6" opacity=".45"/>
+  <circle class="sunglow" cx="880" cy="214" r="120" fill="#ffe28a" opacity=".45"/>
   <circle cx="880" cy="214" r="62" fill="url(#sun)"/>
   <g class="birds" fill="none" stroke="{INK}" stroke-width="2.2" stroke-linecap="round" opacity=".55">{birds}</g>
   <rect y="226" width="1440" height="134" fill="url(#sea)"/>
-  <path d="M760 240 H1000 M790 254 H970 M820 268 H940" stroke="#ffd98f" stroke-width="4" stroke-linecap="round" opacity=".6"/>
+  <path d="M760 240 H1000 M790 254 H970 M820 268 H940" stroke="#ffe07a" stroke-width="4" stroke-linecap="round" opacity=".6"/>
   <!-- pier on pilings -->
   <g class="pier" stroke="{INK}" stroke-width="5" stroke-linecap="round">{pil}</g>
   <path d="M440 232 H1300" stroke="{INK}" stroke-width="9" stroke-linecap="round"/>
@@ -42,7 +42,7 @@ def pier_scene():
     <path d="M150 300 C 146 250 150 210 164 170" stroke-width="7"/>
     <path d="M232 300 C 236 262 232 232 222 204" stroke-width="6"/>
   </g>
-  <g fill="{INK}">
+  <g fill="#1b7a3c">
     <path d="M164 170 c-22 -10 -48 -4 -60 12 c18 -8 40 -8 60 -6 c-16 -14 -38 -22 -56 -14 c22 0 42 6 56 14 c2 -20 -10 -38 -26 -44 c12 12 22 28 26 40 c12 -18 36 -26 58 -18 c-22 4 -40 12 -52 24 c24 -6 44 2 56 18 c-18 -12 -40 -14 -62 -8z"/>
     <path transform="translate(90.8 68) scale(.8)" d="M164 170 c-22 -10 -48 -4 -60 12 c18 -8 40 -8 60 -6 c-16 -14 -38 -22 -56 -14 c22 0 42 6 56 14 c2 -20 -10 -38 -26 -44 c12 12 22 28 26 40 c12 -18 36 -26 58 -18 c-22 4 -40 12 -52 24 c24 -6 44 2 56 18 c-18 -12 -40 -14 -62 -8z"/>
   </g>
