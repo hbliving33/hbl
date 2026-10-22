@@ -106,3 +106,4 @@ body.playing .sun { animation: pulse .8s ease-in-out infinite alternate; transfo
 .vibe > .logo + .flagbar { margin: 4px auto 10px; } .vibe .kick + .now { margin-top: 14px; }
 .cam figcaption { margin-bottom: 24px; } @media (max-width: 700px) { .cam figcaption { margin-bottom: 18px; } }
 .shore { margin-top: -80px; } @media (max-width: 700px) { .shore { margin-top: -30px; } }
+.cam-credit { font-size: 11px; margin-top: 12px; opacity: .85; }
