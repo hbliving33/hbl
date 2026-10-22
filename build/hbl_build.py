@@ -351,7 +351,7 @@ holding = brandify(f'''<!doctype html>
   <p class="tag">One love from <b>Surf City.</b></p>
   <button class="play" id="play" type="button" aria-pressed="false"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="pl-txt">Play the vibes</span></button>
   <p class="hint" id="hint">Tap anywhere to start the music</p>
-  <p class="now" id="now" aria-live="polite"><span class="dot"></span><span id="nowTxt">Surf City right now</span></p>
+  <p class="now" id="now" aria-live="polite"><span class="dot"></span><span id="nowTxt"></span></p>
   <figure class="cam">
     <figcaption><span class="live">Live</span> From the pier</figcaption>
     <div class="cam-frame"><iframe src="https://www.youtube-nocookie.com/embed/mhQjsLBfOoY?autoplay=1&amp;mute=1&amp;rel=0&amp;playsinline=1" title="Live camera on the Huntington Beach Pier" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>
