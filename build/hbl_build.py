@@ -358,12 +358,12 @@ holding = brandify(f'''<!doctype html>
     <a class="cam-credit" href="https://www.youtube.com/watch?v=mhQjsLBfOoY" rel="noopener" target="_blank">Live camera by the City of Huntington Beach</a>
   </figure>
 </main>
-<svg class="shore" viewBox="0 0 1440 300" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+<svg class="shore" viewBox="0 96 1440 204" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
   <circle class="sun" cx="980" cy="210" r="96"/>
   <g class="glints" stroke="#fff3c4" stroke-linecap="round" stroke-width="3"><path d="M920 236 H1040"/><path d="M945 246 H1015"/></g>
   <g class="gulls" fill="none" stroke="#0b0b0b" stroke-width="3" stroke-linecap="round"><path d="M300 70 q10 -10 20 0 q10 -10 20 0"/><path d="M360 100 q8 -8 16 0 q8 -8 16 0"/><path d="M250 115 q7 -7 14 0 q7 -7 14 0"/></g>
 
-  <g class="waves"><path d="M0 230 C 120 214 240 246 360 230 S 600 214 720 230 S 960 246 1080 230 S 1320 214 1440 230 V300 H0Z" fill="#d62b1f"/>
+  <g class="waves" transform="translate(-40 0) scale(1.08 1)"><path d="M0 230 C 120 214 240 246 360 230 S 600 214 720 230 S 960 246 1080 230 S 1320 214 1440 230 V300 H0Z" fill="#d62b1f"/>
   <path d="M0 250 C 120 236 240 264 360 250 S 600 236 720 250 S 960 264 1080 250 S 1320 236 1440 250 V300 H0Z" fill="#f8b800"/>
   <path d="M0 270 C 120 258 240 282 360 270 S 600 258 720 270 S 960 282 1080 270 S 1320 258 1440 270 V300 H0Z" fill="#138a43"/></g>
   <g fill="#0b0b0b"><path d="M560 214 H1390 V222 H560Z"/>{''.join(f'<rect x="{x}" y="214" width="6" height="40"/>' for x in range(570, 1390, 32))}<path d="M1300 214 V192 H1372 V214Z M1294 193 L1336 176 L1378 193Z"/></g>
