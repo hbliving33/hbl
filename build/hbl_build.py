@@ -349,7 +349,7 @@ holding = brandify(f'''<!doctype html>
   <div class="flagbar" aria-hidden="true"><i></i><i></i><i></i></div>
   <p class="kick">Huntington Beach, California</p>
   <h1 class="logo">HB<em>Living</em></h1>
-  <p class="tag">One love from <b>Surf City.</b></p>
+  <div class="onelove"><p class="ol-s">One Love</p><svg viewBox="0 0 420 40" aria-hidden="true"><path d="M10 26 C 120 6 300 6 410 22" stroke="#d62b1f" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M20 32 C 130 14 300 14 400 30" stroke="#f8b800" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M34 38 C 140 22 300 22 388 37" stroke="#138a43" stroke-width="5" fill="none" stroke-linecap="round"/></svg><p class="ol-from">from Surf City</p></div>
   <p class="now" id="now" aria-live="polite"><span class="dot"></span><span id="nowTxt"></span></p>
   <figure class="cam">
     <figcaption><span class="live">Live</span> From the pier</figcaption>

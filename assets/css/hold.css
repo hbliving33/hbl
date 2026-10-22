@@ -1,3 +1,6 @@
+@font-face { font-family: "Shrikhand"; src: url(../fonts/shrikhand-latin-400-normal.woff2) format("woff2"); font-display: swap; }
+@font-face { font-family: "Pacifico"; src: url(../fonts/pacifico-latin-400-normal.woff2) format("woff2"); font-display: swap; }
+@font-face { font-family: "Bungee"; src: url(../fonts/bungee-latin-400-normal.woff2) format("woff2"); font-display: swap; }
 /* HBLiving one-pager: rasta colors, Surf City sun */
 :root { --red: #d62b1f; --gold: #f8b800; --green: #138a43; --ink: #0b0b0b; }
 * { box-sizing: border-box; }
@@ -79,3 +82,19 @@ body.playing .sun { animation: pulse .8s ease-in-out infinite alternate; transfo
 .music .eq { height: 16px; } .music .eq i { width: 3px; }
 .music .hint { margin: 0; font-size: 13px; font-weight: 700; color: #fff3d0; background: rgba(0, 0, 0, .55); border-radius: 999px; padding: 5px 10px; }
 .music .eq i:nth-child(1) { height: 7px; } .music .eq i:nth-child(2) { height: 13px; } .music .eq i:nth-child(3) { height: 9px; } .music .eq i:nth-child(4) { height: 15px; }
+
+/* Logo 3: Retro 3D */
+.logo { font-family: "Shrikhand", Georgia, serif; font-weight: 400; font-size: clamp(54px, 10vw, 112px); line-height: 1.15; letter-spacing: 0;
+  background: none; -webkit-background-clip: border-box; background-clip: border-box; color: var(--gold); filter: none;
+  transform: skew(-6deg) rotate(-3deg); padding: 0 .2em .12em;
+  text-shadow: 3px 3px 0 var(--red), 6px 6px 0 var(--red), 9px 9px 0 var(--green), 12px 12px 0 var(--green), 15px 15px 0 #000; }
+.logo em { font-style: normal; font-weight: 400; color: var(--cream, #fff3d0); }
+/* One Love B */
+.onelove { margin: 2px auto 0; }
+.ol-s { margin: 0; font-family: "Pacifico", cursive; font-size: clamp(40px, 6vw, 64px); line-height: 1.25; color: #fff3d0; text-shadow: 4px 4px 0 #000; }
+.onelove svg { display: block; width: min(300px, 70vw); height: 30px; margin: -12px auto 0; }
+.ol-from { margin: 6px 0 0; font-family: "Bungee", system-ui, sans-serif; font-size: 14px; letter-spacing: .32em; color: var(--gold); }
+.logo { font-size: clamp(50px, 9vw, 96px); }
+.ol-s { font-size: clamp(38px, 5vw, 54px); }
+.cam { max-width: 460px; }
+@media (max-width: 700px) { .vibe { padding-top: 66px; } .music .hint { display: none; } }
