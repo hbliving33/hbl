@@ -356,7 +356,7 @@ holding = brandify(f'''<!doctype html>
   <figure class="cam">
     <figcaption><span class="live">Live</span> From the pier</figcaption>
     <div class="cam-frame"><iframe src="https://www.youtube-nocookie.com/embed/mhQjsLBfOoY?autoplay=1&amp;mute=1&amp;rel=0&amp;playsinline=1" title="Live camera on the Huntington Beach Pier" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>
-    <a class="cam-credit" href="https://camstreamer.com/live/stream/188351090-view-from-huntington-beach-pier" rel="noopener" target="_blank">Camera via CamStreamer</a>
+    <a class="cam-credit" href="https://www.youtube.com/watch?v=mhQjsLBfOoY" rel="noopener" target="_blank">Live camera by the City of Huntington Beach</a>
   </figure>
 </main>
 <svg class="shore" viewBox="0 0 1440 300" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
