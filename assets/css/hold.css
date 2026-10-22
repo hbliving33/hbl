@@ -36,7 +36,7 @@ body { min-height: 100vh; display: flex; flex-direction: column; overflow-x: hid
 @keyframes sway { to { transform: translateX(-30px); } }
 .fronds { transform-origin: 194px 150px; animation: frond 5s ease-in-out infinite alternate; }
 @keyframes frond { to { transform: rotate(-3deg); } }
-body.playing .sun { animation: pulse .8s ease-in-out infinite alternate; transform-origin: 980px 210px; }
+body.playing .sun { animation: pulse .8s ease-in-out infinite alternate; transform-origin: 1120px 210px; }
 @keyframes pulse { to { transform: scale(1.04); } }
 .hfoot { position: relative; z-index: 2; background: var(--green); color: #e8f5ea; text-align: center; font-size: 13px; padding: 10px 20px; }
 .hfoot .nm em { color: var(--gold); }
@@ -105,3 +105,4 @@ body.playing .sun { animation: pulse .8s ease-in-out infinite alternate; transfo
 @keyframes ride { 0% { transform: translate(330px, 266px) rotate(-3deg); } 50% { transform: translate(900px, 260px) rotate(3deg); } 100% { transform: translate(330px, 266px) rotate(-3deg); } }
 .vibe > .logo + .flagbar { margin: 4px auto 10px; } .vibe .kick + .now { margin-top: 14px; }
 .cam figcaption { margin-bottom: 24px; } @media (max-width: 700px) { .cam figcaption { margin-bottom: 18px; } }
+.shore { margin-top: -80px; } @media (max-width: 700px) { .shore { margin-top: -30px; } }
