@@ -355,7 +355,47 @@ holding = brandify(f'''<!doctype html>
     <div class="cam-frame"><iframe src="https://www.youtube-nocookie.com/embed/mhQjsLBfOoY?autoplay=1&amp;mute=1&amp;rel=0&amp;playsinline=1&amp;controls=0&amp;disablekb=1&amp;fs=0&amp;iv_load_policy=3" title="Live camera on the Huntington Beach Pier" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>
     <a class="cam-credit" href="https://www.youtube.com/watch?v=mhQjsLBfOoY" rel="noopener" target="_blank">Live camera by the City of Huntington Beach</a>
   </figure>
-  <div class="onelove"><p class="ol-s">One Love</p><svg viewBox="0 0 420 40" aria-hidden="true"><path d="M10 26 C 120 6 300 6 410 22" stroke="#d62b1f" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M20 32 C 130 14 300 14 400 30" stroke="#f8b800" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M34 38 C 140 22 300 22 388 37" stroke="#138a43" stroke-width="5" fill="none" stroke-linecap="round"/></svg><p class="ol-from">from Surf City</p></div>
+  <div class="onelove"><svg class="ol-block" viewBox="0 16 560 344" role="img" aria-label="One Love from Surf City">
+  <defs>
+    <linearGradient id="bands" gradientUnits="userSpaceOnUse" x1="0" y1="40" x2="0" y2="318">
+      <stop offset="0" stop-color="#d62b1f"/><stop offset=".33" stop-color="#d62b1f"/>
+      <stop offset=".33" stop-color="#f8b800"/><stop offset=".74" stop-color="#f8b800"/>
+      <stop offset=".74" stop-color="#138a43"/><stop offset="1" stop-color="#138a43"/>
+    </linearGradient>
+    <g id="word" font-family="Bowlby One" font-size="150">
+      
+      <circle cx="110" cy="104" r="70"/>
+      <text x="186" y="160">NE</text>
+      
+      <text x="40" y="306">L</text>
+      <circle cx="232" cy="250" r="70"/>
+      <text x="306" y="306">VE</text>
+    </g>
+    <clipPath id="wordclip"><use href="#word"/></clipPath>
+  </defs>
+  
+  <use href="#word" fill="#000" stroke="#000" stroke-width="22" stroke-linejoin="round" transform="translate(8 8)"/>
+  <use href="#word" fill="#000" stroke="#000" stroke-width="22" stroke-linejoin="round"/>
+  
+  <use href="#word" fill="url(#bands)"/>
+  
+  <g class="rec">
+    <circle cx="110" cy="104" r="70" fill="#111"/>
+    <g fill="none" stroke="#2a2a2a" stroke-width="2"><circle cx="110" cy="104" r="60"/><circle cx="110" cy="104" r="50"/><circle cx="110" cy="104" r="40"/></g>
+    <path d="M70 68 A56 56 0 0 1 150 68" fill="none" stroke="#555" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+    <circle cx="110" cy="104" r="24" fill="#d62b1f"/><path d="M86 104 A24 24 0 0 0 134 104Z" fill="#138a43"/><rect x="86" y="100" width="48" height="8" fill="#f8b800"/>
+    <circle cx="110" cy="104" r="4" fill="#000"/>
+  </g>
+  
+  <clipPath id="sunc"><circle cx="232" cy="250" r="70"/></clipPath>
+  <g clip-path="url(#sunc)">
+    <rect x="160" y="178" width="150" height="150" fill="#1b1206"/>
+    <circle cx="232" cy="262" r="40" fill="#f8b800"/>
+    <rect x="160" y="262" width="150" height="16" fill="#d62b1f"/><rect x="160" y="278" width="150" height="14" fill="#f8b800"/><rect x="160" y="292" width="150" height="40" fill="#138a43"/>
+    <g fill="#000"><rect x="170" y="254" width="130" height="5"/><rect x="180" y="259" width="4" height="22"/><rect x="204" y="259" width="4" height="22"/><rect x="228" y="259" width="4" height="22"/><rect x="252" y="259" width="4" height="22"/><rect x="276" y="259" width="4" height="22"/></g>
+  </g>
+  <text x="280" y="352" text-anchor="middle" font-family="Bungee" font-size="20" letter-spacing="7" fill="#fff3d0">FROM SURF CITY</text>
+</svg></div>
 </main>
 <svg class="shore" viewBox="0 96 1440 204" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
   <circle class="sun" cx="1120" cy="210" r="96"/>

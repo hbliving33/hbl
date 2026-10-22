@@ -1,3 +1,4 @@
+@font-face { font-family: "Bowlby One"; src: url(../fonts/bowlby-one-latin-400-normal.woff2) format("woff2"); font-display: swap; }
 @font-face { font-family: "Shrikhand"; src: url(../fonts/shrikhand-latin-400-normal.woff2) format("woff2"); font-display: swap; }
 @font-face { font-family: "Pacifico"; src: url(../fonts/pacifico-latin-400-normal.woff2) format("woff2"); font-display: swap; }
 @font-face { font-family: "Bungee"; src: url(../fonts/bungee-latin-400-normal.woff2) format("woff2"); font-display: swap; }
@@ -107,3 +108,9 @@ body.playing .sun { animation: pulse .8s ease-in-out infinite alternate; transfo
 .cam figcaption { margin-bottom: 24px; } @media (max-width: 700px) { .cam figcaption { margin-bottom: 18px; } }
 .shore { margin-top: -80px; } @media (max-width: 700px) { .shore { margin-top: -30px; } }
 .cam-credit { font-size: 11px; margin-top: 12px; opacity: .85; }
+.ol-block { display: block; width: min(330px, 76vw); height: auto; margin: 0 auto; }
+.ol-block .rec { transform-origin: 110px 104px; }
+body.playing .ol-block .rec { animation: spinrec 3.2s linear infinite; }
+@keyframes spinrec { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { body.playing .ol-block .rec { animation: none; } }
+.onelove svg.ol-block { width: min(300px, 74vw); height: auto; margin: 0 auto; }
