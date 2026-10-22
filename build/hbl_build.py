@@ -69,7 +69,7 @@ def head(title, desc, extra='', noindex=False):
 # When it is set, the form posts through FormSubmit and lands on thanks.html.
 FORM_TO = ''
 
-NAV = [('#why', 'Why HBLiving'), ('#map', 'Map'), ('#communities', 'Communities'), ('#plans', 'Plans'), ('#how', 'How it works'), ('#categories', 'Categories'), ('#faq', 'Questions')]
+NAV = [('#why', 'Why HBLiving'), ('#map', 'Map'), ('#plans', 'Pricing'), ('#neighborhood', 'Your neighborhood'), ('#how', 'How it works'), ('#categories', 'Categories'), ('#faq', 'Questions')]
 CITIES = ['Huntington Beach', 'Fountain Valley', 'Seal Beach', 'Sunset Beach', 'Westminster', 'Costa Mesa', 'Newport Beach']
 CATS = [('food', 'Food and drink'), ('tool', 'Home services'), ('wave', 'Surf and outdoor'), ('heart', 'Health and fitness'), ('scissors', 'Beauty and spa'),
         ('paw', 'Pets'), ('home', 'Real estate'), ('car', 'Auto'), ('kids', 'Kids and family'), ('brief', 'Professional services'), ('bag', 'Shops and boutiques'), ('star', 'Events and entertainment')]
@@ -124,7 +124,7 @@ form_attrs = (f'action="https://formsubmit.co/{FORM_TO}" method="POST"' if form_
 form_hidden = ('<input type="hidden" name="_subject" value="HBLiving: new advertiser request"><input type="hidden" name="_template" value="table">'
                '<input type="hidden" name="_next" value="https://hbliving.com/thanks.html"><input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">') if form_on else ''
 
-home = f'''{head('HBLiving | Local advertising in Huntington Beach', 'Advertise your business to Huntington Beach and nearby neighbors from $5 a month.  No contracts, cancel anytime.', '<link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">')}
+home = f'''{head('HBLiving | Local advertising in Huntington Beach', 'Advertise your business to Huntington Beach and nearby neighbors for $10 a month.  No contracts, cancel anytime.', '<link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">')}
 <body>
 {header()}
 <main>
@@ -133,9 +133,9 @@ home = f'''{head('HBLiving | Local advertising in Huntington Beach', 'Advertise 
       <div class="hero-copy">
         <p class="kicker">Local advertising for Huntington Beach</p>
         <h1>Put your business <em>on the local map.</em></h1>
-        <p class="lede">HBLiving connects Huntington Beach businesses with the neighbors who live, work and spend here.  Simple plans from $5 a month.  No contracts.</p>
+        <p class="lede">HBLiving connects Huntington Beach businesses with the neighbors who live, work and spend here.  One simple price: $10 a month.  No contracts.</p>
         <div class="cta-row"><a class="btn btn-coral" href="#advertise">Start advertising</a><a class="btn btn-ghost" href="#plans">View plans</a></div>
-        <ul class="proof"><li><b>From $5</b><span>per month</span></li><li><b>4 areas</b><span>across HB</span></li><li><b>No</b><span>contracts</span></li></ul>
+        <ul class="proof"><li><b>$10</b><span>a month</span></li><li><b>4 areas</b><span>across HB</span></li><li><b>No</b><span>contracts</span></li></ul>
       </div>
       <div class="preview" aria-hidden="true">
         <div class="pv-card">
@@ -159,54 +159,55 @@ home = f'''{head('HBLiving | Local advertising in Huntington Beach', 'Advertise 
       {why('pin', 'Only local eyes', 'Every ad is built for Huntington Beach and the towns around it, not shown to people three states away.')}
       {why('tag', 'Priced for small business', 'Less than the price of a coffee a week.  Big-name ad sites can cost many times as much.')}
       {why('shake', 'No contracts', 'Pay month to month and cancel anytime.  Stay because it works, not because you signed something.')}
-      {why('chart', 'See your results', 'Advertisers on the $10 plan get a simple monthly report: how many people saw the ad and tapped to call, visit the website or get directions.')}
-    </div>
-  </section>
-
-  <section class="wrap" id="communities">
-    <div class="sec-head"><p class="kicker">Local communities</p><h2>Neighborhood sites, <em>powered by HBLiving.</em></h2><p class="sub">Each neighborhood gets its own free site for neighbors: a calendar, a bulletin board and neighbors helping neighbors.  Local businesses that advertise keep it free.</p></div>
-    <div class="comms comms-2">
-      <article class="comm"><span class="comm-status soon">Coming soon</span><h3>Meredith Gardens</h3><p>Across the Seaview ballfields.  Southeast HB.</p><span class="comm-note">Launching soon</span></article>
-      <article class="comm comm-join"><span class="comm-status join">Your neighborhood</span><h3>Bring it to your street</h3><p>Want a free site for your tract or HOA?  We'll set it up.  Tell us about your neighborhood.</p><a class="btn btn-coral" href="#advertise" data-plan="Start">Start a community site</a></article>
+      {why('chart', 'See your results', 'Every advertiser gets a simple monthly report: how many people saw the ad and tapped to call, visit the website or get directions.')}
     </div>
   </section>
 
   <section class="band" id="plans">
     <div class="wrap">
-      <div class="sec-head center"><p class="kicker">Simple pricing</p><h2>Two plans.  <em>No surprises.</em></h2><p class="sub">Reach your neighborhood for $5, or your neighborhood and all of Huntington Beach for $10.  Pay monthly, or pay for the year and get two months free.</p></div>
+      <div class="sec-head center"><p class="kicker">Simple pricing</p><h2>One plan.  <em>Everything included.</em></h2><p class="sub">$10 a month, no contract.  Pay for the year and get two months free.</p></div>
       <div class="plans">
-        <article class="plan">
-          <h3>Community</h3>
-          <p class="price"><b>$5</b><span>per month</span></p>
-          <p class="yearly">or $50 a year, two months free</p>
-          <ul>
-            <li>Your ad on one community site's Local page</li>
-            <li>Seen by the neighbors who live right around you</li>
-            <li>Your pin on the HBLiving map</li>
-            <li>Name, phone, website and a short description</li>
-            <li>Tap to call and tap for your website</li>
-            <li>Update your details anytime</li>
-          </ul>
-          <a class="btn btn-ghost btn-wide" href="#advertise" data-plan="Community">Choose Community</a>
-        </article>
         <article class="plan plan-feat">
-          <span class="plan-flag">Best value</span>
-          <h3>Community plus HBLiving</h3>
+          <span class="plan-flag">Everything included</span>
+          <h3>HBLiving Featured</h3>
           <p class="price"><b>$10</b><span>per month</span></p>
           <p class="yearly">or $100 a year, two months free</p>
           <ul>
-            <li>Everything in Community</li>
             <li>Your ad on the HBLiving home page and in your area of the city</li>
-            <li>Every community site in your area, including new ones as they launch</li>
             <li>Featured badge and a gold-ringed pin on the map</li>
             <li>Your photo or logo and a special offer line</li>
-            <li>Monthly report of views and taps to call, visit or get directions</li>
+            <li>Tap to call, tap for your website and tap for directions</li>
+            <li>Monthly report of views and taps</li>
+            <li>Update your details anytime</li>
           </ul>
-          <a class="btn btn-coral btn-wide" href="#advertise" data-plan="Both">Choose Community plus HBLiving</a>
+          <a class="btn btn-coral btn-wide" href="#advertise" data-plan="Monthly">Start for $10 a month</a>
+          <a class="btn btn-ghost btn-wide" href="#advertise" data-plan="Yearly">Go yearly for $100</a>
+        </article>
+        <article class="plan plan-ref">
+          <span class="plan-flag plan-flag-alt">Referral program</span>
+          <h3>Refer a business, <em>get two months free</em></h3>
+          <p class="ref-big"><b>2</b><span>free months for you</span></p>
+          <ul>
+            <li>Know a local business that should be on HBLiving?  Send them our way.</li>
+            <li>When they sign up for a year, you get two free months.</li>
+            <li>No limit.  Refer six businesses on yearly plans and your whole year is free.</li>
+            <li>They just put your business name in the "Referred by" box when they sign up.</li>
+          </ul>
+          <a class="btn btn-ghost btn-wide" href="#advertise">Refer a business</a>
         </article>
       </div>
       <div class="founding"><b>Founding advertisers lock in their price.</b><span>Businesses that join in the first year keep their rate for as long as they stay with us, even if prices go up later.</span></div>
     </div>
+  </section>
+
+  <section class="wrap" id="neighborhood">
+    <div class="sec-head"><p class="kicker">Bring it to your neighborhood</p><h2>Bring five businesses.  <em>Get your neighborhood site free.</em></h2><p class="sub">Want a site for your street, tract or HOA, with a neighborhood calendar, a bulletin board and neighbors helping neighbors?  Sign up five local businesses to advertise with HBLiving and we'll build it for free.</p></div>
+    <ol class="steps">
+      <li><b>Tell us about your neighborhood</b><span>Your street, tract or HOA and what your neighbors would use.</span></li>
+      <li><b>Bring five advertisers</b><span>The coffee shop, the plumber, the realtor you already know.  When five sign up, you're in.</span></li>
+      <li><b>We build your site, free</b><span>Your own neighborhood site, set up for you and kept free for your neighbors.</span></li>
+    </ol>
+    <div class="cta-row"><a class="btn btn-coral" href="#advertise" data-plan="Neighborhood">Start my neighborhood</a></div>
   </section>
 
   <section class="wrap" id="how">
@@ -240,9 +241,10 @@ home = f'''{head('HBLiving | Local advertising in Huntington Beach', 'Advertise 
       <div class="sec-head"><p class="kicker">Questions</p><h2>Good to <em>know.</em></h2></div>
       <div class="faq">
         <details><summary>How do I pay?</summary><p>After you approve your ad, we send you a secure link to pay by card, monthly or for the year.</p></details>
-        <details><summary>Is there a contract?</summary><p>No.  Plans are month to month and you can cancel anytime.  Yearly plans are paid up front for two free months.</p></details>
+        <details><summary>Is there a contract?</summary><p>No.  Monthly is $10 a month and you can cancel anytime.  Yearly is $100 paid up front, which works out to two free months.</p></details>
         <details><summary>Can I change my ad later?</summary><p>Yes.  Send us new hours, a new offer or a new photo and we'll update it.</p></details>
-        <details><summary>What is the difference between the plans?</summary><p>Community puts your ad on one neighborhood site, where the people right around you see it.  Community plus HBLiving adds the HBLiving home page, your area of the city and every community site near you, including new ones as they open.</p></details>
+        <details><summary>How does the referral program work?</summary><p>Refer a business.  When they sign up for a yearly plan and put your business name in the "Referred by" box, you get two free months added to your plan.  There's no limit.</p></details>
+        <details><summary>How do I get a free neighborhood site?</summary><p>Tell us about your neighborhood, then sign up five local businesses to advertise with HBLiving.  Once all five are live, we build your neighborhood site at no cost.</p></details>
         <details><summary>What are the four areas?</summary><p>Downtown and the Pier, Harbour and Sunset Beach, North HB and Central Park, and Southeast HB.  They follow Huntington Beach's ZIP codes, so your ad shows in your own area and across the whole city.</p></details>
         <details><summary>Who sees my ad?</summary><p>People looking for local businesses in Huntington Beach and nearby towns: Fountain Valley, Seal Beach, Sunset Beach, Westminster, Costa Mesa and Newport Beach.</p></details>
         <details><summary>What do I need to get started?</summary><p>Just your business name, phone, website or social page, and a sentence or two about what you do.  A logo or photo helps for Featured ads.</p></details>
@@ -258,8 +260,8 @@ home = f'''{head('HBLiving | Local advertising in Huntington Beach', 'Advertise 
         <div class="row"><label>Business name<input name="business" required maxlength="80"></label><label>Your name<input name="name" required maxlength="60"></label></div>
         <div class="row"><label>Email<input type="email" name="email" required></label><label>Phone<input type="tel" name="phone" maxlength="20"></label></div>
         <div class="row"><label>Website or social page <span class="opt">(optional)</span><input name="website" maxlength="120"></label><label>City<select name="city">{''.join(f'<option>{c}</option>' for c in CITIES)}<option>Other nearby</option></select></label></div>
-        <div class="row"><label>Category<select name="category">{''.join(f'<option>{t}</option>' for _, t in CATS)}<option>Something else</option></select></label><label>Plan<select name="plan" id="planSel"><option>Community plus HBLiving, $10 a month</option><option>Community, $5 a month</option><option>Start a community site (free)</option><option>Not sure yet</option></select></label></div>
-        <label>Community <select name="community"><option>Meredith Gardens (coming soon)</option><option>Not sure, help me pick</option><option>A new neighborhood</option></select></label>
+        <div class="row"><label>Category<select name="category">{''.join(f'<option>{t}</option>' for _, t in CATS)}<option>Something else</option></select></label><label>Plan<select name="plan" id="planSel"><option>Monthly, $10 a month</option><option>Yearly, $100 (two months free)</option><option>Bring HBLiving to my neighborhood</option><option>Not sure yet</option></select></label></div>
+        <div class="row"><label>Referred by <span class="opt">(optional)</span><input name="referred_by" maxlength="80" placeholder="Business that sent you"></label><label>Your neighborhood <span class="opt">(optional)</span><input name="neighborhood" maxlength="80" placeholder="Street, tract or HOA"></label></div>
         <label>Tell us about your business <span class="opt">(optional)</span><textarea name="about" rows="3" maxlength="600"></textarea></label>
         <button class="btn btn-coral" type="submit">Send my details</button>
         <p class="form-msg" role="status"></p>
