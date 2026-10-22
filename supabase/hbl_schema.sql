@@ -16,6 +16,10 @@ alter table public.ad_events enable row level security;
 drop policy if exists "log ad events" on public.ad_events;
 create policy "log ad events" on public.ad_events for insert to anon, authenticated with check (true);
 
+-- Supabase projects created after May 30, 2026 need explicit website access.
+grant usage on schema public to anon, authenticated;
+grant insert on public.ad_events to anon, authenticated;
+
 -- 2. Who may see reports.  Add your own email here (see step 4).  No policies, so the website cannot read or change it.
 create table if not exists public.hbl_admins (email text primary key);
 alter table public.hbl_admins enable row level security;
