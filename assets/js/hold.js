@@ -18,3 +18,23 @@
   btn.addEventListener("click", (e) => { e.stopPropagation(); if (audio.paused) { stoppedByUser = false; start(); } else { stoppedByUser = true; audio.pause(); } });
   addEventListener("pointerdown", (e) => { if (e.target.closest("#play")) return; if (audio.paused && !stoppedByUser && !btn.hidden) start(); });
 })();
+
+// Surf City right now: local time and weather (Open-Meteo, free, no key)
+(() => {
+  const el = document.getElementById("nowTxt");
+  if (!el) return;
+  const WX = [[0, "Clear"], [1, "Mostly clear"], [2, "Partly cloudy"], [3, "Cloudy"], [48, "Foggy"], [57, "Drizzle"], [67, "Rain"], [77, "Snow"], [82, "Showers"], [86, "Snow showers"], [99, "Thunderstorms"]];
+  const look = (c) => (WX.find(([max]) => c <= max) || [0, ""])[1];
+  let wx = "";
+  const time = () => new Date().toLocaleTimeString("en-US", { timeZone: "America/Los_Angeles", hour: "numeric", minute: "2-digit" });
+  const paint = () => { el.textContent = `Surf City right now  ·  ${time()}${wx ? "  ·  " + wx : ""}`; };
+  async function load() {
+    try {
+      const r = await fetch("https://api.open-meteo.com/v1/forecast?latitude=33.6595&longitude=-117.9988&current=temperature_2m,weather_code&temperature_unit=fahrenheit&timezone=America%2FLos_Angeles");
+      if (!r.ok) return;
+      const w = await r.json();
+      wx = `${Math.round(w.current.temperature_2m)}° ${look(w.current.weather_code)}`; paint();
+    } catch (e) {}
+  }
+  paint(); load(); setInterval(paint, 15000); setInterval(load, 15 * 60 * 1000);
+})();
