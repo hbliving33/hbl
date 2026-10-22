@@ -15,7 +15,7 @@
 <meta name="apple-mobile-web-app-title" content="HBLiving">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/site.css?v=fb67a9a3">
+<link rel="stylesheet" href="assets/css/site.css?v=6466008c">
 <link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
 </head>
 <body>
@@ -84,9 +84,8 @@
 
   <section class="wrap" id="communities">
     <div class="sec-head"><p class="kicker">Local communities</p><h2>Neighborhood sites, <em>powered by <span class="nm">HB<em>Living</em></span>.</em></h2><p class="sub">Each neighborhood gets its own free site for neighbors: a calendar, a bulletin board and neighbors helping neighbors.  Local businesses that advertise keep it free.</p></div>
-    <div class="comms">
-      <article class="comm comm-live"><span class="comm-status">Live</span><h3>Suburbia Park</h3><p>Next to the Seaview ballfields and the Santa Ana River Trail.  Southeast HB.</p><a class="btn btn-ghost" href="https://hbliving33.github.io/spark/" target="_blank" rel="noopener">Visit Suburbia Park</a></article>
-      <article class="comm"><span class="comm-status soon">Coming soon</span><h3>Meredith Gardens</h3><p>Across the ballfields from Suburbia Park.  Southeast HB.</p><span class="comm-note">Launching soon</span></article>
+    <div class="comms comms-2">
+      <article class="comm"><span class="comm-status soon">Coming soon</span><h3>Meredith Gardens</h3><p>Across the Seaview ballfields.  Southeast HB.</p><span class="comm-note">Launching soon</span></article>
       <article class="comm comm-join"><span class="comm-status join">Your neighborhood</span><h3>Bring it to your street</h3><p>Want a free site for your tract or HOA?  We'll set it up.  Tell us about your neighborhood.</p><a class="btn btn-coral" href="#advertise" data-plan="Start">Start a community site</a></article>
     </div>
   </section>
@@ -100,7 +99,7 @@
           <p class="price"><b>$5</b><span>per month</span></p>
           <p class="yearly">or $50 a year, two months free</p>
           <ul>
-            <li>Your ad on one community site's Local page, like Suburbia Park</li>
+            <li>Your ad on one community site's Local page</li>
             <li>Seen by the neighbors who live right around you</li>
             <li>Your pin on the <span class="nm">HB<em>Living</em></span> map</li>
             <li>Name, phone, website and a short description</li>
@@ -162,7 +161,7 @@
         <details><summary>How do I pay?</summary><p>After you approve your ad, we send you a secure link to pay by card, monthly or for the year.</p></details>
         <details><summary>Is there a contract?</summary><p>No.  Plans are month to month and you can cancel anytime.  Yearly plans are paid up front for two free months.</p></details>
         <details><summary>Can I change my ad later?</summary><p>Yes.  Send us new hours, a new offer or a new photo and we'll update it.</p></details>
-        <details><summary>What is the difference between the plans?</summary><p>Community puts your ad on one neighborhood site, like Suburbia Park, where the people right around you see it.  Community plus <span class="nm">HB<em>Living</em></span> adds the <span class="nm">HB<em>Living</em></span> home page, your area of the city and every community site near you, including new ones as they open.</p></details>
+        <details><summary>What is the difference between the plans?</summary><p>Community puts your ad on one neighborhood site, where the people right around you see it.  Community plus <span class="nm">HB<em>Living</em></span> adds the <span class="nm">HB<em>Living</em></span> home page, your area of the city and every community site near you, including new ones as they open.</p></details>
         <details><summary>What are the four areas?</summary><p>Downtown and the Pier, Harbour and Sunset Beach, North HB and Central Park, and Southeast HB.  They follow Huntington Beach's ZIP codes, so your ad shows in your own area and across the whole city.</p></details>
         <details><summary>Who sees my ad?</summary><p>People looking for local businesses in Huntington Beach and nearby towns: Fountain Valley, Seal Beach, Sunset Beach, Westminster, Costa Mesa and Newport Beach.</p></details>
         <details><summary>What do I need to get started?</summary><p>Just your business name, phone, website or social page, and a sentence or two about what you do.  A logo or photo helps for Featured ads.</p></details>
@@ -179,7 +178,7 @@
         <div class="row"><label>Email<input type="email" name="email" required></label><label>Phone<input type="tel" name="phone" maxlength="20"></label></div>
         <div class="row"><label>Website or social page <span class="opt">(optional)</span><input name="website" maxlength="120"></label><label>City<select name="city"><option>Huntington Beach</option><option>Fountain Valley</option><option>Seal Beach</option><option>Sunset Beach</option><option>Westminster</option><option>Costa Mesa</option><option>Newport Beach</option><option>Other nearby</option></select></label></div>
         <div class="row"><label>Category<select name="category"><option>Food and drink</option><option>Home services</option><option>Surf and outdoor</option><option>Health and fitness</option><option>Beauty and spa</option><option>Pets</option><option>Real estate</option><option>Auto</option><option>Kids and family</option><option>Professional services</option><option>Shops and boutiques</option><option>Events and entertainment</option><option>Something else</option></select></label><label>Plan<select name="plan" id="planSel"><option>Community plus HBLiving, $10 a month</option><option>Community, $5 a month</option><option>Start a community site (free)</option><option>Not sure yet</option></select></label></div>
-        <label>Community <select name="community"><option>Suburbia Park</option><option>Meredith Gardens (coming soon)</option><option>Not sure, help me pick</option><option>A new neighborhood</option></select></label>
+        <label>Community <select name="community"><option>Meredith Gardens (coming soon)</option><option>Not sure, help me pick</option><option>A new neighborhood</option></select></label>
         <label>Tell us about your business <span class="opt">(optional)</span><textarea name="about" rows="3" maxlength="600"></textarea></label>
         <button class="btn btn-coral" type="submit">Send my details</button>
         <p class="form-msg" role="status"></p>
@@ -199,7 +198,7 @@
 <script src="assets/js/site.js?v=3b57cc0d"></script>
 <script src="assets/vendor/leaflet/leaflet.js"></script>
 <script src="assets/js/track.js?v=733d2b7e"></script>
-<script src="assets/js/map-data.js?v=f56ec4bd"></script>
+<script src="assets/js/map-data.js?v=a0218f21"></script>
 <script src="assets/js/map.js?v=a6c0e23f"></script>
 </body>
 </html>
