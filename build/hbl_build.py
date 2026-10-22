@@ -4,6 +4,11 @@ import pathlib, math, hashlib
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 YEAR = 2026
 
+# ---------- Which site is public at hbliving.com ----------
+#   "holding"  = the plain HBLiving one-pager is the home page.  The business site is kept at business.html (unlinked, noindex) for preview.
+#   "business" = the full advertising site is the home page.
+MODE = "holding"
+
 # Palette: deep Pacific, sea glass, warm sand, sunset coral, golden hour
 INK, SEA, GLASS, SAND, CORAL, GOLD, FOAM = '#161310', '#138a43', '#9bd8a4', '#f3e4c8', '#d62b1f', '#f8b800', '#fbf7ef'
 
@@ -323,9 +328,56 @@ report = f'''{head('Monthly report | HBLiving', 'HBLiving advertiser report.', n
 '''
 (ROOT / 'report.html').write_text(brandify(report))
 home = brandify(home); thanks = brandify(thanks)
-(ROOT / 'index.html').write_text(home)
+
+holding = brandify(f'''<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HBLiving | Surf City vibes</title>
+<meta name="description" content="HBLiving: one love from Huntington Beach, Surf City USA.">
+<meta name="theme-color" content="#0b0b0b">
+<link rel="icon" href="assets/img/mark.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/img/icon-180.png">
+{FONTS}
+<link rel="stylesheet" href="assets/css/hold.css?v={ver('assets/css/hold.css')}">
+</head>
+<body>
+<div class="rays" aria-hidden="true"></div>
+<main class="vibe">
+  <div class="flagbar" aria-hidden="true"><i></i><i></i><i></i></div>
+  <p class="kick">Huntington Beach, California</p>
+  <h1 class="logo">HB<em>Living</em></h1>
+  <p class="tag">One love from <b>Surf City.</b></p>
+  <p class="sub">Sunshine, salt air and good people.  Something irie is on the way.</p>
+  <button class="play" id="play" type="button" aria-pressed="false"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="pl-txt">Play the vibes</span></button>
+  <p class="hint" id="hint">Tap anywhere to start the music</p>
+</main>
+<svg class="shore" viewBox="0 0 1440 300" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+  <circle class="sun" cx="980" cy="210" r="96"/>
+  <g class="waves"><path d="M0 230 C 120 214 240 246 360 230 S 600 214 720 230 S 960 246 1080 230 S 1320 214 1440 230 V300 H0Z" fill="#d62b1f"/>
+  <path d="M0 250 C 120 236 240 264 360 250 S 600 236 720 250 S 960 264 1080 250 S 1320 236 1440 250 V300 H0Z" fill="#f8b800"/>
+  <path d="M0 270 C 120 258 240 282 360 270 S 600 258 720 270 S 960 282 1080 270 S 1320 258 1440 270 V300 H0Z" fill="#138a43"/></g>
+  <g fill="#0b0b0b"><path d="M560 214 H1390 V222 H560Z"/>{''.join(f'<rect x="{x}" y="214" width="6" height="40"/>' for x in range(570, 1390, 32))}<path d="M1300 214 V192 H1372 V214Z M1294 193 L1336 176 L1378 193Z"/></g>
+  <g fill="none" stroke="#0b0b0b" stroke-linecap="round"><path d="M180 262 C 176 216 180 180 194 144" stroke-width="7"/><path d="M262 262 C 266 226 262 200 252 174" stroke-width="6"/></g>
+  <g fill="#0b0b0b" class="fronds"><path d="M194 144 c-22 -10 -48 -4 -60 12 c18 -8 40 -8 60 -6 c-16 -14 -38 -22 -56 -14 c22 0 42 6 56 14 c2 -20 -10 -38 -26 -44 c12 12 22 28 26 40 c12 -18 36 -26 58 -18 c-22 4 -40 12 -52 24 c24 -6 44 2 56 18 c-18 -12 -40 -14 -62 -8z"/><path transform="translate(96.8 39.6) scale(.8)" d="M194 168 c-22 -10 -48 -4 -60 12 c18 -8 40 -8 60 -6 c-16 -14 -38 -22 -56 -14 c22 0 42 6 56 14 c2 -20 -10 -38 -26 -44 c12 12 22 28 26 40 c12 -18 36 -26 58 -18 c-22 4 -40 12 -52 24 c24 -6 44 2 56 18 c-18 -12 -40 -14 -62 -8z"/></g>
+</svg>
+<footer class="hfoot">&copy; {YEAR} HBLiving.  Independently owned.  Not affiliated with the City of Huntington Beach.</footer>
+<script src="assets/js/hold.js?v={ver('assets/js/hold.js')}"></script>
+</body>
+</html>
+''')
+
+if MODE == "holding":
+    biz = home.replace('<head>', '<head>\n<meta name="robots" content="noindex">', 1).replace('href="index.html"', 'href="business.html"')
+    (ROOT / 'index.html').write_text(holding)
+    (ROOT / 'business.html').write_text(biz)
+else:
+    (ROOT / 'index.html').write_text(home)
+    (ROOT / 'business.html').unlink(missing_ok=True)
 (ROOT / 'thanks.html').write_text(thanks)
 import re as _re
-_h = hashlib.md5(b''.join((ROOT / f).read_bytes() for f in ['index.html', 'thanks.html', 'assets/css/site.css', 'assets/js/site.js', 'assets/js/map.js', 'assets/js/map-data.js', 'assets/js/track.js', 'assets/img/mark.svg'])).hexdigest()[:10]
+_h = hashlib.md5(b''.join((ROOT / f).read_bytes() for f in ['index.html', 'thanks.html', 'assets/css/site.css', 'assets/js/site.js', 'assets/js/map.js', 'assets/js/map-data.js', 'assets/js/track.js', 'assets/js/hold.js', 'assets/css/hold.css', 'assets/img/mark.svg'])).hexdigest()[:10]
 _sw = (ROOT / 'sw.js').read_text(); (ROOT / 'sw.js').write_text(_re.sub(r'const CACHE = "[^"]*";', f'const CACHE = "hbl-{_h}";', _sw))
-print('built index.html and thanks.html, cache', _h)
+print('mode', MODE, '- built index.html' + (' (one-pager) and business.html' if MODE == 'holding' else ' (business site)') + ', cache', _h)
