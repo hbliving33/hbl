@@ -38,3 +38,4 @@ body.playing .sun { animation: pulse .8s ease-in-out infinite alternate; transfo
 .hfoot { position: relative; z-index: 2; background: var(--green); color: #e8f5ea; text-align: center; font-size: 13px; padding: 14px 20px; }
 .hfoot .nm em { color: var(--gold); }
 @media (prefers-reduced-motion: reduce) { .rays, .waves path, .fronds, .sun, .eq i { animation: none !important; } }
+.play[hidden] { display: none; }
