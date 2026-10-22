@@ -355,7 +355,7 @@ holding = brandify(f'''<!doctype html>
     <div class="cam-frame"><iframe src="https://www.youtube-nocookie.com/embed/mhQjsLBfOoY?autoplay=1&amp;mute=1&amp;rel=0&amp;playsinline=1&amp;controls=0&amp;disablekb=1&amp;fs=0&amp;iv_load_policy=3" title="Live camera on the Huntington Beach Pier" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>
     <a class="cam-credit" href="https://www.youtube.com/watch?v=mhQjsLBfOoY" rel="noopener" target="_blank">Live camera by the City of Huntington Beach</a>
   </figure>
-  <div class="onelove"><svg class="ol-block" viewBox="0 16 560 344" role="img" aria-label="One Love from Surf City">
+  <div class="onelove"><svg class="ol-block" viewBox="0 16 560 318" role="img" aria-label="One Love from Surf City">
   <defs>
     <linearGradient id="bands" gradientUnits="userSpaceOnUse" x1="0" y1="40" x2="0" y2="318">
       <stop offset="0" stop-color="#d62b1f"/><stop offset=".33" stop-color="#d62b1f"/>
@@ -368,7 +368,7 @@ holding = brandify(f'''<!doctype html>
       <text x="186" y="160">NE</text>
       
       <text x="40" y="306">L</text>
-      <circle cx="232" cy="250" r="70"/>
+      <path d="M232 306 C 146 250 158 186 200 186 C 219 186 230 198 232 210 C 234 198 245 186 264 186 C 306 186 318 250 232 306Z"/>
       <text x="306" y="306">VE</text>
     </g>
     <clipPath id="wordclip"><use href="#word"/></clipPath>
@@ -386,16 +386,7 @@ holding = brandify(f'''<!doctype html>
     <circle cx="110" cy="104" r="24" fill="#d62b1f"/><path d="M86 104 A24 24 0 0 0 134 104Z" fill="#138a43"/><rect x="86" y="100" width="48" height="8" fill="#f8b800"/>
     <circle cx="110" cy="104" r="4" fill="#000"/>
   </g>
-  
-  <clipPath id="sunc"><circle cx="232" cy="250" r="70"/></clipPath>
-  <g clip-path="url(#sunc)">
-    <rect x="160" y="178" width="150" height="150" fill="#1b1206"/>
-    <circle cx="232" cy="262" r="40" fill="#f8b800"/>
-    <rect x="160" y="262" width="150" height="16" fill="#d62b1f"/><rect x="160" y="278" width="150" height="14" fill="#f8b800"/><rect x="160" y="292" width="150" height="40" fill="#138a43"/>
-    <g fill="#000"><rect x="170" y="254" width="130" height="5"/><rect x="180" y="259" width="4" height="22"/><rect x="204" y="259" width="4" height="22"/><rect x="228" y="259" width="4" height="22"/><rect x="252" y="259" width="4" height="22"/><rect x="276" y="259" width="4" height="22"/></g>
-  </g>
-  <text x="280" y="352" text-anchor="middle" font-family="Bungee" font-size="20" letter-spacing="7" fill="#fff3d0">FROM SURF CITY</text>
-</svg></div>
+</svg><p class="ol-from">from Surf City</p></div>
 </main>
 <svg class="shore" viewBox="0 96 1440 204" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
   <circle class="sun" cx="1120" cy="210" r="96"/>

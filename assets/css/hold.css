@@ -114,3 +114,4 @@ body.playing .ol-block .rec { animation: spinrec 3.2s linear infinite; }
 @keyframes spinrec { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { body.playing .ol-block .rec { animation: none; } }
 .onelove svg.ol-block { width: min(220px, 58vw); height: auto; margin: 0 auto; }
+.onelove .ol-from { margin-top: 8px; }
