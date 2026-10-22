@@ -372,7 +372,7 @@ holding = brandify(f'''<!doctype html>
   <g class="surfer"><path d="M-40 0 C -20 6 20 6 40 0 C 20 -4 -20 -4 -40 0Z" fill="#f8b800" stroke="#0b0b0b" stroke-width="2"/><g fill="#0b0b0b"><circle cx="2" cy="-40" r="6"/><path d="M-2 -33 L 6 -33 L 8 -16 L 16 -2 L 10 0 L 2 -14 L -6 0 L -12 -2 L -4 -16Z"/><path d="M4 -30 L 22 -24 L 21 -21 L 4 -25Z M0 -30 L -18 -34 L -18 -31 L 0 -26Z"/></g></g>
 </svg>
 <div class="ticker" aria-hidden="true"><div class="tk">{''.join(f'<span>{t}</span>' for t in [f'{e} <i>{m}</i>' for e, m in [('Surf City Marathon', 'Feb'), ('Irish Fest', 'Mar'), ('Taste of Huntington Beach', 'Apr'), ('AVP Huntington Beach Open', 'May'), ('Fourth of July', 'Jul'), ('US Open of Surfing', 'Jul to Aug'), ('Oktoberfest', 'Sep to Nov'), ('Pacific Airshow', 'Oct'), ('Corgi Beach Day', 'Apr and Oct'), ('Magic on Main Street', 'Nov'), ('Cruise of Lights', 'Dec')]]*2)}</div></div>
-<footer class="hfoot">&copy; {YEAR} HBLiving.  Independently owned.  <a href="https://open-meteo.com/" rel="noopener" target="_blank">Weather by Open-Meteo</a></footer>
+<footer class="hfoot">&copy; {YEAR} HBLiving.  Independently owned.  <a href="https://open-meteo.com/" rel="noopener" target="_blank">Weather by Open-Meteo</a>.  Music: <a href="https://pixabay.com/music/reggae-reggae-island-vibes-537451/" rel="noopener" target="_blank">Reggae Island Vibes by alex-morgan</a></footer>
 <script src="assets/js/hold.js?v={ver('assets/js/hold.js')}"></script>
 </body>
 </html>
