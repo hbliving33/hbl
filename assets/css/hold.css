@@ -100,3 +100,4 @@ body.playing .sun { animation: pulse .8s ease-in-out infinite alternate; transfo
 @media (max-width: 700px) { .vibe { padding-top: 66px; } .music .hint { display: none; } }
 .onelove { margin: 14px auto 0; }
 .now { display: flex; width: fit-content; }
+.flagbar { width: min(320px, 80vw); height: 8px; margin: 10px auto 14px; }
