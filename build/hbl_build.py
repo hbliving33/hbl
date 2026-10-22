@@ -326,7 +326,6 @@ report = f'''{head('Monthly report | HBLiving', 'HBLiving advertiser report.', n
 </body>
 </html>
 '''
-(ROOT / 'report.html').write_text(brandify(report))
 home = brandify(home); thanks = brandify(thanks)
 
 holding = brandify(f'''<!doctype html>
@@ -380,14 +379,15 @@ holding = brandify(f'''<!doctype html>
 ''')
 
 if MODE == "holding":
-    biz = home.replace('<head>', '<head>\n<meta name="robots" content="noindex">', 1).replace('href="index.html"', 'href="business.html"')
+    # Only the one-pager is published.  The business pages are not written at all.
     (ROOT / 'index.html').write_text(holding)
-    (ROOT / 'business.html').write_text(biz)
+    for p in ['business.html', 'thanks.html', 'report.html', 'logos.html']:
+        (ROOT / p).unlink(missing_ok=True)
 else:
     (ROOT / 'index.html').write_text(home)
-    (ROOT / 'business.html').unlink(missing_ok=True)
-(ROOT / 'thanks.html').write_text(thanks)
+    (ROOT / 'thanks.html').write_text(thanks)
+    (ROOT / 'report.html').write_text(brandify(report))
 import re as _re
-_h = hashlib.md5(b''.join((ROOT / f).read_bytes() for f in ['index.html', 'thanks.html', 'assets/css/site.css', 'assets/js/site.js', 'assets/js/map.js', 'assets/js/map-data.js', 'assets/js/track.js', 'assets/js/hold.js', 'assets/css/hold.css', 'assets/img/mark.svg'])).hexdigest()[:10]
+_h = hashlib.md5(b''.join((ROOT / f).read_bytes() for f in ['index.html', 'assets/css/site.css', 'assets/js/site.js', 'assets/js/map.js', 'assets/js/map-data.js', 'assets/js/track.js', 'assets/js/hold.js', 'assets/css/hold.css', 'assets/img/mark.svg'])).hexdigest()[:10]
 _sw = (ROOT / 'sw.js').read_text(); (ROOT / 'sw.js').write_text(_re.sub(r'const CACHE = "[^"]*";', f'const CACHE = "hbl-{_h}";', _sw))
-print('mode', MODE, '- built index.html' + (' (one-pager) and business.html' if MODE == 'holding' else ' (business site)') + ', cache', _h)
+print('mode', MODE, '- built index.html' + (' (one-pager only)' if MODE == 'holding' else ' (business site)') + ', cache', _h)
