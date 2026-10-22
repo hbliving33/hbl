@@ -12,8 +12,8 @@ body { min-height: 100vh; display: flex; flex-direction: column; overflow-x: hid
 .flagbar { display: flex; width: 132px; height: 10px; margin: 0 auto 26px; border-radius: 5px; overflow: hidden; }
 .flagbar i { flex: 1; } .flagbar i:nth-child(1) { background: var(--red); } .flagbar i:nth-child(2) { background: var(--gold); } .flagbar i:nth-child(3) { background: var(--green); }
 .kick { margin: 0; font-size: 13px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); }
-.logo { margin: 10px 0 0; font-family: "Fraunces", Georgia, serif; font-weight: 700; font-size: clamp(64px, 14vw, 156px); line-height: .95; letter-spacing: -.03em;
-  background: linear-gradient(180deg, var(--red) 0 36%, var(--gold) 36% 66%, var(--green) 66%); -webkit-background-clip: text; background-clip: text; color: transparent;
+.logo { margin: 10px 0 0; font-family: "Fraunces", Georgia, serif; font-weight: 700; font-size: clamp(64px, 14vw, 156px); line-height: 1.15; letter-spacing: -.03em; padding: 0 .12em .12em; display: inline-block;
+  background: linear-gradient(180deg, var(--red) 0 41%, var(--gold) 41% 62%, var(--green) 62%); -webkit-background-clip: text; background-clip: text; color: transparent;
   filter: drop-shadow(0 4px 0 rgba(0, 0, 0, .6)); }
 .logo em { font-weight: 400; font-style: italic; }
 .tag { margin: 18px 0 0; font-family: "Fraunces", Georgia, serif; font-size: clamp(24px, 3.6vw, 36px); }
