@@ -16,5 +16,5 @@
   }, { once: true });
   audio.addEventListener("pause", () => ui(false));
   btn.addEventListener("click", (e) => { e.stopPropagation(); if (audio.paused) { stoppedByUser = false; start(); } else { stoppedByUser = true; audio.pause(); } });
-  addEventListener("pointerdown", () => { if (audio.paused && !stoppedByUser && !btn.hidden) start(); });
+  addEventListener("pointerdown", (e) => { if (e.target.closest("#play")) return; if (audio.paused && !stoppedByUser && !btn.hidden) start(); });
 })();
