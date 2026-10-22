@@ -346,9 +346,9 @@ holding = brandify(f'''<!doctype html>
 <div class="rays" aria-hidden="true"></div>
 <div class="music"><p class="hint" id="hint">Tap for music</p><button class="play" id="play" type="button" aria-pressed="false" title="Music"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="pl-txt">Play the vibes</span></button></div>
 <main class="vibe">
-  <p class="kick">Huntington Beach, California</p>
-  <div class="flagbar" aria-hidden="true"><i></i><i></i><i></i></div>
   <h1 class="logo">HB<em>Living</em></h1>
+  <div class="flagbar" aria-hidden="true"><i></i><i></i><i></i></div>
+  <p class="kick">Huntington Beach, California</p>
   <p class="now" id="now" aria-live="polite"><span class="dot"></span><span id="nowTxt"></span></p>
   <figure class="cam">
     <figcaption><span class="live">Live</span> From the pier</figcaption>
