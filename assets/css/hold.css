@@ -59,3 +59,12 @@ body.playing .sun { animation: pulse .8s ease-in-out infinite alternate; transfo
 .ticker { border-top-width: 0; }
 @media (prefers-reduced-motion: reduce) { .tk, .surfer, .gulls, .glints path, .now .dot { animation: none !important; } }
 .hfoot a { color: #fff3d0; }
+.cam { margin: 26px auto 0; max-width: 640px; }
+.cam figcaption { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 12px; font-family: "Fraunces", Georgia, serif; font-size: 24px; color: #fff3d0; }
+.live { font-family: "Inter", system-ui, sans-serif; font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; background: var(--red); color: #fff; border-radius: 6px; padding: 3px 8px; }
+.cam-frame { position: relative; aspect-ratio: 16 / 9; border-radius: 18px; overflow: hidden; background: #000;
+  box-shadow: 0 0 0 4px var(--red), 0 0 0 8px var(--gold), 0 0 0 12px var(--green), 0 24px 60px rgba(0, 0, 0, .6); }
+.cam-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.cam-credit { display: inline-block; margin-top: 18px; font-size: 13px; color: #bfae86; }
+.now { margin-bottom: 4px; }
+@media (max-width: 700px) { .cam-frame { border-radius: 12px; box-shadow: 0 0 0 3px var(--red), 0 0 0 6px var(--gold), 0 0 0 9px var(--green), 0 16px 40px rgba(0, 0, 0, .6); } }
