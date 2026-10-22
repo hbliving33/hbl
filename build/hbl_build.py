@@ -353,6 +353,11 @@ holding = brandify(f'''<!doctype html>
   <button class="play" id="play" type="button" aria-pressed="false"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="pl-txt">Play the vibes</span></button>
   <p class="hint" id="hint">Tap anywhere to start the music</p>
   <p class="now" id="now" aria-live="polite"><span class="dot"></span><span id="nowTxt">Surf City right now</span></p>
+  <figure class="cam">
+    <figcaption><span class="live">Live</span> From the pier</figcaption>
+    <div class="cam-frame"><iframe src="https://camstreamer.com/embed/9zshBzHp18Swur18MeshTQkzAzXtSQoKPoqkhJu7?rel=0" title="Live camera on the Huntington Beach Pier" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>
+    <a class="cam-credit" href="https://camstreamer.com/live/stream/188351090-view-from-huntington-beach-pier" rel="noopener" target="_blank">Camera via CamStreamer</a>
+  </figure>
 </main>
 <svg class="shore" viewBox="0 0 1440 300" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
   <circle class="sun" cx="980" cy="210" r="96"/>
