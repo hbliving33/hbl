@@ -45,7 +45,7 @@ body.playing .sun { animation: pulse .8s ease-in-out infinite alternate; transfo
 .now .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 0 rgba(19, 138, 67, .7); animation: ping 2s infinite; }
 @keyframes ping { 70% { box-shadow: 0 0 0 10px rgba(19, 138, 67, 0); } 100% { box-shadow: 0 0 0 0 rgba(19, 138, 67, 0); } }
 .ticker { position: relative; z-index: 2; overflow: hidden; background: var(--ink); border-top: 3px solid var(--red); border-bottom: 3px solid var(--green); }
-.tk { display: flex; width: max-content; animation: tick 38s linear infinite; }
+.tk { display: flex; width: max-content; animation: tick 60s linear infinite; }
 .tk span { padding: 7px 20px; font-weight: 800; font-size: 15px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); white-space: nowrap; }
 .tk span::after { content: "\2022"; color: var(--red); margin-left: 44px; }
 .tk span:nth-child(3n+2) { color: #fff3d0; } .tk span:nth-child(3n) { color: #5fd38a; }
@@ -68,3 +68,4 @@ body.playing .sun { animation: pulse .8s ease-in-out infinite alternate; transfo
 .cam-credit { display: inline-block; margin-top: 14px; font-size: 13px; color: #bfae86; }
 .now { margin-bottom: 0; }
 @media (max-width: 700px) { .cam-frame { border-radius: 12px; box-shadow: 0 0 0 3px var(--red), 0 0 0 6px var(--gold), 0 0 0 9px var(--green), 0 16px 40px rgba(0, 0, 0, .6); } }
+.tk span i { font-style: normal; font-weight: 600; letter-spacing: .06em; color: #fff3d0; opacity: .75; margin-left: 8px; }
