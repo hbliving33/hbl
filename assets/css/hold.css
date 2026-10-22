@@ -113,4 +113,4 @@ body.playing .sun { animation: pulse .8s ease-in-out infinite alternate; transfo
 body.playing .ol-block .rec { animation: spinrec 3.2s linear infinite; }
 @keyframes spinrec { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { body.playing .ol-block .rec { animation: none; } }
-.onelove svg.ol-block { width: min(300px, 74vw); height: auto; margin: 0 auto; }
+.onelove svg.ol-block { width: min(220px, 58vw); height: auto; margin: 0 auto; }
