@@ -69,3 +69,13 @@ body.playing .sun { animation: pulse .8s ease-in-out infinite alternate; transfo
 .now { margin-bottom: 0; }
 @media (max-width: 700px) { .cam-frame { border-radius: 12px; box-shadow: 0 0 0 3px var(--red), 0 0 0 6px var(--gold), 0 0 0 9px var(--green), 0 16px 40px rgba(0, 0, 0, .6); } }
 .tk span i { font-style: normal; font-weight: 600; letter-spacing: .06em; color: #fff3d0; opacity: .75; margin-left: 8px; }
+
+/* Small music toggle, top right */
+.music { position: fixed; top: 14px; right: 14px; z-index: 10; display: flex; align-items: center; gap: 8px; }
+.music .play { margin: 0; width: 44px; height: 44px; padding: 0; justify-content: center; gap: 0; border-radius: 50%; font-size: 0;
+  box-shadow: 0 0 0 3px var(--red), 0 0 0 6px var(--green), 0 8px 20px rgba(0, 0, 0, .5); }
+.music .play:hover { transform: scale(1.06); }
+.music .pl-txt { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.music .eq { height: 16px; } .music .eq i { width: 3px; }
+.music .hint { margin: 0; font-size: 13px; font-weight: 700; color: #fff3d0; background: rgba(0, 0, 0, .55); border-radius: 999px; padding: 5px 10px; }
+.music .eq i:nth-child(1) { height: 7px; } .music .eq i:nth-child(2) { height: 13px; } .music .eq i:nth-child(3) { height: 9px; } .music .eq i:nth-child(4) { height: 15px; }
