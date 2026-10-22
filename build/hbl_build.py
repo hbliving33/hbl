@@ -95,7 +95,7 @@ def footer():
     return f'''<footer class="foot">
   <div class="foot-in">
     <div><a class="brand brand-foot" href="index.html"><img src="assets/img/mark.svg" alt="" width="36" height="36"><span>HB<em>Living</em></span></a>
-    <p>Local advertising for Huntington Beach businesses and the towns next door.  Independently owned.  Not affiliated with the City of Huntington Beach.</p></div>
+    <p>Local advertising for Huntington Beach businesses and the towns next door.  Independently owned.</p></div>
     <nav aria-label="Footer">{''.join(f'<a href="{h}">{t}</a>' for h, t in NAV)}<a href="#advertise">Advertise</a></nav>
     <small>&copy; {YEAR} HBLiving.</small>
   </div>
@@ -353,17 +353,23 @@ holding = brandify(f'''<!doctype html>
   <p class="sub">Sunshine, salt air and good people.  Something irie is on the way.</p>
   <button class="play" id="play" type="button" aria-pressed="false"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="pl-txt">Play the vibes</span></button>
   <p class="hint" id="hint">Tap anywhere to start the music</p>
+  <p class="now" id="now" aria-live="polite"><span class="dot"></span><span id="nowTxt">Surf City right now</span></p>
 </main>
 <svg class="shore" viewBox="0 0 1440 300" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
   <circle class="sun" cx="980" cy="210" r="96"/>
+  <g class="glints" stroke="#fff3c4" stroke-linecap="round" stroke-width="3"><path d="M920 236 H1040"/><path d="M945 246 H1015"/></g>
+  <g class="gulls" fill="none" stroke="#0b0b0b" stroke-width="3" stroke-linecap="round"><path d="M300 70 q10 -10 20 0 q10 -10 20 0"/><path d="M360 100 q8 -8 16 0 q8 -8 16 0"/><path d="M250 115 q7 -7 14 0 q7 -7 14 0"/></g>
+
   <g class="waves"><path d="M0 230 C 120 214 240 246 360 230 S 600 214 720 230 S 960 246 1080 230 S 1320 214 1440 230 V300 H0Z" fill="#d62b1f"/>
   <path d="M0 250 C 120 236 240 264 360 250 S 600 236 720 250 S 960 264 1080 250 S 1320 236 1440 250 V300 H0Z" fill="#f8b800"/>
   <path d="M0 270 C 120 258 240 282 360 270 S 600 258 720 270 S 960 282 1080 270 S 1320 258 1440 270 V300 H0Z" fill="#138a43"/></g>
   <g fill="#0b0b0b"><path d="M560 214 H1390 V222 H560Z"/>{''.join(f'<rect x="{x}" y="214" width="6" height="40"/>' for x in range(570, 1390, 32))}<path d="M1300 214 V192 H1372 V214Z M1294 193 L1336 176 L1378 193Z"/></g>
   <g fill="none" stroke="#0b0b0b" stroke-linecap="round"><path d="M180 262 C 176 216 180 180 194 144" stroke-width="7"/><path d="M262 262 C 266 226 262 200 252 174" stroke-width="6"/></g>
   <g fill="#0b0b0b" class="fronds"><path d="M194 144 c-22 -10 -48 -4 -60 12 c18 -8 40 -8 60 -6 c-16 -14 -38 -22 -56 -14 c22 0 42 6 56 14 c2 -20 -10 -38 -26 -44 c12 12 22 28 26 40 c12 -18 36 -26 58 -18 c-22 4 -40 12 -52 24 c24 -6 44 2 56 18 c-18 -12 -40 -14 -62 -8z"/><path transform="translate(96.8 39.6) scale(.8)" d="M194 168 c-22 -10 -48 -4 -60 12 c18 -8 40 -8 60 -6 c-16 -14 -38 -22 -56 -14 c22 0 42 6 56 14 c2 -20 -10 -38 -26 -44 c12 12 22 28 26 40 c12 -18 36 -26 58 -18 c-22 4 -40 12 -52 24 c24 -6 44 2 56 18 c-18 -12 -40 -14 -62 -8z"/></g>
+  <g class="surfer"><path d="M-40 0 C -20 6 20 6 40 0 C 20 -4 -20 -4 -40 0Z" fill="#f8b800" stroke="#0b0b0b" stroke-width="2"/><g fill="#0b0b0b"><circle cx="2" cy="-40" r="6"/><path d="M-2 -33 L 6 -33 L 8 -16 L 16 -2 L 10 0 L 2 -14 L -6 0 L -12 -2 L -4 -16Z"/><path d="M4 -30 L 22 -24 L 21 -21 L 4 -25Z M0 -30 L -18 -34 L -18 -31 L 0 -26Z"/></g></g>
 </svg>
-<footer class="hfoot">&copy; {YEAR} HBLiving.  Independently owned.  Not affiliated with the City of Huntington Beach.</footer>
+<div class="ticker" aria-hidden="true"><div class="tk">{''.join(f'<span>{t}</span>' for t in ['The Pier', 'Main Street', 'Bolsa Chica', 'Dog Beach', 'Central Park', 'Sunset Beach', 'Huntington Harbour', 'The river trail', 'Surf City USA', 'One love']*2)}</div></div>
+<footer class="hfoot">&copy; {YEAR} HBLiving.  Independently owned.  <a href="https://open-meteo.com/" rel="noopener" target="_blank">Weather by Open-Meteo</a></footer>
 <script src="assets/js/hold.js?v={ver('assets/js/hold.js')}"></script>
 </body>
 </html>

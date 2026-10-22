@@ -39,3 +39,23 @@ body.playing .sun { animation: pulse .8s ease-in-out infinite alternate; transfo
 .hfoot .nm em { color: var(--gold); }
 @media (prefers-reduced-motion: reduce) { .rays, .waves path, .fronds, .sun, .eq i { animation: none !important; } }
 .play[hidden] { display: none; }
+
+/* Life on the page */
+.now { margin: 22px auto 0; display: inline-flex; align-items: center; gap: 10px; background: rgba(0, 0, 0, .45); border: 1px solid rgba(248, 184, 0, .35); border-radius: 999px; padding: 8px 16px; font-size: 15px; font-weight: 600; color: #fff3d0; }
+.now .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 0 rgba(19, 138, 67, .7); animation: ping 2s infinite; }
+@keyframes ping { 70% { box-shadow: 0 0 0 10px rgba(19, 138, 67, 0); } 100% { box-shadow: 0 0 0 0 rgba(19, 138, 67, 0); } }
+.ticker { position: relative; z-index: 2; overflow: hidden; background: var(--ink); border-top: 3px solid var(--red); border-bottom: 3px solid var(--green); }
+.tk { display: flex; width: max-content; animation: tick 38s linear infinite; }
+.tk span { padding: 10px 22px; font-weight: 800; font-size: 15px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); white-space: nowrap; }
+.tk span::after { content: "\2022"; color: var(--red); margin-left: 44px; }
+.tk span:nth-child(3n+2) { color: #fff3d0; } .tk span:nth-child(3n) { color: #5fd38a; }
+@keyframes tick { to { transform: translateX(-50%); } }
+.surfer { animation: ride 14s ease-in-out infinite; }
+@keyframes ride { 0% { transform: translate(-80px, 236px) rotate(-4deg); } 50% { transform: translate(520px, 226px) rotate(4deg); } 100% { transform: translate(-80px, 236px) rotate(-4deg); } }
+.gulls { animation: fly 40s linear infinite; }
+@keyframes fly { from { transform: translateX(-400px); } to { transform: translateX(1500px); } }
+.glints path { animation: glint 2.4s ease-in-out infinite alternate; } .glints path:nth-child(2) { animation-delay: -1.2s; }
+@keyframes glint { from { opacity: .25; } to { opacity: .95; } }
+.ticker { border-top-width: 0; }
+@media (prefers-reduced-motion: reduce) { .tk, .surfer, .gulls, .glints path, .now .dot { animation: none !important; } }
+.hfoot a { color: #fff3d0; }
