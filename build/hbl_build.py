@@ -358,8 +358,8 @@ holding = brandify(f'''<!doctype html>
   <div class="onelove"><p class="ol-s">One Love</p><svg viewBox="0 0 420 40" aria-hidden="true"><path d="M10 26 C 120 6 300 6 410 22" stroke="#d62b1f" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M20 32 C 130 14 300 14 400 30" stroke="#f8b800" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M34 38 C 140 22 300 22 388 37" stroke="#138a43" stroke-width="5" fill="none" stroke-linecap="round"/></svg><p class="ol-from">from Surf City</p></div>
 </main>
 <svg class="shore" viewBox="0 96 1440 204" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
-  <circle class="sun" cx="980" cy="210" r="96"/>
-  <g class="glints" stroke="#fff3c4" stroke-linecap="round" stroke-width="3"><path d="M920 236 H1040"/><path d="M945 246 H1015"/></g>
+  <circle class="sun" cx="1120" cy="210" r="96"/>
+  <g class="glints" stroke="#fff3c4" stroke-linecap="round" stroke-width="3"><path d="M1060 236 H1180"/><path d="M1085 246 H1155"/></g>
   <g class="gulls" fill="none" stroke="#0b0b0b" stroke-width="3" stroke-linecap="round"><path d="M300 128 q10 -10 20 0 q10 -10 20 0"/><path d="M360 146 q8 -8 16 0 q8 -8 16 0"/><path d="M250 156 q7 -7 14 0 q7 -7 14 0"/></g>
 
   <g class="waves" transform="translate(-40 0) scale(1.08 1)"><path d="M0 230 C 120 214 240 246 360 230 S 600 214 720 230 S 960 246 1080 230 S 1320 214 1440 230 V300 H0Z" fill="#d62b1f"/>
