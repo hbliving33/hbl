@@ -244,3 +244,4 @@ section.wrap, .band { padding-top: 72px; padding-bottom: 72px; }
 .rep-ad { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px; margin-bottom: 16px; }
 .rep-ad h2 { font-size: 24px; margin-bottom: 10px; } .rep-ad table { width: 100%; border-collapse: collapse; margin-bottom: 14px; }
 .rep-ad th, .rep-ad td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); } .rep-ad th { font-size: 13px; color: var(--muted); } .rep-ad .tot td { font-weight: 800; }
+.comms-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } @media (max-width: 860px) { .comms-2 { grid-template-columns: 1fr; } }
