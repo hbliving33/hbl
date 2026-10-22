@@ -103,3 +103,4 @@ body.playing .sun { animation: pulse .8s ease-in-out infinite alternate; transfo
 .flagbar { width: min(320px, 80vw); height: 8px; margin: 10px auto 14px; }
 .cam figcaption { font-family: "Bungee", system-ui, sans-serif; font-size: 18px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); }
 @keyframes ride { 0% { transform: translate(330px, 266px) rotate(-3deg); } 50% { transform: translate(900px, 260px) rotate(3deg); } 100% { transform: translate(330px, 266px) rotate(-3deg); } }
+.vibe > .logo + .flagbar { margin: 4px auto 10px; } .vibe .kick + .now { margin-top: 14px; }
