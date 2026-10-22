@@ -9,7 +9,7 @@
 // Plan buttons pre-select the plan in the advertiser form
 document.querySelectorAll("[data-plan]").forEach((a) => a.addEventListener("click", () => {
   const sel = document.getElementById("planSel");
-  const v = { Community: "Community, $5 a month", Both: "Community plus HBLiving, $10 a month", Start: "Start a community site (free)" }[a.dataset.plan];
+  const v = { Monthly: "Monthly, $10 a month", Yearly: "Yearly, $100 (two months free)", Neighborhood: "Bring HBLiving to my neighborhood" }[a.dataset.plan];
   if (sel && v) sel.value = v;
 }));
 
