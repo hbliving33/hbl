@@ -145,9 +145,10 @@ section.wrap, .band { padding-top: 72px; padding-bottom: 72px; }
 @media (max-width: 860px) { .faq-wrap { grid-template-columns: 1fr; gap: 0; } }
 
 /* Advertise form */
-.adv { display: grid; grid-template-columns: 1fr 1.3fr; gap: 32px; background: linear-gradient(135deg, #161310 0%, #0b5e33 100%); color: #fff; border-radius: 28px; padding: 44px; box-shadow: var(--shadow); }
-.adv .kicker { color: #9bd8a4; } .adv h2 { font-size: clamp(30px, 4vw, 44px); } .adv em { color: #f8b800; } .adv > div p { color: #efe4cc; }
-.adv-form { display: grid; gap: 14px; background: #fffdf8; color: var(--ink); border-radius: 20px; padding: 24px; }
+.adv { position: relative; overflow: hidden; display: grid; grid-template-columns: 1fr 1.3fr; gap: 32px; background: #f8efdd; color: var(--ink); border: 1px solid var(--line); border-radius: 28px; padding: 50px 44px 44px; box-shadow: var(--shadow); }
+.adv::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 6px; background: linear-gradient(90deg, #d62b1f 0 33.3%, #f8b800 33.3% 66.6%, #138a43 66.6%); }
+.adv .kicker { color: var(--sea); } .adv h2 { font-size: clamp(30px, 4vw, 44px); } .adv em { color: var(--coral); } .adv > div p { color: var(--muted); }
+.adv-form { display: grid; gap: 14px; background: #fff; color: var(--ink); border: 1px solid var(--line); border-radius: 20px; padding: 24px; box-shadow: 0 8px 24px rgba(22, 19, 16, .06); }
 .adv-form .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .adv-form label { display: grid; gap: 6px; font-weight: 700; font-size: 14px; }
 .adv-form input, .adv-form select, .adv-form textarea { font: inherit; font-weight: 400; padding: 11px 13px; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
@@ -236,7 +237,7 @@ section.wrap, .band { padding-top: 72px; padding-bottom: 72px; }
 
 /* The name: HB plus italic Living, wherever it appears in text */
 .nm { white-space: nowrap; } .nm em { font-style: italic; color: #d62b1f; }
-.hero .nm em, .foot .nm em, .adv .nm em, .founding .nm em, .soon-box .nm em { color: #f8b800; }
+.hero .nm em, .foot .nm em, .founding .nm em, .soon-box .nm em { color: #f8b800; }
 .sec-head h2 em .nm em { color: inherit; }
 .mad-links { display: flex; gap: 6px; margin-top: 4px; } .mad-links a { font-size: 13px; font-weight: 700; color: #fff; background: #161310; border-radius: 8px; padding: 5px 11px; text-decoration: none; }
 .rep-form { max-width: 460px; margin-top: 24px; } .rep-bar { display: flex; gap: 14px; align-items: end; justify-content: space-between; margin: 24px 0; }
@@ -253,3 +254,25 @@ section.wrap, .band { padding-top: 72px; padding-bottom: 72px; }
 .ref-big b { font-size: 56px; line-height: 1; color: #138a43; }
 .ref-big span { font-weight: 700; color: var(--muted); }
 #neighborhood .cta-row { margin-top: 20px; }
+
+/* Color lift: bright Surf City daytime */
+:root { --foam: #fffcf5; --card: #ffffff; --line: #eadfc9; }
+.band { background: #eaf7ed; } .band-sand { background: #fff3dc; }
+.hero { background: linear-gradient(180deg, #d9f0fb 0%, #eef8f3 45%, #fff1cf 100%); color: var(--ink); }
+.hero .kicker { color: #138a43; }
+.hero h1 em { color: #d62b1f; }
+.hero .lede { color: #3d4f5a; }
+.hero .btn-ghost { background: rgba(255, 255, 255, .8); color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--ink); }
+.hero .btn-ghost:hover { box-shadow: inset 0 0 0 2px var(--ink); }
+.proof { border-top-color: rgba(22, 19, 16, .12); }
+.proof b { color: var(--ink); } .proof span { color: var(--muted); }
+.pv-card { background: #fff; box-shadow: 0 24px 60px rgba(19, 80, 90, .18); }
+.pv-btns span:nth-child(1) { background: #d62b1f; } .pv-btns span:nth-child(2) { background: #e0a400; color: #161310; } .pv-btns span:nth-child(3) { background: #138a43; }
+.pv-stats { background: rgba(255, 255, 255, .85); border-color: #eadfc9; box-shadow: 0 10px 30px rgba(19, 80, 90, .10); }
+.pv-stats p { color: var(--muted); } .pv-stats b { color: #138a43; } .pv-stats span { color: #3d4f5a; }
+.hero .nm em { color: #d62b1f; }
+.founding { background: #fff3cf; color: #4a3b12; border: 1px solid #f1d27a; }
+.founding b { color: #9a6b00; }
+.founding .nm em { color: #d62b1f; }
+.foot { background: #0e4f2d; color: #dcefe1; }
+.foot small { color: #a9d3b4; }
