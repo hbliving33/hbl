@@ -352,7 +352,7 @@ holding = brandify(f'''<!doctype html>
   <p class="now" id="now" aria-live="polite"><span class="dot"></span><span id="nowTxt"></span></p>
   <figure class="cam">
     <figcaption><span class="live">Live</span> From the pier</figcaption>
-    <div class="cam-frame"><iframe src="https://www.youtube-nocookie.com/embed/mhQjsLBfOoY?autoplay=1&amp;mute=1&amp;rel=0&amp;playsinline=1" title="Live camera on the Huntington Beach Pier" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>
+    <div class="cam-frame"><iframe src="https://www.youtube-nocookie.com/embed/mhQjsLBfOoY?autoplay=1&amp;mute=1&amp;rel=0&amp;playsinline=1&amp;controls=0&amp;disablekb=1&amp;fs=0&amp;iv_load_policy=3" title="Live camera on the Huntington Beach Pier" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>
     <a class="cam-credit" href="https://www.youtube.com/watch?v=mhQjsLBfOoY" rel="noopener" target="_blank">Live camera by the City of Huntington Beach</a>
   </figure>
   <div class="onelove"><p class="ol-s">One Love</p><svg viewBox="0 0 420 40" aria-hidden="true"><path d="M10 26 C 120 6 300 6 410 22" stroke="#d62b1f" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M20 32 C 130 14 300 14 400 30" stroke="#f8b800" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M34 38 C 140 22 300 22 388 37" stroke="#138a43" stroke-width="5" fill="none" stroke-linecap="round"/></svg><p class="ol-from">from Surf City</p></div>
@@ -360,7 +360,7 @@ holding = brandify(f'''<!doctype html>
 <svg class="shore" viewBox="0 96 1440 204" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
   <circle class="sun" cx="980" cy="210" r="96"/>
   <g class="glints" stroke="#fff3c4" stroke-linecap="round" stroke-width="3"><path d="M920 236 H1040"/><path d="M945 246 H1015"/></g>
-  <g class="gulls" fill="none" stroke="#0b0b0b" stroke-width="3" stroke-linecap="round"><path d="M300 70 q10 -10 20 0 q10 -10 20 0"/><path d="M360 100 q8 -8 16 0 q8 -8 16 0"/><path d="M250 115 q7 -7 14 0 q7 -7 14 0"/></g>
+  <g class="gulls" fill="none" stroke="#0b0b0b" stroke-width="3" stroke-linecap="round"><path d="M300 128 q10 -10 20 0 q10 -10 20 0"/><path d="M360 146 q8 -8 16 0 q8 -8 16 0"/><path d="M250 156 q7 -7 14 0 q7 -7 14 0"/></g>
 
   <g class="waves" transform="translate(-40 0) scale(1.08 1)"><path d="M0 230 C 120 214 240 246 360 230 S 600 214 720 230 S 960 246 1080 230 S 1320 214 1440 230 V300 H0Z" fill="#d62b1f"/>
   <path d="M0 250 C 120 236 240 264 360 250 S 600 236 720 250 S 960 264 1080 250 S 1320 236 1440 250 V300 H0Z" fill="#f8b800"/>
