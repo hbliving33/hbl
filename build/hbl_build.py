@@ -377,7 +377,7 @@ holding = brandify(f'''<!doctype html>
   <use href="#word" fill="#000" stroke="#000" stroke-width="22" stroke-linejoin="round" transform="translate(8 8)"/>
   <use href="#word" fill="#000" stroke="#000" stroke-width="22" stroke-linejoin="round"/>
   
-  <use class="ol-fill" href="#word" fill="url(#bands)"/>
+  <use href="#word" fill="url(#bands)"/>
   
   <g class="rec">
     <circle cx="110" cy="104" r="70" fill="#111"/>
