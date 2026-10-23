@@ -40,3 +40,13 @@
   }
   paint(); load(); setInterval(paint, 15000); setInterval(load, 15 * 60 * 1000);
 })();
+
+// Visit counter: counts this visit in the shared database.  No cookies, no personal data.
+(() => {
+  if (/^(localhost|127\.)/.test(location.hostname)) return;
+  const path = location.pathname.replace(/index\.html$/, "") || "/";
+  try { const k = "hbl-hit:" + path; if (sessionStorage.getItem(k)) return; sessionStorage.setItem(k, "1"); } catch (e) {}
+  fetch("https://pfmsokttldrqzdeekytu.supabase.co/rest/v1/rpc/count_hit", { method: "POST", keepalive: true,
+    headers: { apikey: "sb_publishable_ZRwXYQ7XFunCuCQyY5h75g_Cn7lCxJG", "Content-Type": "application/json" },
+    body: JSON.stringify({ p_site: "hbliving", p_path: path }) }).catch(() => {});
+})();
