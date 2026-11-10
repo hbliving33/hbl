@@ -37,8 +37,10 @@
   .tile h2 { font-size: 27px; font-weight: 700; margin: 0 0 14px; line-height: 1.2; }
   .meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
   .tag { display: inline-block; font-size: 16px; font-weight: 700; padding: 6px 10px; border-radius: 3px; letter-spacing: 0.2px; }
-  .svc { color: #fff; }
-  .who { background: #2a2d35; color: var(--text); }
+  .who-both { background: #14b8a6; color: #04201c; }
+  .who-eric { background: #f59e0b; color: #1f1400; }
+  .who-vicki { background: #ec4899; color: #2a0716; }
+  .len { background: #3b82f6; color: #fff; }
   .night { background: transparent; border: 2px solid var(--line); color: var(--text); padding: 4px 9px; }
 
   table { width: 100%; border-collapse: collapse; background: var(--panel); border: 2px solid var(--line); border-radius: 6px; overflow: hidden; }
@@ -73,10 +75,9 @@
   </div>
   <div class="controls">
     <div class="group" role="group" aria-label="Who is watching">
-      <button type="button" data-who="all" aria-pressed="true">Everyone</button>
       <button type="button" data-who="Eric" aria-pressed="false">Eric</button>
       <button type="button" data-who="Vicki" aria-pressed="false">Vicki</button>
-      <button type="button" data-who="Together" aria-pressed="false">Together</button>
+      <button type="button" data-who="Together" aria-pressed="true">Together</button>
     </div>
     <div class="group" role="group" aria-label="Which services">
       <button type="button" data-subs="all" aria-pressed="true">All Services</button>
@@ -110,12 +111,14 @@
   const SUPABASE_URL = "https://raooyhmkovzshmhgarwm.supabase.co";
   const SUPABASE_KEY = "sb_publishable_apjQYn1UxVPG_Ecwxs3rdQ_ovJix8Fo";
 
+  // Each service always gets the same color: [background, text].
   const SERVICE_COLORS = {
-    "netflix": "#c4111b", "hulu": "#127a3e", "max": "#2c3fd6", "hbo max": "#2c3fd6",
-    "disney+": "#113ccf", "prime video": "#0a6b9e", "amazon prime": "#0a6b9e", "apple tv+": "#3b3d44",
-    "apple tv": "#3b3d44", "peacock": "#6a3fb5", "paramount+": "#0057d9", "youtube tv": "#cc1f1f",
-    "youtube": "#cc1f1f", "espn+": "#a3171f", "tubi": "#5b2bb5", "fx": "#3b3d44", "abc": "#3b3d44",
-    "nbc": "#3b3d44", "cbs": "#3b3d44", "fox": "#3b3d44", "starz": "#3b3d44", "showtime": "#a3171f", "britbox": "#0b5cab", "acorn tv": "#3b6e2f"
+    "netflix": ["#d81f26", "#fff"], "apple tv": ["#f2f3f5", "#111"], "apple tv+": ["#f2f3f5", "#111"],
+    "britbox": ["#0d2a6b", "#fff"], "hulu": ["#1ce783", "#0b1a12"], "max": ["#5b2be0", "#fff"], "hbo max": ["#5b2be0", "#fff"],
+    "disney+": ["#0e3fa8", "#fff"], "prime video": ["#00a8e1", "#04121a"], "amazon prime": ["#00a8e1", "#04121a"],
+    "peacock": ["#ffd200", "#141414"], "paramount+": ["#0064ff", "#fff"], "youtube tv": ["#ff0000", "#fff"],
+    "youtube": ["#ff0000", "#fff"], "espn+": ["#b5121b", "#fff"], "tubi": ["#7a2cff", "#fff"],
+    "acorn tv": ["#2e7d32", "#fff"], "starz": ["#000", "#fff"], "showtime": ["#b5121b", "#fff"]
   };
   const NIGHTS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
   const WHO_LABEL = { "Eric": "Eric", "Vicki": "Vicki", "Both": "Together" };
@@ -123,17 +126,18 @@
   let shows = [];
   let subscribed = {};
   let subs = "all";
-  let who = "all";
+  let who = "Together";
   let view = "tiles";
   let sortKey = "title", sortDir = 1;
 
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-  const svcColor = (s) => SERVICE_COLORS[String(s || "").trim().toLowerCase()] || "#3b3d44";
+  const svcStyle = (s) => { const c = SERVICE_COLORS[String(s || "").trim().toLowerCase()] || ["#6b7280", "#fff"]; return "background:" + c[0] + ";color:" + c[1]; };
+  const whoClass = (w) => w === "Eric" ? "who-eric" : w === "Vicki" ? "who-vicki" : "who-both";
 
   const isOff = (s) => subscribed[String(s.service).toLowerCase()] === false;
   function filtered() {
-    let list = shows.filter((s) => subs === "all" || !isOff(s)).filter((s) => who === "all" ? true : who === "Together" ? s.watcher === "Both" : (s.watcher === who || s.watcher === "Both"));
+    let list = shows.filter((s) => subs === "all" || !isOff(s)).filter((s) => who === "Together" ? s.watcher === "Both" : s.watcher === who);
     list.sort((a, b) => {
       if (isOff(a) !== isOff(b)) return isOff(a) ? 1 : -1;
       let av, bv;
@@ -157,18 +161,18 @@
 
     $("tiles").innerHTML = list.map((s) =>
       '<article class="tile' + (isOff(s) ? ' off' : '') + '"><div><h2>' + esc(s.title) + '</h2>' + (isOff(s) ? '<p class="gone">Not subscribed right now</p>' : '') + '</div><div class="meta">' +
-      '<span class="tag svc" style="background:' + svcColor(s.service) + '">' + esc(s.service) + '</span>' +
-      '<span class="tag who">' + esc(WHO_LABEL[s.watcher] || s.watcher) + '</span>' +
+      '<span class="tag svc" style="' + svcStyle(s.service) + '">' + esc(s.service) + '</span>' +
+      '<span class="tag ' + whoClass(s.watcher) + '">' + esc(WHO_LABEL[s.watcher] || s.watcher) + '</span>' +
       (s.night ? '<span class="tag night">' + esc(s.night) + 's</span>' : '') +
-      (s.avg_minutes ? '<span class="tag night">' + esc(s.avg_minutes) + ' min</span>' : '') +
+      (s.avg_minutes ? '<span class="tag len">' + esc(s.avg_minutes) + ' min</span>' : '') +
       '</div></article>').join("");
 
     $("rows").innerHTML = list.map((s) =>
       '<tr' + (isOff(s) ? ' class="off"' : '') + '><td class="title">' + esc(s.title) + '</td>' +
-      '<td><span class="tag svc" style="background:' + svcColor(s.service) + '">' + esc(s.service) + '</span></td>' +
-      '<td>' + esc(WHO_LABEL[s.watcher] || s.watcher) + '</td>' +
+      '<td><span class="tag svc" style="' + svcStyle(s.service) + '">' + esc(s.service) + '</span></td>' +
+      '<td><span class="tag ' + whoClass(s.watcher) + '">' + esc(WHO_LABEL[s.watcher] || s.watcher) + '</span></td>' +
       '<td>' + (s.night ? esc(s.night) + 's' : '') + '</td>' +
-      '<td>' + (s.avg_minutes ? esc(s.avg_minutes) + ' min' : '') + '</td></tr>').join("");
+      '<td>' + (s.avg_minutes ? '<span class="tag len">' + esc(s.avg_minutes) + ' min</span>' : '') + '</td></tr>').join("");
 
     document.querySelectorAll("th[data-key]").forEach((th) => {
       const on = th.dataset.key === sortKey;
@@ -190,7 +194,7 @@
   }));
 
   function save() { try { localStorage.setItem("tv-prefs", JSON.stringify({ who, view, subs })); } catch (e) {} }
-  try { const p = JSON.parse(localStorage.getItem("tv-prefs") || "{}"); if (p.who) who = p.who; if (p.view) view = p.view; if (p.subs) subs = p.subs; } catch (e) {}
+  try { const p = JSON.parse(localStorage.getItem("tv-prefs") || "{}"); if (["Eric","Vicki","Together"].includes(p.who)) who = p.who; if (p.view) view = p.view; if (p.subs) subs = p.subs; } catch (e) {}
   press("who", who); press("view", view); press("subs", subs);
 
   async function load() {
