@@ -91,6 +91,7 @@
       <th data-key="service">Service <span class="arrow">&#9650;</span></th>
       <th data-key="watcher">Watching <span class="arrow">&#9650;</span></th>
       <th data-key="night">Night <span class="arrow">&#9650;</span></th>
+      <th data-key="avg_minutes">Avg. Length <span class="arrow">&#9650;</span></th>
     </tr></thead>
     <tbody id="rows"></tbody>
   </table>
@@ -127,6 +128,7 @@
     list.sort((a, b) => {
       let av, bv;
       if (sortKey === "night") { av = a.night ? NIGHTS.indexOf(a.night) : 99; bv = b.night ? NIGHTS.indexOf(b.night) : 99; }
+      else if (sortKey === "avg_minutes") { av = a.avg_minutes || 9999; bv = b.avg_minutes || 9999; }
       else if (sortKey === "watcher") { av = WHO_LABEL[a.watcher] || ""; bv = WHO_LABEL[b.watcher] || ""; }
       else { av = String(a[sortKey] || "").toLowerCase(); bv = String(b[sortKey] || "").toLowerCase(); }
       if (av < bv) return -sortDir;
@@ -148,13 +150,15 @@
       '<span class="tag svc" style="background:' + svcColor(s.service) + '">' + esc(s.service) + '</span>' +
       '<span class="tag who">' + esc(WHO_LABEL[s.watcher] || s.watcher) + '</span>' +
       (s.night ? '<span class="tag night">' + esc(s.night) + 's</span>' : '') +
+      (s.avg_minutes ? '<span class="tag night">' + esc(s.avg_minutes) + ' min</span>' : '') +
       '</div></article>').join("");
 
     $("rows").innerHTML = list.map((s) =>
       '<tr><td class="title">' + esc(s.title) + '</td>' +
       '<td><span class="tag svc" style="background:' + svcColor(s.service) + '">' + esc(s.service) + '</span></td>' +
       '<td>' + esc(WHO_LABEL[s.watcher] || s.watcher) + '</td>' +
-      '<td>' + (s.night ? esc(s.night) + 's' : '') + '</td></tr>').join("");
+      '<td>' + (s.night ? esc(s.night) + 's' : '') + '</td>' +
+      '<td>' + (s.avg_minutes ? esc(s.avg_minutes) + ' min' : '') + '</td></tr>').join("");
 
     document.querySelectorAll("th[data-key]").forEach((th) => {
       const on = th.dataset.key === sortKey;
@@ -180,7 +184,7 @@
 
   async function load() {
     try {
-      const res = await fetch(SUPABASE_URL + "/rest/v1/tv_shows?select=title,service,watcher,night&order=title.asc", {
+      const res = await fetch(SUPABASE_URL + "/rest/v1/tv_shows?select=title,service,watcher,night,avg_minutes&order=title.asc", {
         headers: { apikey: SUPABASE_KEY }, cache: "no-store"
       });
       if (!res.ok) throw new Error(res.status);
