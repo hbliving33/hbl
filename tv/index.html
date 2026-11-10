@@ -55,6 +55,24 @@
   .error { color: #ffb4a8; }
   .off { opacity: 0.45; }
   .gone { margin: -6px 0 14px; font-size: 17px; font-weight: 600; color: var(--muted); }
+  .addbtn { appearance: none; border: 2px solid var(--accent); background: var(--accent); color: #0e0f12; font: inherit; font-size: 19px;
+    font-weight: 700; padding: 14px 22px; min-height: 54px; border-radius: 4px; cursor: pointer; }
+  dialog { background: var(--panel); color: var(--text); border: 2px solid var(--line); border-radius: 6px; padding: 28px; width: min(560px, calc(100vw - 32px)); }
+  dialog::backdrop { background: rgba(0,0,0,0.7); }
+  dialog h2 { margin: 0 0 20px; font-size: 28px; }
+  .field { margin-bottom: 18px; }
+  .field > label, .field > .lbl { display: block; font-size: 16px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 8px; }
+  .field input, .field select { width: 100%; font: inherit; font-size: 21px; color: var(--text); background: var(--bg); border: 2px solid var(--line); border-radius: 4px; padding: 12px 14px; min-height: 54px; }
+  .field .group { width: 100%; }
+  .field .group button { flex: 1; }
+  .field > label.remember { display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 500; color: var(--muted); margin: 10px 0 0; text-transform: none; letter-spacing: 0; }
+  .remember input { width: 22px; height: 22px; min-height: 0; }
+  .actions { display: flex; gap: 12px; margin-top: 24px; }
+  .actions button { flex: 1; font: inherit; font-size: 19px; font-weight: 700; min-height: 54px; border-radius: 4px; cursor: pointer; }
+  .actions .cancel { background: transparent; color: var(--text); border: 2px solid var(--line); }
+  .actions .save { background: var(--accent); color: #0e0f12; border: 2px solid var(--accent); }
+  .msg { min-height: 26px; margin-top: 14px; font-size: 18px; font-weight: 600; }
+  .msg.bad { color: #ffb4a8; } .msg.good { color: #5eead4; }
   [hidden] { display: none !important; }
 
   @media (max-width: 640px) {
@@ -87,6 +105,7 @@
       <button type="button" data-view="tiles" aria-pressed="true">Tiles</button>
       <button type="button" data-view="table" aria-pressed="false">Table</button>
     </div>
+    <button type="button" class="addbtn" id="addOpen">+ Add Show</button>
   </div>
 </header>
 
@@ -105,6 +124,27 @@
   <div class="empty" id="empty" hidden>Nothing on the list yet.</div>
   <div class="error" id="error" hidden>Couldn't load the list.  Pull down to refresh.</div>
 </main>
+
+<dialog id="addDlg">
+  <form id="addForm" method="dialog" autocomplete="off">
+    <h2>Add a Show</h2>
+    <div class="field"><label for="fTitle">Show</label><input id="fTitle" maxlength="80" required autocapitalize="words"></div>
+    <div class="field"><label for="fService">Service</label><select id="fService" required></select></div>
+    <div class="field"><span class="lbl">Who's watching</span>
+      <div class="group" role="group" aria-label="Who is watching">
+        <button type="button" data-fwho="Eric" aria-pressed="false">Eric</button>
+        <button type="button" data-fwho="Vicki" aria-pressed="false">Vicki</button>
+        <button type="button" data-fwho="Both" aria-pressed="true">Together</button>
+      </div>
+    </div>
+    <div class="field"><label for="fNight">Night (live shows only)</label>
+      <select id="fNight"><option value="">None, it streams</option><option>Sunday</option><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option></select></div>
+    <div class="field"><label for="fPin">PIN</label><input id="fPin" type="password" inputmode="numeric" maxlength="12" required>
+      <label class="remember"><input type="checkbox" id="fRemember" checked> Remember the PIN on this device</label></div>
+    <div class="msg" id="fMsg" aria-live="polite"></div>
+    <div class="actions"><button type="button" class="cancel" id="addCancel">Cancel</button><button type="submit" class="save" id="addSave">Add</button></div>
+  </form>
+</dialog>
 
 <script>
 (() => {
@@ -125,6 +165,7 @@
 
   let shows = [];
   let subscribed = {};
+  let services = [];
   let subs = "all";
   let who = "Together";
   let view = "tiles";
@@ -197,11 +238,51 @@
   try { const p = JSON.parse(localStorage.getItem("tv-prefs") || "{}"); if (["Eric","Vicki","Together"].includes(p.who)) who = p.who; if (p.view) view = p.view; if (p.subs) subs = p.subs; } catch (e) {}
   press("who", who); press("view", view); press("subs", subs);
 
+  // Add a show
+  const dlg = $("addDlg");
+  let fwho = "Both";
+  document.querySelectorAll("[data-fwho]").forEach((b) => b.addEventListener("click", () => { fwho = b.dataset.fwho; press("fwho", fwho); }));
+  $("addOpen").addEventListener("click", () => {
+    const names = services.map((r) => r.name).sort((a, b) => a.localeCompare(b));
+    $("fService").innerHTML = '<option value="">Pick one</option>' + names.map((n) => '<option>' + esc(n) + '</option>').join("");
+    $("fTitle").value = ""; $("fNight").value = ""; $("fMsg").textContent = ""; $("fMsg").className = "msg";
+    fwho = "Both"; press("fwho", fwho);
+    try { $("fPin").value = localStorage.getItem("tv-pin") || ""; } catch (e) { $("fPin").value = ""; }
+    if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", "");
+    setTimeout(() => $("fTitle").focus(), 50);
+  });
+  $("addCancel").addEventListener("click", () => dlg.close());
+  $("addForm").addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const msg = $("fMsg"); msg.className = "msg"; msg.textContent = "Adding…";
+    const pin = $("fPin").value.trim();
+    $("addSave").disabled = true;
+    try {
+      const res = await fetch(SUPABASE_URL + "/rest/v1/rpc/tv_add_show", {
+        method: "POST", headers: { apikey: SUPABASE_KEY, "Content-Type": "application/json" },
+        body: JSON.stringify({ p_pin: pin, p_title: $("fTitle").value, p_service: $("fService").value, p_watcher: fwho, p_night: $("fNight").value || null })
+      });
+      const out = res.ok ? await res.json() : "Something went wrong.  Try again.";
+      if (out === "ok") {
+        try { if ($("fRemember").checked) localStorage.setItem("tv-pin", pin); else localStorage.removeItem("tv-pin"); } catch (e) {}
+        msg.className = "msg good"; msg.textContent = "Added.";
+        await load();
+        setTimeout(() => dlg.close(), 700);
+      } else {
+        if (out === "Wrong PIN.") { try { localStorage.removeItem("tv-pin"); } catch (e) {} }
+        msg.className = "msg bad"; msg.textContent = out;
+      }
+    } catch (e) {
+      msg.className = "msg bad"; msg.textContent = "No connection.  Try again.";
+    }
+    $("addSave").disabled = false;
+  });
+
   async function load() {
     try {
       const hdr = { headers: { apikey: SUPABASE_KEY }, cache: "no-store" };
       const sres = await fetch(SUPABASE_URL + "/rest/v1/tv_services?select=name,subscribed", hdr);
-      if (sres.ok) { subscribed = {}; (await sres.json()).forEach((r) => { subscribed[String(r.name).toLowerCase()] = r.subscribed; }); }
+      if (sres.ok) { subscribed = {}; services = await sres.json(); services.forEach((r) => { subscribed[String(r.name).toLowerCase()] = r.subscribed; }); }
       const res = await fetch(SUPABASE_URL + "/rest/v1/tv_shows?select=title,service,watcher,night,avg_minutes&order=title.asc", {
         headers: { apikey: SUPABASE_KEY }, cache: "no-store"
       });
