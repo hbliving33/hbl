@@ -42,16 +42,15 @@
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; align-items: start; }
   .card { background: var(--white); border: 1px solid var(--line); border-top: 6px solid var(--navy); border-radius: 6px;
     padding: 20px 22px 20px; display: flex; flex-direction: column; box-shadow: 0 2px 10px rgba(10, 49, 97, 0.08); }
-  .card h2 { font-size: 26px; font-weight: 800; margin: 0 0 8px; line-height: 1.2; color: var(--navy); }
-  details.sum { margin: 0 0 16px; }
-  details.sum summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 700;
-    color: var(--navy); border: 2px solid var(--line); border-radius: 4px; padding: 6px 12px; min-height: 40px; user-select: none; }
-  details.sum summary::-webkit-details-marker { display: none; }
-  details.sum summary::after { content: "\25BE"; font-size: 14px; transition: transform 0.15s; }
-  details.sum[open] summary::after { transform: rotate(180deg); }
-  details.sum[open] summary { border-color: var(--navy); }
-  .desc { margin: 12px 0 0; font-size: 18px; line-height: 1.5; color: var(--ink); }
-  .gone { margin: -4px 0 8px; font-size: 14px; font-weight: 800; color: var(--red); text-transform: uppercase; letter-spacing: 0.6px; }
+  .card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+  .card h2 { font-size: 26px; font-weight: 800; margin: 0; line-height: 1.2; color: var(--navy); }
+  .sumbtn { flex: none; appearance: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; font: inherit; font-size: 0;
+    color: var(--navy); background: var(--white); border: 2px solid var(--line); border-radius: 4px; width: 38px; height: 34px; padding: 0; }
+  .sumbtn::after { content: "\25BE"; font-size: 15px; transition: transform 0.15s; }
+  .sumbtn[aria-expanded="true"] { border-color: var(--navy); }
+  .sumbtn[aria-expanded="true"]::after { transform: rotate(180deg); }
+  .desc { margin: 0 0 14px; font-size: 18px; line-height: 1.5; color: var(--ink); }
+  .gone { margin: -8px 0 12px; font-size: 14px; font-weight: 800; color: var(--red); text-transform: uppercase; letter-spacing: 0.6px; }
   .meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: auto; }
   .tag { display: inline-block; font-size: 16px; font-weight: 700; padding: 5px 10px; border-radius: 3px; border: 2px solid transparent; }
   .svc { background: var(--navy); color: var(--white); border-color: var(--navy); }
@@ -59,7 +58,7 @@
   .len { background: var(--white); color: var(--navy); border-color: var(--navy); }
   .night { background: var(--white); color: var(--red); border-color: var(--red); }
   .card.off { border-top-color: #9aa4b2; }
-  .card.off h2, .card.off .desc, .card.off summary { color: #8a94a3; }
+  .card.off h2, .card.off .desc, .card.off .sumbtn { color: #8a94a3; }
   .card.off .svc, .card.off .who { background: #9aa4b2; border-color: #9aa4b2; }
   .card.off .len { color: #8a94a3; border-color: #9aa4b2; }
 
@@ -99,11 +98,25 @@
   [hidden] { display: none !important; }
 
   @media (max-width: 640px) {
-    body { font-size: 18px; }
-    h1 { font-size: 30px; }
-    .group button, .addbtn { padding: 11px 16px; font-size: 17px; }
-    .grid { grid-template-columns: 1fr; }
-    th, td { padding: 12px 12px; font-size: 17px; }
+    body { font-size: 17px; padding: max(14px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) 28px max(12px, env(safe-area-inset-left)); }
+    header { gap: 10px; margin-bottom: 14px; }
+    h1 { font-size: 24px; }
+    .count { font-size: 14px; }
+    .controls { gap: 8px; width: 100%; flex-wrap: nowrap; }
+    .group button, .addbtn { padding: 8px 12px; font-size: 15px; min-height: 40px; }
+    .addbtn { margin-left: auto; }
+    .addbtn .long { display: none; }
+    .grid { grid-template-columns: 1fr; gap: 10px; }
+    .card { padding: 12px 14px; border-top-width: 4px; }
+    .card-top { margin-bottom: 10px; align-items: center; }
+    .card h2 { font-size: 19px; }
+    .sumbtn { width: 34px; height: 30px; }
+    .desc { font-size: 15px; margin-bottom: 10px; }
+    .gone { font-size: 12px; margin: -6px 0 8px; }
+    .meta { gap: 6px; }
+    .tag { font-size: 13px; padding: 3px 7px; }
+    th, td { padding: 10px 8px; font-size: 15px; }
+    th { font-size: 12px; letter-spacing: 0.4px; }
   }
 </style>
 </head>
@@ -122,7 +135,7 @@
       <button type="button" data-view="cards" aria-pressed="true">Cards</button>
       <button type="button" data-view="table" aria-pressed="false">Table</button>
     </div>
-    <button type="button" class="addbtn" id="addOpen">+ Add Show</button>
+    <button type="button" class="addbtn" id="addOpen">+ Add<span class="long"> Show</span></button>
   </div>
 </header>
 
@@ -212,9 +225,9 @@
 
     $("cards").innerHTML = list.map((s) =>
       '<article class="card' + (isOff(s) ? ' off' : '') + '">' +
-      '<h2>' + esc(s.title) + '</h2>' +
+      '<div class="card-top"><h2>' + esc(s.title) + '</h2><button type="button" class="sumbtn" aria-expanded="false" aria-label="Show summary" title="Summary"><span class="sumlbl">Summary</span></button></div>' +
       (isOff(s) ? '<p class="gone">Not subscribed right now</p>' : '') +
-      '<details class="sum"><summary>Summary</summary><p class="desc">' + esc(s.description || "Description coming soon.") + '</p></details>' +
+      '<p class="desc" hidden>' + esc(s.description || "Description coming soon.") + '</p>' +
       '<div class="meta">' + tags(s) + '</div></article>').join("");
 
     $("rows").innerHTML = list.map((s) =>
@@ -230,6 +243,13 @@
       th.querySelector(".arrow").innerHTML = on && sortDir === -1 ? "&#9660;" : "&#9650;";
     });
   }
+
+  $("cards").addEventListener("click", (ev) => {
+    const btn = ev.target.closest(".sumbtn"); if (!btn) return;
+    const open = btn.getAttribute("aria-expanded") !== "true";
+    btn.setAttribute("aria-expanded", String(open));
+    btn.closest(".card").querySelector(".desc").hidden = !open;
+  });
 
   function press(attr, value) {
     document.querySelectorAll("[data-" + attr + "]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset[attr] === value)));
