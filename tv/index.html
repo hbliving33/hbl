@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <title>What We're Watching</title>
-<meta name="theme-color" content="#0e0f12">
+<meta name="theme-color" content="#0a3161">
 <link rel="icon" href="../assets/img/mark.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../assets/img/icon-180.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -14,74 +14,96 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0e0f12; --panel: #17191e; --line: #2a2d35; --text: #f4f5f7; --muted: #a3a8b4;
-    --accent: #ffffff;
+    --navy: #0a3161; --red: #b31942; --white: #ffffff;
+    --page: #f6f7fa; --ink: #0d1b2e; --muted: #556275; --line: #d5dbe5;
   }
   * { box-sizing: border-box; }
-  html, body { margin: 0; background: var(--bg); color: var(--text); }
-  body { font-family: Inter, system-ui, -apple-system, sans-serif; font-size: 20px; line-height: 1.35;
-    padding: max(24px, env(safe-area-inset-top)) max(28px, env(safe-area-inset-right)) 40px max(28px, env(safe-area-inset-left)); }
+  html { background: var(--page); }
+  body { margin: 0; color: var(--ink); font-family: Inter, system-ui, -apple-system, sans-serif; font-size: 20px; line-height: 1.4;
+    padding: max(24px, env(safe-area-inset-top)) max(28px, env(safe-area-inset-right)) 40px max(28px, env(safe-area-inset-left));
+    min-height: 100vh; position: relative; }
+  /* Faint American flag behind everything */
+  body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0.07;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1900 1000' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3Cpolygon id='s' points='0,-18 5.3,-5.6 18,-5.6 7.8,2.1 11.6,14.6 0,7 -11.6,14.6 -7.8,2.1 -18,-5.6 -5.3,-5.6' fill='%23ffffff'/%3E%3Cpattern id='p1' width='126.7' height='107.7' patternUnits='userSpaceOnUse'%3E%3Cuse href='%23s' x='63.3' y='53.8'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='1900' height='1000' fill='%23ffffff'/%3E%3Cg fill='%23b31942'%3E%3Crect y='0' width='1900' height='76.9'/%3E%3Crect y='153.8' width='1900' height='76.9'/%3E%3Crect y='307.7' width='1900' height='76.9'/%3E%3Crect y='461.5' width='1900' height='76.9'/%3E%3Crect y='615.4' width='1900' height='76.9'/%3E%3Crect y='769.2' width='1900' height='76.9'/%3E%3Crect y='923.1' width='1900' height='76.9'/%3E%3C/g%3E%3Crect width='760' height='538.5' fill='%230a3161'/%3E%3Crect width='760' height='538.5' fill='url(%23p1)'/%3E%3Crect x='63.3' y='53.8' width='633.4' height='430.8' fill='url(%23p1)'/%3E%3C/svg%3E") center / cover no-repeat;
+  }
   header { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 24px; }
-  h1 { font-size: 40px; font-weight: 800; margin: 0; letter-spacing: -0.5px; }
-  .count { color: var(--muted); font-size: 18px; font-weight: 500; margin-top: 4px; }
+  h1 { font-size: 40px; font-weight: 800; margin: 0; letter-spacing: -0.5px; color: var(--navy); }
+  .count { color: var(--muted); font-size: 18px; font-weight: 600; margin-top: 2px; }
   .controls { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
-  .group { display: flex; border: 2px solid var(--line); border-radius: 4px; overflow: hidden; }
-  .group button { appearance: none; border: 0; background: transparent; color: var(--muted); font: inherit; font-size: 19px;
-    font-weight: 600; padding: 14px 22px; min-height: 54px; cursor: pointer; border-right: 2px solid var(--line); }
+  .group { display: flex; border: 2px solid var(--navy); border-radius: 4px; overflow: hidden; background: var(--white); }
+  .group button { appearance: none; border: 0; background: transparent; color: var(--navy); font: inherit; font-size: 19px;
+    font-weight: 700; padding: 13px 24px; min-height: 52px; cursor: pointer; border-right: 2px solid var(--navy); }
   .group button:last-child { border-right: 0; }
-  .group button[aria-pressed="true"] { background: var(--accent); color: #0e0f12; }
+  .group button[aria-pressed="true"] { background: var(--navy); color: var(--white); }
+  .addbtn { appearance: none; border: 2px solid var(--red); background: var(--red); color: var(--white); font: inherit; font-size: 19px;
+    font-weight: 700; padding: 13px 24px; min-height: 52px; border-radius: 4px; cursor: pointer; }
 
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
-  .tile { background: var(--panel); border: 2px solid var(--line); border-radius: 6px; padding: 22px 22px 20px;
-    display: flex; flex-direction: column; justify-content: space-between; min-height: 168px; }
-  .tile h2 { font-size: 27px; font-weight: 700; margin: 0 0 14px; line-height: 1.2; }
-  .meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-  .tag { display: inline-block; font-size: 16px; font-weight: 700; padding: 6px 10px; border-radius: 3px; letter-spacing: 0.2px; }
-  .who-both { background: #14b8a6; color: #04201c; }
-  .who-eric { background: #f59e0b; color: #1f1400; }
-  .who-vicki { background: #ec4899; color: #2a0716; }
-  .len { background: #3b82f6; color: #fff; }
-  .night { background: transparent; border: 2px solid var(--line); color: var(--text); padding: 4px 9px; }
+  /* Cards */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; align-items: start; }
+  .card { background: var(--white); border: 1px solid var(--line); border-top: 6px solid var(--navy); border-radius: 6px;
+    padding: 20px 22px 20px; display: flex; flex-direction: column; box-shadow: 0 2px 10px rgba(10, 49, 97, 0.08); }
+  .card h2 { font-size: 26px; font-weight: 800; margin: 0 0 8px; line-height: 1.2; color: var(--navy); }
+  details.sum { margin: 0 0 16px; }
+  details.sum summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 700;
+    color: var(--navy); border: 2px solid var(--line); border-radius: 4px; padding: 6px 12px; min-height: 40px; user-select: none; }
+  details.sum summary::-webkit-details-marker { display: none; }
+  details.sum summary::after { content: "\25BE"; font-size: 14px; transition: transform 0.15s; }
+  details.sum[open] summary::after { transform: rotate(180deg); }
+  details.sum[open] summary { border-color: var(--navy); }
+  .desc { margin: 12px 0 0; font-size: 18px; line-height: 1.5; color: var(--ink); }
+  .gone { margin: -4px 0 8px; font-size: 14px; font-weight: 800; color: var(--red); text-transform: uppercase; letter-spacing: 0.6px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: auto; }
+  .tag { display: inline-block; font-size: 16px; font-weight: 700; padding: 5px 10px; border-radius: 3px; border: 2px solid transparent; }
+  .svc { background: var(--navy); color: var(--white); border-color: var(--navy); }
+  .who { background: var(--red); color: var(--white); border-color: var(--red); }
+  .len { background: var(--white); color: var(--navy); border-color: var(--navy); }
+  .night { background: var(--white); color: var(--red); border-color: var(--red); }
+  .card.off { border-top-color: #9aa4b2; }
+  .card.off h2, .card.off .desc, .card.off summary { color: #8a94a3; }
+  .card.off .svc, .card.off .who { background: #9aa4b2; border-color: #9aa4b2; }
+  .card.off .len { color: #8a94a3; border-color: #9aa4b2; }
 
-  table { width: 100%; border-collapse: collapse; background: var(--panel); border: 2px solid var(--line); border-radius: 6px; overflow: hidden; }
-  th, td { text-align: left; padding: 18px 20px; border-bottom: 2px solid var(--line); font-size: 21px; }
-  th { font-size: 16px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); cursor: pointer; user-select: none; white-space: nowrap; }
-  th .arrow { display: inline-block; width: 18px; color: var(--muted); }
-  th[aria-sort] .arrow { color: var(--text); }
+  /* Table */
+  table { width: 100%; border-collapse: collapse; background: var(--white); border: 1px solid var(--line); border-radius: 6px; overflow: hidden;
+    box-shadow: 0 2px 10px rgba(10, 49, 97, 0.08); }
+  th, td { text-align: left; padding: 16px 20px; border-bottom: 1px solid var(--line); font-size: 20px; }
+  th { background: var(--navy); color: var(--white); font-size: 15px; text-transform: uppercase; letter-spacing: 0.8px; cursor: pointer; user-select: none; white-space: nowrap; }
+  th .arrow { display: inline-block; width: 18px; opacity: 0.55; }
+  th[aria-sort] .arrow { opacity: 1; }
   tr:last-child td { border-bottom: 0; }
-  td.title { font-weight: 700; font-size: 23px; }
+  td.title { font-weight: 800; color: var(--navy); }
+  tr.off td { color: #8a94a3; }
+  tr.off .svc, tr.off .who { background: #9aa4b2; border-color: #9aa4b2; }
 
-  .empty, .error { text-align: center; color: var(--muted); padding: 60px 20px; font-size: 22px; border: 2px dashed var(--line); border-radius: 6px; }
-  .error { color: #ffb4a8; }
-  .off { opacity: 0.45; }
-  .gone { margin: -6px 0 14px; font-size: 17px; font-weight: 600; color: var(--muted); }
-  .addbtn { appearance: none; border: 2px solid var(--accent); background: var(--accent); color: #0e0f12; font: inherit; font-size: 19px;
-    font-weight: 700; padding: 14px 22px; min-height: 54px; border-radius: 4px; cursor: pointer; }
-  dialog { background: var(--panel); color: var(--text); border: 2px solid var(--line); border-radius: 6px; padding: 28px; width: min(560px, calc(100vw - 32px)); }
-  dialog::backdrop { background: rgba(0,0,0,0.7); }
-  dialog h2 { margin: 0 0 20px; font-size: 28px; }
+  .empty, .error { text-align: center; color: var(--muted); padding: 60px 20px; font-size: 22px; border: 2px dashed var(--line); border-radius: 6px; background: var(--white); }
+  .error { color: var(--red); }
+
+  /* Add dialog */
+  dialog { background: var(--white); color: var(--ink); border: 0; border-top: 6px solid var(--red); border-radius: 6px; padding: 28px; width: min(560px, calc(100vw - 32px)); }
+  dialog::backdrop { background: rgba(10, 49, 97, 0.55); }
+  dialog h2 { margin: 0 0 20px; font-size: 28px; color: var(--navy); }
   .field { margin-bottom: 18px; }
-  .field > label, .field > .lbl { display: block; font-size: 16px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 8px; }
-  .field input, .field select { width: 100%; font: inherit; font-size: 21px; color: var(--text); background: var(--bg); border: 2px solid var(--line); border-radius: 4px; padding: 12px 14px; min-height: 54px; }
+  .field > label, .field > .lbl { display: block; font-size: 15px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 8px; }
+  .field input, .field select { width: 100%; font: inherit; font-size: 21px; color: var(--ink); background: var(--white); border: 2px solid var(--line); border-radius: 4px; padding: 11px 14px; min-height: 52px; }
+  .field input:focus, .field select:focus { outline: none; border-color: var(--navy); }
   .field .group { width: 100%; }
   .field .group button { flex: 1; }
   .field > label.remember { display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 500; color: var(--muted); margin: 10px 0 0; text-transform: none; letter-spacing: 0; }
   .remember input { width: 22px; height: 22px; min-height: 0; }
   .actions { display: flex; gap: 12px; margin-top: 24px; }
-  .actions button { flex: 1; font: inherit; font-size: 19px; font-weight: 700; min-height: 54px; border-radius: 4px; cursor: pointer; }
-  .actions .cancel { background: transparent; color: var(--text); border: 2px solid var(--line); }
-  .actions .save { background: var(--accent); color: #0e0f12; border: 2px solid var(--accent); }
-  .msg { min-height: 26px; margin-top: 14px; font-size: 18px; font-weight: 600; }
-  .msg.bad { color: #ffb4a8; } .msg.good { color: #5eead4; }
+  .actions button { flex: 1; font: inherit; font-size: 19px; font-weight: 700; min-height: 52px; border-radius: 4px; cursor: pointer; }
+  .actions .cancel { background: var(--white); color: var(--navy); border: 2px solid var(--navy); }
+  .actions .save { background: var(--red); color: var(--white); border: 2px solid var(--red); }
+  .msg { min-height: 26px; margin-top: 14px; font-size: 18px; font-weight: 700; }
+  .msg.bad { color: var(--red); } .msg.good { color: var(--navy); }
   [hidden] { display: none !important; }
 
   @media (max-width: 640px) {
     body { font-size: 18px; }
     h1 { font-size: 30px; }
-    .group button { padding: 12px 14px; font-size: 17px; }
+    .group button, .addbtn { padding: 11px 16px; font-size: 17px; }
     .grid { grid-template-columns: 1fr; }
-    th, td { padding: 14px 12px; font-size: 18px; }
-    td.title { font-size: 19px; }
+    th, td { padding: 12px 12px; font-size: 17px; }
   }
 </style>
 </head>
@@ -92,17 +114,12 @@
     <div class="count" id="count">Loading&hellip;</div>
   </div>
   <div class="controls">
-    <div class="group" role="group" aria-label="Who is watching">
-      <button type="button" data-who="Eric" aria-pressed="false">Eric</button>
-      <button type="button" data-who="Vicki" aria-pressed="false">Vicki</button>
-      <button type="button" data-who="Together" aria-pressed="true">Together</button>
-    </div>
     <div class="group" role="group" aria-label="Which services">
-      <button type="button" data-subs="all" aria-pressed="true">All Services</button>
-      <button type="button" data-subs="mine" aria-pressed="false">Ours Now</button>
+      <button type="button" data-subs="active" aria-pressed="true">Active</button>
+      <button type="button" data-subs="all" aria-pressed="false">All</button>
     </div>
     <div class="group" role="group" aria-label="View">
-      <button type="button" data-view="tiles" aria-pressed="true">Tiles</button>
+      <button type="button" data-view="cards" aria-pressed="true">Cards</button>
       <button type="button" data-view="table" aria-pressed="false">Table</button>
     </div>
     <button type="button" class="addbtn" id="addOpen">+ Add Show</button>
@@ -110,7 +127,7 @@
 </header>
 
 <main>
-  <div class="grid" id="tiles"></div>
+  <div class="grid" id="cards"></div>
   <table id="table" hidden>
     <thead><tr>
       <th data-key="title">Show <span class="arrow">&#9650;</span></th>
@@ -121,7 +138,7 @@
     </tr></thead>
     <tbody id="rows"></tbody>
   </table>
-  <div class="empty" id="empty" hidden>Nothing on the list yet.</div>
+  <div class="empty" id="empty" hidden>Nothing here yet.</div>
   <div class="error" id="error" hidden>Couldn't load the list.  Pull down to refresh.</div>
 </main>
 
@@ -150,35 +167,22 @@
 (() => {
   const SUPABASE_URL = "https://raooyhmkovzshmhgarwm.supabase.co";
   const SUPABASE_KEY = "sb_publishable_apjQYn1UxVPG_Ecwxs3rdQ_ovJix8Fo";
-
-  // Each service always gets the same color: [background, text].
-  const SERVICE_COLORS = {
-    "netflix": ["#d81f26", "#fff"], "apple tv": ["#f2f3f5", "#111"], "apple tv+": ["#f2f3f5", "#111"],
-    "britbox": ["#0d2a6b", "#fff"], "hulu": ["#1ce783", "#0b1a12"], "max": ["#5b2be0", "#fff"], "hbo max": ["#5b2be0", "#fff"],
-    "disney+": ["#0e3fa8", "#fff"], "prime video": ["#00a8e1", "#04121a"], "amazon prime": ["#00a8e1", "#04121a"],
-    "peacock": ["#ffd200", "#141414"], "paramount+": ["#0064ff", "#fff"], "youtube tv": ["#ff0000", "#fff"],
-    "youtube": ["#ff0000", "#fff"], "espn+": ["#b5121b", "#fff"], "tubi": ["#7a2cff", "#fff"],
-    "acorn tv": ["#2e7d32", "#fff"], "starz": ["#000", "#fff"], "showtime": ["#b5121b", "#fff"]
-  };
   const NIGHTS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
   const WHO_LABEL = { "Eric": "Eric", "Vicki": "Vicki", "Both": "Together" };
 
   let shows = [];
-  let subscribed = {};
   let services = [];
-  let subs = "all";
-  let who = "Together";
-  let view = "tiles";
+  let subscribed = {};
+  let subs = "active";
+  let view = "cards";
   let sortKey = "title", sortDir = 1;
 
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-  const svcStyle = (s) => { const c = SERVICE_COLORS[String(s || "").trim().toLowerCase()] || ["#6b7280", "#fff"]; return "background:" + c[0] + ";color:" + c[1]; };
-  const whoClass = (w) => w === "Eric" ? "who-eric" : w === "Vicki" ? "who-vicki" : "who-both";
-
   const isOff = (s) => subscribed[String(s.service).toLowerCase()] === false;
+
   function filtered() {
-    let list = shows.filter((s) => subs === "all" || !isOff(s)).filter((s) => who === "Together" ? s.watcher === "Both" : s.watcher === who);
+    const list = shows.filter((s) => subs === "all" || !isOff(s));
     list.sort((a, b) => {
       if (isOff(a) !== isOff(b)) return isOff(a) ? 1 : -1;
       let av, bv;
@@ -193,27 +197,32 @@
     return list;
   }
 
+  const tags = (s) =>
+    '<span class="tag svc">' + esc(s.service) + '</span>' +
+    '<span class="tag who">' + esc(WHO_LABEL[s.watcher] || s.watcher) + '</span>' +
+    (s.avg_minutes ? '<span class="tag len">' + esc(s.avg_minutes) + ' min</span>' : '') +
+    (s.night ? '<span class="tag night">' + esc(s.night) + 's</span>' : '');
+
   function render() {
     const list = filtered();
     $("count").textContent = list.length === 1 ? "1 show" : list.length + " shows";
     $("empty").hidden = list.length > 0;
-    $("tiles").hidden = view !== "tiles" || list.length === 0;
+    $("cards").hidden = view !== "cards" || list.length === 0;
     $("table").hidden = view !== "table" || list.length === 0;
 
-    $("tiles").innerHTML = list.map((s) =>
-      '<article class="tile' + (isOff(s) ? ' off' : '') + '"><div><h2>' + esc(s.title) + '</h2>' + (isOff(s) ? '<p class="gone">Not subscribed right now</p>' : '') + '</div><div class="meta">' +
-      '<span class="tag svc" style="' + svcStyle(s.service) + '">' + esc(s.service) + '</span>' +
-      '<span class="tag ' + whoClass(s.watcher) + '">' + esc(WHO_LABEL[s.watcher] || s.watcher) + '</span>' +
-      (s.night ? '<span class="tag night">' + esc(s.night) + 's</span>' : '') +
-      (s.avg_minutes ? '<span class="tag len">' + esc(s.avg_minutes) + ' min</span>' : '') +
-      '</div></article>').join("");
+    $("cards").innerHTML = list.map((s) =>
+      '<article class="card' + (isOff(s) ? ' off' : '') + '">' +
+      '<h2>' + esc(s.title) + '</h2>' +
+      (isOff(s) ? '<p class="gone">Not subscribed right now</p>' : '') +
+      '<details class="sum"><summary>Summary</summary><p class="desc">' + esc(s.description || "Description coming soon.") + '</p></details>' +
+      '<div class="meta">' + tags(s) + '</div></article>').join("");
 
     $("rows").innerHTML = list.map((s) =>
       '<tr' + (isOff(s) ? ' class="off"' : '') + '><td class="title">' + esc(s.title) + '</td>' +
-      '<td><span class="tag svc" style="' + svcStyle(s.service) + '">' + esc(s.service) + '</span></td>' +
-      '<td><span class="tag ' + whoClass(s.watcher) + '">' + esc(WHO_LABEL[s.watcher] || s.watcher) + '</span></td>' +
+      '<td><span class="tag svc">' + esc(s.service) + '</span></td>' +
+      '<td><span class="tag who">' + esc(WHO_LABEL[s.watcher] || s.watcher) + '</span></td>' +
       '<td>' + (s.night ? esc(s.night) + 's' : '') + '</td>' +
-      '<td>' + (s.avg_minutes ? '<span class="tag len">' + esc(s.avg_minutes) + ' min</span>' : '') + '</td></tr>').join("");
+      '<td>' + (s.avg_minutes ? esc(s.avg_minutes) + ' min' : '') + '</td></tr>').join("");
 
     document.querySelectorAll("th[data-key]").forEach((th) => {
       const on = th.dataset.key === sortKey;
@@ -222,21 +231,19 @@
     });
   }
 
-  function press(groupAttr, value) {
-    document.querySelectorAll("[data-" + groupAttr + "]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset[groupAttr] === value)));
+  function press(attr, value) {
+    document.querySelectorAll("[data-" + attr + "]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset[attr] === value)));
   }
+  function save() { try { localStorage.setItem("tv-prefs-v2", JSON.stringify({ subs, view })); } catch (e) {} }
+  try { const p = JSON.parse(localStorage.getItem("tv-prefs-v2") || "{}"); if (p.subs === "all" || p.subs === "active") subs = p.subs; if (p.view === "cards" || p.view === "table") view = p.view; } catch (e) {}
+  press("subs", subs); press("view", view);
 
-  document.querySelectorAll("[data-who]").forEach((b) => b.addEventListener("click", () => { who = b.dataset.who; press("who", who); save(); render(); }));
   document.querySelectorAll("[data-subs]").forEach((b) => b.addEventListener("click", () => { subs = b.dataset.subs; press("subs", subs); save(); render(); }));
   document.querySelectorAll("[data-view]").forEach((b) => b.addEventListener("click", () => { view = b.dataset.view; press("view", view); save(); render(); }));
   document.querySelectorAll("th[data-key]").forEach((th) => th.addEventListener("click", () => {
     if (sortKey === th.dataset.key) sortDir = -sortDir; else { sortKey = th.dataset.key; sortDir = 1; }
     render();
   }));
-
-  function save() { try { localStorage.setItem("tv-prefs", JSON.stringify({ who, view, subs })); } catch (e) {} }
-  try { const p = JSON.parse(localStorage.getItem("tv-prefs") || "{}"); if (["Eric","Vicki","Together"].includes(p.who)) who = p.who; if (p.view) view = p.view; if (p.subs) subs = p.subs; } catch (e) {}
-  press("who", who); press("view", view); press("subs", subs);
 
   // Add a show
   const dlg = $("addDlg");
@@ -265,9 +272,9 @@
       const out = res.ok ? await res.json() : "Something went wrong.  Try again.";
       if (out === "ok") {
         try { if ($("fRemember").checked) localStorage.setItem("tv-pin", pin); else localStorage.removeItem("tv-pin"); } catch (e) {}
-        msg.className = "msg good"; msg.textContent = "Added.";
+        msg.className = "msg good"; msg.textContent = "Added.  The description and length fill in overnight.";
         await load();
-        setTimeout(() => dlg.close(), 700);
+        setTimeout(() => dlg.close(), 1400);
       } else {
         if (out === "Wrong PIN.") { try { localStorage.removeItem("tv-pin"); } catch (e) {} }
         msg.className = "msg bad"; msg.textContent = out;
@@ -281,12 +288,12 @@
   async function load() {
     try {
       const hdr = { headers: { apikey: SUPABASE_KEY }, cache: "no-store" };
-      const sres = await fetch(SUPABASE_URL + "/rest/v1/tv_services?select=name,subscribed", hdr);
-      if (sres.ok) { subscribed = {}; services = await sres.json(); services.forEach((r) => { subscribed[String(r.name).toLowerCase()] = r.subscribed; }); }
-      const res = await fetch(SUPABASE_URL + "/rest/v1/tv_shows?select=title,service,watcher,night,avg_minutes&order=title.asc", {
-        headers: { apikey: SUPABASE_KEY }, cache: "no-store"
-      });
+      const [sres, res] = await Promise.all([
+        fetch(SUPABASE_URL + "/rest/v1/tv_services?select=name,subscribed", hdr),
+        fetch(SUPABASE_URL + "/rest/v1/tv_shows?select=title,service,watcher,night,avg_minutes,description&order=title.asc", hdr)
+      ]);
       if (!res.ok) throw new Error(res.status);
+      if (sres.ok) { services = await sres.json(); subscribed = {}; services.forEach((r) => { subscribed[String(r.name).toLowerCase()] = r.subscribed; }); }
       shows = await res.json();
       $("error").hidden = true;
       render();
