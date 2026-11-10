@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>What We're Watching</title>
+<meta name="theme-color" content="#0e0f12">
+<link rel="icon" href="../assets/img/mark.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/img/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="TV">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0f12; --panel: #17191e; --line: #2a2d35; --text: #f4f5f7; --muted: #a3a8b4;
+    --accent: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--text); }
+  body { font-family: Inter, system-ui, -apple-system, sans-serif; font-size: 20px; line-height: 1.35;
+    padding: max(24px, env(safe-area-inset-top)) max(28px, env(safe-area-inset-right)) 40px max(28px, env(safe-area-inset-left)); }
+  header { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 24px; }
+  h1 { font-size: 40px; font-weight: 800; margin: 0; letter-spacing: -0.5px; }
+  .count { color: var(--muted); font-size: 18px; font-weight: 500; margin-top: 4px; }
+  .controls { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .group { display: flex; border: 2px solid var(--line); border-radius: 4px; overflow: hidden; }
+  .group button { appearance: none; border: 0; background: transparent; color: var(--muted); font: inherit; font-size: 19px;
+    font-weight: 600; padding: 14px 22px; min-height: 54px; cursor: pointer; border-right: 2px solid var(--line); }
+  .group button:last-child { border-right: 0; }
+  .group button[aria-pressed="true"] { background: var(--accent); color: #0e0f12; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+  .tile { background: var(--panel); border: 2px solid var(--line); border-radius: 6px; padding: 22px 22px 20px;
+    display: flex; flex-direction: column; justify-content: space-between; min-height: 168px; }
+  .tile h2 { font-size: 27px; font-weight: 700; margin: 0 0 14px; line-height: 1.2; }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .tag { display: inline-block; font-size: 16px; font-weight: 700; padding: 6px 10px; border-radius: 3px; letter-spacing: 0.2px; }
+  .svc { color: #fff; }
+  .who { background: #2a2d35; color: var(--text); }
+  .night { background: transparent; border: 2px solid var(--line); color: var(--text); padding: 4px 9px; }
+
+  table { width: 100%; border-collapse: collapse; background: var(--panel); border: 2px solid var(--line); border-radius: 6px; overflow: hidden; }
+  th, td { text-align: left; padding: 18px 20px; border-bottom: 2px solid var(--line); font-size: 21px; }
+  th { font-size: 16px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); cursor: pointer; user-select: none; white-space: nowrap; }
+  th .arrow { display: inline-block; width: 18px; color: var(--muted); }
+  th[aria-sort] .arrow { color: var(--text); }
+  tr:last-child td { border-bottom: 0; }
+  td.title { font-weight: 700; font-size: 23px; }
+
+  .empty, .error { text-align: center; color: var(--muted); padding: 60px 20px; font-size: 22px; border: 2px dashed var(--line); border-radius: 6px; }
+  .error { color: #ffb4a8; }
+  [hidden] { display: none !important; }
+
+  @media (max-width: 640px) {
+    body { font-size: 18px; }
+    h1 { font-size: 30px; }
+    .group button { padding: 12px 14px; font-size: 17px; }
+    .grid { grid-template-columns: 1fr; }
+    th, td { padding: 14px 12px; font-size: 18px; }
+    td.title { font-size: 19px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>What We're Watching</h1>
+    <div class="count" id="count">Loading&hellip;</div>
+  </div>
+  <div class="controls">
+    <div class="group" role="group" aria-label="Who is watching">
+      <button type="button" data-who="all" aria-pressed="true">Everyone</button>
+      <button type="button" data-who="Eric" aria-pressed="false">Eric</button>
+      <button type="button" data-who="Vicki" aria-pressed="false">Vicki</button>
+      <button type="button" data-who="Together" aria-pressed="false">Together</button>
+    </div>
+    <div class="group" role="group" aria-label="View">
+      <button type="button" data-view="tiles" aria-pressed="true">Tiles</button>
+      <button type="button" data-view="table" aria-pressed="false">Table</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="grid" id="tiles"></div>
+  <table id="table" hidden>
+    <thead><tr>
+      <th data-key="title">Show <span class="arrow">&#9650;</span></th>
+      <th data-key="service">Service <span class="arrow">&#9650;</span></th>
+      <th data-key="watcher">Watching <span class="arrow">&#9650;</span></th>
+      <th data-key="night">Night <span class="arrow">&#9650;</span></th>
+    </tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+  <div class="empty" id="empty" hidden>Nothing on the list yet.</div>
+  <div class="error" id="error" hidden>Couldn't load the list.  Pull down to refresh.</div>
+</main>
+
+<script>
+(() => {
+  const SUPABASE_URL = "https://raooyhmkovzshmhgarwm.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_apjQYn1UxVPG_Ecwxs3rdQ_ovJix8Fo";
+
+  const SERVICE_COLORS = {
+    "netflix": "#c4111b", "hulu": "#127a3e", "max": "#2c3fd6", "hbo max": "#2c3fd6",
+    "disney+": "#113ccf", "prime video": "#0a6b9e", "amazon prime": "#0a6b9e", "apple tv+": "#3b3d44",
+    "apple tv": "#3b3d44", "peacock": "#6a3fb5", "paramount+": "#0057d9", "youtube tv": "#cc1f1f",
+    "youtube": "#cc1f1f", "espn+": "#a3171f", "tubi": "#5b2bb5", "fx": "#3b3d44", "abc": "#3b3d44",
+    "nbc": "#3b3d44", "cbs": "#3b3d44", "fox": "#3b3d44", "starz": "#3b3d44", "showtime": "#a3171f"
+  };
+  const NIGHTS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  const WHO_LABEL = { "Eric": "Eric", "Vicki": "Vicki", "Both": "Together" };
+
+  let shows = [];
+  let who = "all";
+  let view = "tiles";
+  let sortKey = "title", sortDir = 1;
+
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const svcColor = (s) => SERVICE_COLORS[String(s || "").trim().toLowerCase()] || "#3b3d44";
+
+  function filtered() {
+    let list = shows.filter((s) => who === "all" ? true : who === "Together" ? s.watcher === "Both" : (s.watcher === who || s.watcher === "Both"));
+    list.sort((a, b) => {
+      let av, bv;
+      if (sortKey === "night") { av = a.night ? NIGHTS.indexOf(a.night) : 99; bv = b.night ? NIGHTS.indexOf(b.night) : 99; }
+      else if (sortKey === "watcher") { av = WHO_LABEL[a.watcher] || ""; bv = WHO_LABEL[b.watcher] || ""; }
+      else { av = String(a[sortKey] || "").toLowerCase(); bv = String(b[sortKey] || "").toLowerCase(); }
+      if (av < bv) return -sortDir;
+      if (av > bv) return sortDir;
+      return String(a.title).localeCompare(String(b.title));
+    });
+    return list;
+  }
+
+  function render() {
+    const list = filtered();
+    $("count").textContent = list.length === 1 ? "1 show" : list.length + " shows";
+    $("empty").hidden = list.length > 0;
+    $("tiles").hidden = view !== "tiles" || list.length === 0;
+    $("table").hidden = view !== "table" || list.length === 0;
+
+    $("tiles").innerHTML = list.map((s) =>
+      '<article class="tile"><h2>' + esc(s.title) + '</h2><div class="meta">' +
+      '<span class="tag svc" style="background:' + svcColor(s.service) + '">' + esc(s.service) + '</span>' +
+      '<span class="tag who">' + esc(WHO_LABEL[s.watcher] || s.watcher) + '</span>' +
+      (s.night ? '<span class="tag night">' + esc(s.night) + 's</span>' : '') +
+      '</div></article>').join("");
+
+    $("rows").innerHTML = list.map((s) =>
+      '<tr><td class="title">' + esc(s.title) + '</td>' +
+      '<td><span class="tag svc" style="background:' + svcColor(s.service) + '">' + esc(s.service) + '</span></td>' +
+      '<td>' + esc(WHO_LABEL[s.watcher] || s.watcher) + '</td>' +
+      '<td>' + (s.night ? esc(s.night) + 's' : '') + '</td></tr>').join("");
+
+    document.querySelectorAll("th[data-key]").forEach((th) => {
+      const on = th.dataset.key === sortKey;
+      if (on) th.setAttribute("aria-sort", sortDir === 1 ? "ascending" : "descending"); else th.removeAttribute("aria-sort");
+      th.querySelector(".arrow").innerHTML = on && sortDir === -1 ? "&#9660;" : "&#9650;";
+    });
+  }
+
+  function press(groupAttr, value) {
+    document.querySelectorAll("[data-" + groupAttr + "]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset[groupAttr] === value)));
+  }
+
+  document.querySelectorAll("[data-who]").forEach((b) => b.addEventListener("click", () => { who = b.dataset.who; press("who", who); save(); render(); }));
+  document.querySelectorAll("[data-view]").forEach((b) => b.addEventListener("click", () => { view = b.dataset.view; press("view", view); save(); render(); }));
+  document.querySelectorAll("th[data-key]").forEach((th) => th.addEventListener("click", () => {
+    if (sortKey === th.dataset.key) sortDir = -sortDir; else { sortKey = th.dataset.key; sortDir = 1; }
+    render();
+  }));
+
+  function save() { try { localStorage.setItem("tv-prefs", JSON.stringify({ who, view })); } catch (e) {} }
+  try { const p = JSON.parse(localStorage.getItem("tv-prefs") || "{}"); if (p.who) who = p.who; if (p.view) view = p.view; } catch (e) {}
+  press("who", who); press("view", view);
+
+  async function load() {
+    try {
+      const res = await fetch(SUPABASE_URL + "/rest/v1/tv_shows?select=title,service,watcher,night&order=title.asc", {
+        headers: { apikey: SUPABASE_KEY }, cache: "no-store"
+      });
+      if (!res.ok) throw new Error(res.status);
+      shows = await res.json();
+      $("error").hidden = true;
+      render();
+    } catch (e) {
+      $("count").textContent = "";
+      $("error").hidden = false;
+    }
+  }
+  load();
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) load(); });
+})();
+</script>
+</body>
+</html>
