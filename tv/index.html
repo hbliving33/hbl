@@ -51,6 +51,8 @@
 
   .empty, .error { text-align: center; color: var(--muted); padding: 60px 20px; font-size: 22px; border: 2px dashed var(--line); border-radius: 6px; }
   .error { color: #ffb4a8; }
+  .off { opacity: 0.45; }
+  .gone { margin: -6px 0 14px; font-size: 17px; font-weight: 600; color: var(--muted); }
   [hidden] { display: none !important; }
 
   @media (max-width: 640px) {
@@ -75,6 +77,10 @@
       <button type="button" data-who="Eric" aria-pressed="false">Eric</button>
       <button type="button" data-who="Vicki" aria-pressed="false">Vicki</button>
       <button type="button" data-who="Together" aria-pressed="false">Together</button>
+    </div>
+    <div class="group" role="group" aria-label="Which services">
+      <button type="button" data-subs="all" aria-pressed="true">All Services</button>
+      <button type="button" data-subs="mine" aria-pressed="false">Ours Now</button>
     </div>
     <div class="group" role="group" aria-label="View">
       <button type="button" data-view="tiles" aria-pressed="true">Tiles</button>
@@ -109,12 +115,14 @@
     "disney+": "#113ccf", "prime video": "#0a6b9e", "amazon prime": "#0a6b9e", "apple tv+": "#3b3d44",
     "apple tv": "#3b3d44", "peacock": "#6a3fb5", "paramount+": "#0057d9", "youtube tv": "#cc1f1f",
     "youtube": "#cc1f1f", "espn+": "#a3171f", "tubi": "#5b2bb5", "fx": "#3b3d44", "abc": "#3b3d44",
-    "nbc": "#3b3d44", "cbs": "#3b3d44", "fox": "#3b3d44", "starz": "#3b3d44", "showtime": "#a3171f"
+    "nbc": "#3b3d44", "cbs": "#3b3d44", "fox": "#3b3d44", "starz": "#3b3d44", "showtime": "#a3171f", "britbox": "#0b5cab", "acorn tv": "#3b6e2f"
   };
   const NIGHTS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
   const WHO_LABEL = { "Eric": "Eric", "Vicki": "Vicki", "Both": "Together" };
 
   let shows = [];
+  let subscribed = {};
+  let subs = "all";
   let who = "all";
   let view = "tiles";
   let sortKey = "title", sortDir = 1;
@@ -123,9 +131,11 @@
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const svcColor = (s) => SERVICE_COLORS[String(s || "").trim().toLowerCase()] || "#3b3d44";
 
+  const isOff = (s) => subscribed[String(s.service).toLowerCase()] === false;
   function filtered() {
-    let list = shows.filter((s) => who === "all" ? true : who === "Together" ? s.watcher === "Both" : (s.watcher === who || s.watcher === "Both"));
+    let list = shows.filter((s) => subs === "all" || !isOff(s)).filter((s) => who === "all" ? true : who === "Together" ? s.watcher === "Both" : (s.watcher === who || s.watcher === "Both"));
     list.sort((a, b) => {
+      if (isOff(a) !== isOff(b)) return isOff(a) ? 1 : -1;
       let av, bv;
       if (sortKey === "night") { av = a.night ? NIGHTS.indexOf(a.night) : 99; bv = b.night ? NIGHTS.indexOf(b.night) : 99; }
       else if (sortKey === "avg_minutes") { av = a.avg_minutes || 9999; bv = b.avg_minutes || 9999; }
@@ -146,7 +156,7 @@
     $("table").hidden = view !== "table" || list.length === 0;
 
     $("tiles").innerHTML = list.map((s) =>
-      '<article class="tile"><h2>' + esc(s.title) + '</h2><div class="meta">' +
+      '<article class="tile' + (isOff(s) ? ' off' : '') + '"><div><h2>' + esc(s.title) + '</h2>' + (isOff(s) ? '<p class="gone">Not subscribed right now</p>' : '') + '</div><div class="meta">' +
       '<span class="tag svc" style="background:' + svcColor(s.service) + '">' + esc(s.service) + '</span>' +
       '<span class="tag who">' + esc(WHO_LABEL[s.watcher] || s.watcher) + '</span>' +
       (s.night ? '<span class="tag night">' + esc(s.night) + 's</span>' : '') +
@@ -154,7 +164,7 @@
       '</div></article>').join("");
 
     $("rows").innerHTML = list.map((s) =>
-      '<tr><td class="title">' + esc(s.title) + '</td>' +
+      '<tr' + (isOff(s) ? ' class="off"' : '') + '><td class="title">' + esc(s.title) + '</td>' +
       '<td><span class="tag svc" style="background:' + svcColor(s.service) + '">' + esc(s.service) + '</span></td>' +
       '<td>' + esc(WHO_LABEL[s.watcher] || s.watcher) + '</td>' +
       '<td>' + (s.night ? esc(s.night) + 's' : '') + '</td>' +
@@ -172,18 +182,22 @@
   }
 
   document.querySelectorAll("[data-who]").forEach((b) => b.addEventListener("click", () => { who = b.dataset.who; press("who", who); save(); render(); }));
+  document.querySelectorAll("[data-subs]").forEach((b) => b.addEventListener("click", () => { subs = b.dataset.subs; press("subs", subs); save(); render(); }));
   document.querySelectorAll("[data-view]").forEach((b) => b.addEventListener("click", () => { view = b.dataset.view; press("view", view); save(); render(); }));
   document.querySelectorAll("th[data-key]").forEach((th) => th.addEventListener("click", () => {
     if (sortKey === th.dataset.key) sortDir = -sortDir; else { sortKey = th.dataset.key; sortDir = 1; }
     render();
   }));
 
-  function save() { try { localStorage.setItem("tv-prefs", JSON.stringify({ who, view })); } catch (e) {} }
-  try { const p = JSON.parse(localStorage.getItem("tv-prefs") || "{}"); if (p.who) who = p.who; if (p.view) view = p.view; } catch (e) {}
-  press("who", who); press("view", view);
+  function save() { try { localStorage.setItem("tv-prefs", JSON.stringify({ who, view, subs })); } catch (e) {} }
+  try { const p = JSON.parse(localStorage.getItem("tv-prefs") || "{}"); if (p.who) who = p.who; if (p.view) view = p.view; if (p.subs) subs = p.subs; } catch (e) {}
+  press("who", who); press("view", view); press("subs", subs);
 
   async function load() {
     try {
+      const hdr = { headers: { apikey: SUPABASE_KEY }, cache: "no-store" };
+      const sres = await fetch(SUPABASE_URL + "/rest/v1/tv_services?select=name,subscribed", hdr);
+      if (sres.ok) { subscribed = {}; (await sres.json()).forEach((r) => { subscribed[String(r.name).toLowerCase()] = r.subscribed; }); }
       const res = await fetch(SUPABASE_URL + "/rest/v1/tv_shows?select=title,service,watcher,night,avg_minutes&order=title.asc", {
         headers: { apikey: SUPABASE_KEY }, cache: "no-store"
       });
