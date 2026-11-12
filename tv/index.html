@@ -45,9 +45,7 @@
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; align-items: start; }
   .card { background: var(--white); border: 1px solid var(--line); border-top: 6px solid var(--navy); border-radius: 6px;
     padding: 20px 22px 20px; display: flex; flex-direction: column; box-shadow: 0 2px 10px rgba(10, 49, 97, 0.08); }
-  .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
-  .card-side { flex: none; display: flex; flex-direction: column; align-items: center; gap: 8px; }
-  .card-side .sumbtn { width: 44px; }
+  .card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
   .card h2 { font-size: 26px; font-weight: 800; margin: 0; line-height: 1.2; color: var(--navy); }
   .sumbtn { flex: none; appearance: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; font: inherit; font-size: 0;
     color: var(--navy); background: var(--white); border: 2px solid var(--line); border-radius: 4px; width: 38px; height: 34px; padding: 0; }
@@ -121,7 +119,7 @@
     .addbtn .long { display: none; }
     .grid { grid-template-columns: 1fr; gap: 10px; }
     .card { padding: 12px 14px; border-top-width: 4px; }
-    .card-top { margin-bottom: 10px; }
+    .card-top { margin-bottom: 10px; align-items: center; }
     .card h2 { font-size: 19px; }
     .sumbtn { width: 34px; height: 30px; }
     .desc { font-size: 15px; margin-bottom: 10px; }
@@ -270,8 +268,9 @@
     return f ? '<img class="logo" src="logos/' + f + '?v=2" alt="' + esc(s.service) + '" title="' + esc(s.service) + '" width="44" height="44">'
              : '<span class="tag svc">' + esc(s.service) + '</span>';
   };
-  // Card tags: length, then night.  The service logo sits in the card's top-right corner.  Who's watching is hidden on cards for now.
   const tags = (s) =>
+    svcTag(s) +
+    '<span class="tag who">' + esc(WHO_LABEL[s.watcher] || s.watcher) + '</span>' +
     (s.avg_minutes ? '<span class="tag len">' + esc(lenText(s)) + '</span>' : '') +
     (s.night ? '<span class="tag night">' + esc(s.night) + 's</span>' : '');
 
@@ -284,7 +283,7 @@
 
     $("cards" + K).innerHTML = list.map((s) =>
       '<article class="card' + (isOff(s) ? ' off' : '') + '">' +
-      '<div class="card-top"><h2>' + esc(s.title) + '</h2><div class="card-side">' + svcTag(s) + '<button type="button" class="sumbtn" aria-expanded="false" aria-label="Show summary" title="Summary"><span class="sumlbl">Summary</span></button></div></div>' +
+      '<div class="card-top"><h2>' + esc(s.title) + '</h2><button type="button" class="sumbtn" aria-expanded="false" aria-label="Show summary" title="Summary"><span class="sumlbl">Summary</span></button></div>' +
       (isOff(s) ? '<p class="gone">Not subscribed right now</p>' : '') +
       '<p class="desc" hidden>' + esc(s.description || "Description coming soon.") + '</p>' +
       '<div class="meta">' + tags(s) + '</div></article>').join("");
