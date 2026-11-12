@@ -33,13 +33,13 @@
   h1 { font-size: 40px; font-weight: 800; margin: 0; letter-spacing: -0.5px; color: var(--navy); }
   .count { color: var(--muted); font-size: 18px; font-weight: 600; margin-top: 2px; }
   .controls { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
-  .group { display: flex; border: 2px solid var(--navy); border-radius: 4px; overflow: hidden; background: var(--white); }
+  .group { display: flex; border: 2px solid var(--navy); border-radius: 10px; overflow: hidden; background: var(--white); }
   .group button { appearance: none; border: 0; background: transparent; color: var(--navy); font: inherit; font-size: 19px;
     font-weight: 700; padding: 13px 24px; min-height: 52px; cursor: pointer; border-right: 2px solid var(--navy); }
   .group button:last-child { border-right: 0; }
   .group button[aria-pressed="true"] { background: var(--navy); color: var(--white); }
   .addbtn { appearance: none; border: 2px solid var(--red); background: var(--red); color: var(--white); font: inherit; font-size: 19px;
-    font-weight: 700; padding: 13px 24px; min-height: 52px; border-radius: 4px; cursor: pointer; }
+    font-weight: 700; padding: 13px 24px; min-height: 52px; border-radius: 10px; cursor: pointer; }
 
   /* Cards */
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; align-items: start; }
@@ -48,7 +48,7 @@
   .card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
   .card h2 { font-size: 26px; font-weight: 800; margin: 0; line-height: 1.2; color: var(--navy); }
   .sumbtn { flex: none; appearance: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; font: inherit; font-size: 0;
-    color: var(--navy); background: var(--white); border: 2px solid var(--line); border-radius: 4px; width: 38px; height: 34px; padding: 0; }
+    color: var(--navy); background: var(--white); border: 2px solid var(--line); border-radius: 10px; width: 38px; height: 34px; padding: 0; }
   .sumbtn::after { content: "\25BE"; font-size: 15px; transition: transform 0.15s; }
   .sumbtn[aria-expanded="true"] { border-color: var(--navy); }
   .sumbtn[aria-expanded="true"]::after { transform: rotate(180deg); }
@@ -117,6 +117,7 @@
     .count { font-size: 14px; }
     .controls { gap: 8px; width: 100%; flex-wrap: nowrap; }
     .group button, .addbtn { padding: 8px 12px; font-size: 15px; min-height: 40px; }
+    .group, .addbtn, .sumbtn { border-radius: 8px; }
     .addbtn { margin-left: auto; }
     .addbtn .long { display: none; }
     .grid { grid-template-columns: 1fr; gap: 10px; }
