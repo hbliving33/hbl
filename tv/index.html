@@ -55,7 +55,9 @@
   .desc { margin: 0 0 14px; font-size: 18px; line-height: 1.5; color: var(--ink); }
   .gone { margin: -8px 0 12px; font-size: 14px; font-weight: 800; color: var(--red); text-transform: uppercase; letter-spacing: 0.6px; }
   .meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: auto; }
-  .tag { display: inline-block; font-size: 16px; font-weight: 700; padding: 5px 10px; border-radius: 3px; border: 2px solid transparent; }
+  /* Tags match the service logo: same height, same rounded-corner shape. */
+  .tag { display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; height: 44px; min-width: 44px; padding: 0 14px;
+    font-size: 16px; font-weight: 700; line-height: 1; border-radius: 10px; border: 2px solid transparent; vertical-align: middle; }
   .svc { background: var(--navy); color: var(--white); border-color: var(--navy); }
   .logo { display: inline-block; width: 44px; height: 44px; border-radius: 10px; vertical-align: middle; object-fit: contain; }
   .card.off .logo, tr.off .logo { filter: grayscale(1); opacity: .55; }
@@ -125,7 +127,8 @@
     .desc { font-size: 15px; margin-bottom: 10px; }
     .gone { font-size: 12px; margin: -6px 0 8px; }
     .meta { gap: 6px; }
-    .tag { font-size: 13px; padding: 3px 7px; }
+    .tag { height: 36px; min-width: 36px; padding: 0 10px; font-size: 14px; border-radius: 8px; }
+    .logo { width: 36px; height: 36px; border-radius: 8px; }
     th, td { padding: 10px 8px; font-size: 15px; }
     th { font-size: 12px; letter-spacing: 0.4px; }
   }
