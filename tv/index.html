@@ -65,6 +65,10 @@
   .card.off .svc, .card.off .who { background: #9aa4b2; border-color: #9aa4b2; }
   .card.off .len { color: #8a94a3; border-color: #9aa4b2; }
 
+  .sect { margin-bottom: 36px; }
+  .sect-h { font-size: 28px; font-weight: 800; color: var(--navy); margin: 0 0 14px; padding-bottom: 6px; border-bottom: 3px solid var(--red); }
+  .sect[hidden] { display: none !important; }
+
   /* Table */
   table { width: 100%; border-collapse: collapse; background: var(--white); border: 1px solid var(--line); border-radius: 6px; overflow: hidden;
     box-shadow: 0 2px 10px rgba(10, 49, 97, 0.08); }
@@ -104,6 +108,8 @@
     body { font-size: 17px; padding: max(14px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) 28px max(12px, env(safe-area-inset-left)); }
     header { gap: 10px; margin-bottom: 14px; }
     h1 { font-size: 24px; }
+    .sect { margin-bottom: 24px; }
+    .sect-h { font-size: 20px; margin-bottom: 10px; }
     .count { font-size: 14px; }
     .controls { gap: 8px; width: 100%; flex-wrap: nowrap; }
     .group button, .addbtn { padding: 8px 12px; font-size: 15px; min-height: 40px; }
@@ -148,31 +154,54 @@
       <button type="button" data-view="cards" aria-pressed="true">Cards</button>
       <button type="button" data-view="table" aria-pressed="false">Table</button>
     </div>
-    <button type="button" class="addbtn" id="addOpen">+ Add<span class="long"> Show</span></button>
+    <button type="button" class="addbtn" id="addOpen">+ Add<span class="long"> Show or Movie</span></button>
   </div>
 </header>
 
 <main>
-  <div class="grid" id="cards"></div>
-  <table id="table" hidden>
-    <thead><tr>
-      <th data-key="title">Show <span class="arrow">&#9650;</span></th>
-      <th data-key="service">Service <span class="arrow">&#9650;</span></th>
-      <th data-key="watcher">Watching <span class="arrow">&#9650;</span></th>
-      <th data-key="night">Night <span class="arrow">&#9650;</span></th>
-      <th data-key="avg_minutes">Avg. Length <span class="arrow">&#9650;</span></th>
-    </tr></thead>
-    <tbody id="rows"></tbody>
-  </table>
-  <div class="empty" id="empty" hidden>Nothing here yet.</div>
+  <section class="sect" id="secShow">
+    <h2 class="sect-h">Shows</h2>
+    <div class="grid" id="cardsShow"></div>
+    <table id="tableShow" data-kind="show" hidden>
+      <thead><tr>
+        <th data-key="title">Show <span class="arrow">&#9650;</span></th>
+        <th data-key="service">Service <span class="arrow">&#9650;</span></th>
+        <th data-key="watcher">Watching <span class="arrow">&#9650;</span></th>
+        <th data-key="night">Night <span class="arrow">&#9650;</span></th>
+        <th data-key="avg_minutes">Avg. Length <span class="arrow">&#9650;</span></th>
+      </tr></thead>
+      <tbody id="rowsShow"></tbody>
+    </table>
+    <div class="empty" id="emptyShow" hidden>No shows here yet.</div>
+  </section>
+  <section class="sect" id="secMovie">
+    <h2 class="sect-h">Movies We Want to Watch</h2>
+    <div class="grid" id="cardsMovie"></div>
+    <table id="tableMovie" data-kind="movie" hidden>
+      <thead><tr>
+        <th data-key="title">Movie <span class="arrow">&#9650;</span></th>
+        <th data-key="service">Service <span class="arrow">&#9650;</span></th>
+        <th data-key="watcher">Watching <span class="arrow">&#9650;</span></th>
+        <th data-key="avg_minutes">Length <span class="arrow">&#9650;</span></th>
+      </tr></thead>
+      <tbody id="rowsMovie"></tbody>
+    </table>
+    <div class="empty" id="emptyMovie" hidden>No movies here yet.</div>
+  </section>
   <div class="error" id="error" hidden>Couldn't load the list.  Pull down to refresh.</div>
   <div class="getapp-row" id="getappRow"><button type="button" class="getapp" id="getApp"><img src="icon-192.png" alt="" width="28" height="28"> Put TV on your Home Screen</button></div>
 </main>
 
 <dialog id="addDlg">
   <form id="addForm" method="dialog" autocomplete="off">
-    <h2>Add a Show</h2>
-    <div class="field"><label for="fTitle">Show</label><input id="fTitle" maxlength="80" required autocapitalize="words"></div>
+    <h2 id="fHead">Add a Show</h2>
+    <div class="field"><span class="lbl">Type</span>
+      <div class="group" role="group" aria-label="Show or movie">
+        <button type="button" data-fkind="show" aria-pressed="true">Show</button>
+        <button type="button" data-fkind="movie" aria-pressed="false">Movie</button>
+      </div>
+    </div>
+    <div class="field"><label for="fTitle" id="fTitleLbl">Show</label><input id="fTitle" maxlength="80" required autocapitalize="words"></div>
     <div class="field"><label for="fService">Service</label><select id="fService" required></select></div>
     <div class="field"><span class="lbl">Who's watching</span>
       <div class="group" role="group" aria-label="Who is watching">
@@ -181,7 +210,7 @@
         <button type="button" data-fwho="Both" aria-pressed="true">Together</button>
       </div>
     </div>
-    <div class="field"><label for="fNight">Night (live shows only)</label>
+    <div class="field" id="fNightField"><label for="fNight">Night (live shows only)</label>
       <select id="fNight"><option value="">None, it streams</option><option>Sunday</option><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option></select></div>
     <div class="field"><label for="fPin">PIN</label><input id="fPin" type="password" inputmode="numeric" maxlength="12" required>
       <label class="remember"><input type="checkbox" id="fRemember" checked> Remember the PIN on this device</label></div>
@@ -202,14 +231,20 @@
   let subscribed = {};
   let subs = "active";
   let view = "cards";
-  let sortKey = "title", sortDir = 1;
+  const sorts = { show: { key: "title", dir: 1 }, movie: { key: "title", dir: 1 } };
+  const KINDS = { show: "Show", movie: "Movie" };
 
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const isOff = (s) => subscribed[String(s.service).toLowerCase()] === false;
 
-  function filtered() {
-    const list = shows.filter((s) => subs === "all" || !isOff(s));
+  const kindOf = (s) => s.kind === "movie" ? "movie" : "show";
+  const runtime = (m) => { m = Number(m); if (!m) return ""; const h = Math.floor(m / 60), r = m % 60; return h ? h + " hr" + (r ? " " + r + " min" : "") : r + " min"; };
+  const lenText = (s) => kindOf(s) === "movie" ? runtime(s.avg_minutes) : (s.avg_minutes ? s.avg_minutes + " min" : "");
+
+  function filtered(kind) {
+    const sortKey = sorts[kind].key, sortDir = sorts[kind].dir;
+    const list = shows.filter((s) => kindOf(s) === kind && (subs === "all" || !isOff(s)));
     list.sort((a, b) => {
       if (isOff(a) !== isOff(b)) return isOff(a) ? 1 : -1;
       let av, bv;
@@ -227,38 +262,44 @@
   const tags = (s) =>
     '<span class="tag svc">' + esc(s.service) + '</span>' +
     '<span class="tag who">' + esc(WHO_LABEL[s.watcher] || s.watcher) + '</span>' +
-    (s.avg_minutes ? '<span class="tag len">' + esc(s.avg_minutes) + ' min</span>' : '') +
+    (s.avg_minutes ? '<span class="tag len">' + esc(lenText(s)) + '</span>' : '') +
     (s.night ? '<span class="tag night">' + esc(s.night) + 's</span>' : '');
 
-  function render() {
-    const list = filtered();
-    $("count").textContent = list.length === 1 ? "1 show" : list.length + " shows";
-    $("empty").hidden = list.length > 0;
-    $("cards").hidden = view !== "cards" || list.length === 0;
-    $("table").hidden = view !== "table" || list.length === 0;
+  function renderKind(kind) {
+    const K = KINDS[kind];
+    const list = filtered(kind);
+    $("empty" + K).hidden = list.length > 0;
+    $("cards" + K).hidden = view !== "cards" || list.length === 0;
+    $("table" + K).hidden = view !== "table" || list.length === 0;
 
-    $("cards").innerHTML = list.map((s) =>
+    $("cards" + K).innerHTML = list.map((s) =>
       '<article class="card' + (isOff(s) ? ' off' : '') + '">' +
       '<div class="card-top"><h2>' + esc(s.title) + '</h2><button type="button" class="sumbtn" aria-expanded="false" aria-label="Show summary" title="Summary"><span class="sumlbl">Summary</span></button></div>' +
       (isOff(s) ? '<p class="gone">Not subscribed right now</p>' : '') +
       '<p class="desc" hidden>' + esc(s.description || "Description coming soon.") + '</p>' +
       '<div class="meta">' + tags(s) + '</div></article>').join("");
 
-    $("rows").innerHTML = list.map((s) =>
+    $("rows" + K).innerHTML = list.map((s) =>
       '<tr' + (isOff(s) ? ' class="off"' : '') + '><td class="title">' + esc(s.title) + '</td>' +
       '<td><span class="tag svc">' + esc(s.service) + '</span></td>' +
       '<td><span class="tag who">' + esc(WHO_LABEL[s.watcher] || s.watcher) + '</span></td>' +
-      '<td>' + (s.night ? esc(s.night) + 's' : '') + '</td>' +
-      '<td>' + (s.avg_minutes ? esc(s.avg_minutes) + ' min' : '') + '</td></tr>').join("");
+      (kind === "show" ? '<td>' + (s.night ? esc(s.night) + 's' : '') + '</td>' : '') +
+      '<td>' + esc(lenText(s)) + '</td></tr>').join("");
 
-    document.querySelectorAll("th[data-key]").forEach((th) => {
-      const on = th.dataset.key === sortKey;
-      if (on) th.setAttribute("aria-sort", sortDir === 1 ? "ascending" : "descending"); else th.removeAttribute("aria-sort");
-      th.querySelector(".arrow").innerHTML = on && sortDir === -1 ? "&#9660;" : "&#9650;";
+    $("table" + K).querySelectorAll("th[data-key]").forEach((th) => {
+      const on = th.dataset.key === sorts[kind].key;
+      if (on) th.setAttribute("aria-sort", sorts[kind].dir === 1 ? "ascending" : "descending"); else th.removeAttribute("aria-sort");
+      th.querySelector(".arrow").innerHTML = on && sorts[kind].dir === -1 ? "&#9660;" : "&#9650;";
     });
+    return list.length;
   }
 
-  $("cards").addEventListener("click", (ev) => {
+  function render() {
+    const n = renderKind("show"), m = renderKind("movie");
+    $("count").textContent = (n === 1 ? "1 show" : n + " shows") + ", " + (m === 1 ? "1 movie" : m + " movies");
+  }
+
+  document.querySelector("main").addEventListener("click", (ev) => {
     const btn = ev.target.closest(".sumbtn"); if (!btn) return;
     const open = btn.getAttribute("aria-expanded") !== "true";
     btn.setAttribute("aria-expanded", String(open));
@@ -275,19 +316,29 @@
   document.querySelectorAll("[data-subs]").forEach((b) => b.addEventListener("click", () => { subs = b.dataset.subs; press("subs", subs); save(); render(); }));
   document.querySelectorAll("[data-view]").forEach((b) => b.addEventListener("click", () => { view = b.dataset.view; press("view", view); save(); render(); }));
   document.querySelectorAll("th[data-key]").forEach((th) => th.addEventListener("click", () => {
-    if (sortKey === th.dataset.key) sortDir = -sortDir; else { sortKey = th.dataset.key; sortDir = 1; }
+    const st = sorts[th.closest("table").dataset.kind];
+    if (st.key === th.dataset.key) st.dir = -st.dir; else { st.key = th.dataset.key; st.dir = 1; }
     render();
   }));
 
   // Add a show
   const dlg = $("addDlg");
   let fwho = "Both";
+  let fkind = "show";
+  const setKind = (k) => {
+    fkind = k; press("fkind", k);
+    $("fHead").textContent = "Add a " + KINDS[k];
+    $("fTitleLbl").textContent = KINDS[k];
+    $("fNightField").hidden = k === "movie";
+    if (k === "movie") $("fNight").value = "";
+  };
+  document.querySelectorAll("[data-fkind]").forEach((b) => b.addEventListener("click", () => setKind(b.dataset.fkind)));
   document.querySelectorAll("[data-fwho]").forEach((b) => b.addEventListener("click", () => { fwho = b.dataset.fwho; press("fwho", fwho); }));
   $("addOpen").addEventListener("click", () => {
     const names = services.map((r) => r.name).sort((a, b) => a.localeCompare(b));
     $("fService").innerHTML = '<option value="">Pick one</option>' + names.map((n) => '<option>' + esc(n) + '</option>').join("");
     $("fTitle").value = ""; $("fNight").value = ""; $("fMsg").textContent = ""; $("fMsg").className = "msg";
-    fwho = "Both"; press("fwho", fwho);
+    fwho = "Both"; press("fwho", fwho); setKind("show");
     try { $("fPin").value = localStorage.getItem("tv-pin") || ""; } catch (e) { $("fPin").value = ""; }
     if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", "");
     setTimeout(() => $("fTitle").focus(), 50);
@@ -301,7 +352,7 @@
     try {
       const res = await fetch(SUPABASE_URL + "/rest/v1/rpc/tv_add_show", {
         method: "POST", headers: { apikey: SUPABASE_KEY, "Content-Type": "application/json" },
-        body: JSON.stringify({ p_pin: pin, p_title: $("fTitle").value, p_service: $("fService").value, p_watcher: fwho, p_night: $("fNight").value || null })
+        body: JSON.stringify({ p_pin: pin, p_title: $("fTitle").value, p_service: $("fService").value, p_watcher: fwho, p_night: fkind === "movie" ? null : ($("fNight").value || null), p_kind: fkind })
       });
       const out = res.ok ? await res.json() : "Something went wrong.  Try again.";
       if (out === "ok") {
@@ -324,7 +375,7 @@
       const hdr = { headers: { apikey: SUPABASE_KEY }, cache: "no-store" };
       const [sres, res] = await Promise.all([
         fetch(SUPABASE_URL + "/rest/v1/tv_services?select=name,subscribed", hdr),
-        fetch(SUPABASE_URL + "/rest/v1/tv_shows?select=title,service,watcher,night,avg_minutes,description&order=title.asc", hdr)
+        fetch(SUPABASE_URL + "/rest/v1/tv_shows?select=title,service,watcher,night,avg_minutes,description,kind&order=title.asc", hdr)
       ]);
       if (!res.ok) throw new Error(res.status);
       if (sres.ok) { services = await sres.json(); subscribed = {}; services.forEach((r) => { subscribed[String(r.name).toLowerCase()] = r.subscribed; }); }
