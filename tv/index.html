@@ -57,6 +57,8 @@
   .meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: auto; }
   .tag { display: inline-block; font-size: 16px; font-weight: 700; padding: 5px 10px; border-radius: 3px; border: 2px solid transparent; }
   .svc { background: var(--navy); color: var(--white); border-color: var(--navy); }
+  .logo { display: inline-block; width: 44px; height: 44px; border-radius: 10px; vertical-align: middle; object-fit: contain; }
+  .card.off .logo, tr.off .logo { filter: grayscale(1); opacity: .55; }
   .who { background: var(--red); color: var(--white); border-color: var(--red); }
   .len { background: var(--white); color: var(--navy); border-color: var(--navy); }
   .night { background: var(--white); color: var(--red); border-color: var(--red); }
@@ -259,8 +261,15 @@
     return list;
   }
 
+  // Service logos.  Any service without a logo here keeps its text tag.
+  const LOGOS = { "britbox": "britbox.png", "hbo max": "hbo-max.png", "netflix": "netflix.png", "prime video": "prime-video.png" };
+  const svcTag = (s) => {
+    const f = LOGOS[String(s.service || "").toLowerCase()];
+    return f ? '<img class="logo" src="logos/' + f + '?v=1" alt="' + esc(s.service) + '" title="' + esc(s.service) + '" width="44" height="44">'
+             : '<span class="tag svc">' + esc(s.service) + '</span>';
+  };
   const tags = (s) =>
-    '<span class="tag svc">' + esc(s.service) + '</span>' +
+    svcTag(s) +
     '<span class="tag who">' + esc(WHO_LABEL[s.watcher] || s.watcher) + '</span>' +
     (s.avg_minutes ? '<span class="tag len">' + esc(lenText(s)) + '</span>' : '') +
     (s.night ? '<span class="tag night">' + esc(s.night) + 's</span>' : '');
@@ -281,7 +290,7 @@
 
     $("rows" + K).innerHTML = list.map((s) =>
       '<tr' + (isOff(s) ? ' class="off"' : '') + '><td class="title">' + esc(s.title) + '</td>' +
-      '<td><span class="tag svc">' + esc(s.service) + '</span></td>' +
+      '<td>' + svcTag(s) + '</td>' +
       '<td><span class="tag who">' + esc(WHO_LABEL[s.watcher] || s.watcher) + '</span></td>' +
       (kind === "show" ? '<td>' + (s.night ? esc(s.night) + 's' : '') + '</td>' : '') +
       '<td>' + esc(lenText(s)) + '</td></tr>').join("");
