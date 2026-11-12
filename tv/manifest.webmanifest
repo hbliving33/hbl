@@ -1,6 +1,6 @@
 {
   "name": "What We're Watching",
-  "short_name": "TV",
+  "short_name": "HB TV",
   "description": "What Eric and Vicki are watching, and where.",
   "id": "/tv/",
   "start_url": "/tv/",

@@ -1,9 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="10" fill="#0a3161"/>
-  <path d="M24 8 L32 16 L40 8" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-  <rect x="8" y="16" width="48" height="36" rx="5" fill="#ffffff"/>
-  <rect x="13" y="21" width="38" height="26" rx="2" fill="#b31942"/>
-  <polygon points="32,25 34.4,31.2 41,31.2 35.7,35.1 37.7,41.4 32,37.6 26.3,41.4 28.3,35.1 23,31.2 29.6,31.2" fill="#ffffff"/>
-  <rect x="18" y="54" width="8" height="4" rx="1" fill="#ffffff"/>
-  <rect x="38" y="54" width="8" height="4" rx="1" fill="#ffffff"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="80" fill="#0a3161"/><path d="M206 70 L256 120 L306 70" stroke="#ffffff" stroke-width="22" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="56" y="120" width="400" height="300" rx="40" fill="#ffffff"/><rect x="92" y="156" width="328" height="228" rx="18" fill="#b31942"/><path d="M215.875 330.0V290.85H179.425V330.0H146.275V226.8H179.425V264.45H215.875V226.8H249.025V330.0ZM368.425 252.15Q368.425 271.2 351.175 276.15V276.75Q370.825 281.25 370.825 302.55Q370.825 310.65 366.85 316.875Q362.875 323.1 355.975 326.55Q349.075 330.0 340.825 330.0H271.225V226.8H339.925Q347.725 226.8 354.25 230.025Q360.775 233.25 364.6 239.1Q368.425 244.95 368.425 252.15ZM304.375 267.0H327.175Q330.475 267.0 332.65 264.675Q334.825 262.35 334.825 258.9V257.4Q334.825 254.10000000000002 332.575 251.775Q330.325 249.45 327.175 249.45H304.375ZM304.375 306.0H329.575Q332.875 306.0 335.05 303.675Q337.225 301.35 337.225 297.9V296.4Q337.225 292.95 335.05 290.625Q332.875 288.3 329.575 288.3H304.375Z" fill="#ffffff"/><rect x="130" y="428" width="60" height="28" rx="8" fill="#ffffff"/><rect x="322" y="428" width="60" height="28" rx="8" fill="#ffffff"/></svg>

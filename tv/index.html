@@ -6,12 +6,12 @@
 <meta name="robots" content="noindex, nofollow">
 <title>What We're Watching</title>
 <meta name="theme-color" content="#0a3161">
-<link rel="icon" href="icon.svg?v=1" type="image/svg+xml">
-<link rel="apple-touch-icon" href="icon-180.png?v=1">
+<link rel="icon" href="icon.svg?v=2" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-180.png?v=2">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="TV">
+<meta name="apple-mobile-web-app-title" content="HB TV">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -189,7 +189,7 @@
     <div class="empty" id="emptyMovie" hidden>No movies here yet.</div>
   </section>
   <div class="error" id="error" hidden>Couldn't load the list.  Pull down to refresh.</div>
-  <div class="getapp-row" id="getappRow"><button type="button" class="getapp" id="getApp"><img src="icon-192.png" alt="" width="28" height="28"> Put TV on your Home Screen</button></div>
+  <div class="getapp-row" id="getappRow"><button type="button" class="getapp" id="getApp"><img src="icon-192.png" alt="" width="28" height="28"> Put HB TV on your Home Screen</button></div>
 </main>
 
 <dialog id="addDlg">
@@ -416,20 +416,20 @@
   };
   const phone = /iphone|ipod/i.test(ua);
   const iosSteps = phone
-    ? "<b>Put TV on your Home Screen</b><br>1. Tap <b>&middot;&middot;&middot;</b> next to the web address at the bottom<br>2. Tap <b>Share</b><br>3. Scroll down, tap <b>Add to Home Screen</b>, then <b>Add</b>"
-    : "<b>Put TV on your Home Screen</b><br>1. Tap <b>Share</b> at the top right<br>2. Tap <b>Add to Home Screen</b>, then <b>Add</b>";
+    ? "<b>Put HB TV on your Home Screen</b><br>1. Tap <b>&middot;&middot;&middot;</b> next to the web address at the bottom<br>2. Tap <b>Share</b><br>3. Scroll down, tap <b>Add to Home Screen</b>, then <b>Add</b>"
+    : "<b>Put HB TV on your Home Screen</b><br>1. Tap <b>Share</b> at the top right<br>2. Tap <b>Add to Home Screen</b>, then <b>Add</b>";
   const steps = () => {
     if (ios) return iosSteps;
     if (/Edg\//.test(ua)) return "<b>Install in Edge</b><br>Open the <b>&middot;&middot;&middot;</b> menu, then <b>Apps</b>, then <b>Install this site as an app</b>.";
-    if (/Android/.test(ua)) return "<b>Put TV on your Home Screen</b><br>Open the browser menu <b>&#8942;</b>, then tap <b>Add to Home screen</b> or <b>Install app</b>.";
+    if (/Android/.test(ua)) return "<b>Put HB TV on your Home Screen</b><br>Open the browser menu <b>&#8942;</b>, then tap <b>Add to Home screen</b> or <b>Install app</b>.";
     if (/Chrome\//.test(ua)) return "<b>Install in Chrome</b><br>Open the <b>&#8942;</b> menu, then <b>Cast, save, and share</b>, then <b>Install page as app</b>.";
     if (/Macintosh/.test(ua) && /Safari\//.test(ua)) return "<b>Install in Safari</b><br>Open the <b>File</b> menu, then <b>Add to Dock</b>.";
-    return "<b>Put TV on your Home Screen</b><br>Open this page in <b>Safari</b>, <b>Chrome</b> or <b>Edge</b> to install it.";
+    return "<b>Put HB TV on your Home Screen</b><br>Open this page in <b>Safari</b>, <b>Chrome</b> or <b>Edge</b> to install it.";
   };
   const install = () => { if (deferred) { const d = deferred; deferred = null; d.prompt(); } else show(steps(), null, false); };
   document.getElementById("getApp").onclick = install;
   addEventListener("appinstalled", () => row.remove());
-  addEventListener("beforeinstallprompt", (e) => { e.preventDefault(); deferred = e; if (!seen) show("<b>Put TV on your Home Screen</b> so it opens like an app.", install); });
+  addEventListener("beforeinstallprompt", (e) => { e.preventDefault(); deferred = e; if (!seen) show("<b>Put HB TV on your Home Screen</b> so it opens like an app.", install); });
   if (!seen && ios) setTimeout(() => show(iosSteps), 2000);
 })();
 </script>
