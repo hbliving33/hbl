@@ -6,8 +6,8 @@
 <meta name="robots" content="noindex, nofollow">
 <title>What We're Watching</title>
 <meta name="theme-color" content="#0a3161">
-<link rel="icon" href="icon.svg?v=2" type="image/svg+xml">
-<link rel="apple-touch-icon" href="icon-180.png?v=2">
+<link rel="icon" href="icon.svg?v=5" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-180.png?v=5">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -70,6 +70,7 @@
   .card.off .len { color: #8a94a3; border-color: #9aa4b2; }
 
   .sect { margin-bottom: 36px; }
+  .h-logo { height: 1.15em; width: auto; vertical-align: -0.2em; margin-right: 0.35em; }
   .sect-h { font-size: 28px; font-weight: 800; color: var(--navy); margin: 0 0 14px; padding-bottom: 6px; border-bottom: 3px solid var(--red); }
   .sect[hidden] { display: none !important; }
 
@@ -148,7 +149,7 @@
 <body>
 <header>
   <div>
-    <h1>What We're Watching</h1>
+    <h1><img class="h-logo" src="icon.svg?v=5" alt="" aria-hidden="true">What We're Watching</h1>
     <div class="count" id="count">Loading&hellip;</div>
   </div>
   <div class="controls">
@@ -166,7 +167,7 @@
 
 <main>
   <section class="sect" id="secShow">
-    <h2 class="sect-h">Shows</h2>
+    <h2 class="sect-h"><img class="h-logo" src="icon.svg?v=5" alt="" aria-hidden="true">Shows</h2>
     <div class="grid" id="cardsShow"></div>
     <table id="tableShow" data-kind="show" hidden>
       <thead><tr>
@@ -181,7 +182,7 @@
     <div class="empty" id="emptyShow" hidden>No shows here yet.</div>
   </section>
   <section class="sect" id="secMovie">
-    <h2 class="sect-h">Movies We Want to Watch</h2>
+    <h2 class="sect-h"><img class="h-logo" src="icon.svg?v=5" alt="" aria-hidden="true">Movies We Want to Watch</h2>
     <div class="grid" id="cardsMovie"></div>
     <table id="tableMovie" data-kind="movie" hidden>
       <thead><tr>
@@ -195,7 +196,7 @@
     <div class="empty" id="emptyMovie" hidden>No movies here yet.</div>
   </section>
   <div class="error" id="error" hidden>Couldn't load the list.  Pull down to refresh.</div>
-  <div class="getapp-row" id="getappRow"><button type="button" class="getapp" id="getApp"><img src="icon-192.png" alt="" width="28" height="28"> Put HB TV on your Home Screen</button></div>
+  <div class="getapp-row" id="getappRow"><button type="button" class="getapp" id="getApp"><img src="icon-192.png?v=5" alt="" width="28" height="28"> Put HB TV on your Home Screen</button></div>
 </main>
 
 <dialog id="addDlg">
@@ -421,7 +422,7 @@
     document.querySelectorAll(".install-tip").forEach((t) => t.remove());
     const tip = document.createElement("div");
     tip.className = "install-tip";
-    tip.innerHTML = `<img src="icon-192.png" alt="" width="40" height="40"><p>${html}</p>${onGo ? '<button type="button" class="it-go">Install</button>' : ""}<button type="button" class="it-x" aria-label="Close">&times;</button>`;
+    tip.innerHTML = `<img src="icon-192.png?v=5" alt="" width="40" height="40"><p>${html}</p>${onGo ? '<button type="button" class="it-go">Install</button>' : ""}<button type="button" class="it-x" aria-label="Close">&times;</button>`;
     document.body.appendChild(tip);
     const close = () => { tip.remove(); if (remember) try { localStorage.setItem("tv-install-tip", "1"); } catch (e) {} };
     tip.querySelector(".it-x").onclick = close;
@@ -433,13 +434,18 @@
     : "<b>Put HB TV on your Home Screen</b><br>1. Tap <b>Share</b> at the top right<br>2. Tap <b>Add to Home Screen</b>, then <b>Add</b>";
   const steps = () => {
     if (ios) return iosSteps;
-    if (/Edg\//.test(ua)) return "<b>Install in Edge</b><br>Open the <b>&middot;&middot;&middot;</b> menu, then <b>Apps</b>, then <b>Install this site as an app</b>.";
     if (/Android/.test(ua)) return "<b>Put HB TV on your Home Screen</b><br>Open the browser menu <b>&#8942;</b>, then tap <b>Add to Home screen</b> or <b>Install app</b>.";
-    if (/Chrome\//.test(ua)) return "<b>Install in Chrome</b><br>Open the <b>&#8942;</b> menu, then <b>Cast, save, and share</b>, then <b>Install page as app</b>.";
+    if (/Windows|Macintosh|CrOS|Linux/.test(ua) && /Chrome\/|Edg\//.test(ua)) return "<b>HB TV may already be installed.</b><br>Look for <b>What We're Watching</b> on your desktop or Start menu.  If it's not there, reload this page and click the button again.";
     if (/Macintosh/.test(ua) && /Safari\//.test(ua)) return "<b>Install in Safari</b><br>Open the <b>File</b> menu, then <b>Add to Dock</b>.";
     return "<b>Put HB TV on your Home Screen</b><br>Open this page in <b>Safari</b>, <b>Chrome</b> or <b>Edge</b> to install it.";
   };
-  const install = () => { if (deferred) { const d = deferred; deferred = null; d.prompt(); } else show(steps(), null, false); };
+  let installed = false;
+  if (navigator.getInstalledRelatedApps) navigator.getInstalledRelatedApps().then((a) => { if (a.length) { installed = true; const b = document.getElementById("getApp"); b.lastChild.textContent = " HB TV is installed on this computer"; } }).catch(() => {});
+  const install = () => {
+    if (deferred) { const d = deferred; deferred = null; d.prompt(); return; }
+    if (installed) { show("<b>HB TV is already installed.</b><br>Open it from your desktop or the Start menu.", null, false); return; }
+    show(steps(), null, false);
+  };
   document.getElementById("getApp").onclick = install;
   addEventListener("appinstalled", () => row.remove());
   addEventListener("beforeinstallprompt", (e) => { e.preventDefault(); deferred = e; if (!seen) show("<b>Put HB TV on your Home Screen</b> so it opens like an app.", install); });
