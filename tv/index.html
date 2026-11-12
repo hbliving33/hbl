@@ -262,7 +262,7 @@
   }
 
   // Service logos.  Any service without a logo here keeps its text tag.
-  const LOGOS = { "britbox": "britbox.png", "hbo max": "hbo-max.png", "netflix": "netflix.png", "prime video": "prime-video.png" };
+  const LOGOS = { "britbox": "britbox.png", "hbo max": "hbo-max.png", "netflix": "netflix.png", "prime video": "prime-video.png", "apple tv": "apple-tv.png" };
   const svcTag = (s) => {
     const f = LOGOS[String(s.service || "").toLowerCase()];
     return f ? '<img class="logo" src="logos/' + f + '?v=2" alt="' + esc(s.service) + '" title="' + esc(s.service) + '" width="44" height="44">'
