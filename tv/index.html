@@ -8,8 +8,11 @@
 <meta name="theme-color" content="#0a3161">
 <link rel="icon" href="icon.svg?v=1" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-180.png?v=1">
+<link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="TV">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -118,6 +121,16 @@
     th, td { padding: 10px 8px; font-size: 15px; }
     th { font-size: 12px; letter-spacing: 0.4px; }
   }
+  .getapp-row { text-align: center; margin: 28px 0 12px; }
+  .getapp { appearance: none; display: inline-flex; align-items: center; gap: 10px; border: 2px solid var(--navy); background: var(--white); color: var(--navy);
+    font: inherit; font-size: 17px; font-weight: 700; padding: 8px 16px; min-height: 48px; border-radius: 4px; cursor: pointer; }
+  .getapp img { border-radius: 4px; }
+  .install-tip { position: fixed; left: 12px; right: 12px; bottom: calc(16px + env(safe-area-inset-bottom)); z-index: 40; display: flex; align-items: center; gap: 12px;
+    background: var(--white); border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; box-shadow: 0 16px 40px rgba(10, 49, 97, .22); max-width: 480px; margin: 0 auto; }
+  .install-tip img { border-radius: 8px; flex: none; }
+  .install-tip p { margin: 0; font-size: 15px; flex: 1; line-height: 1.55; }
+  .install-tip .it-go { appearance: none; border: 2px solid var(--red); background: var(--red); color: var(--white); font: inherit; font-size: 15px; font-weight: 700; padding: 8px 16px; border-radius: 4px; cursor: pointer; }
+  .install-tip .it-x { border: 0; background: none; font-size: 26px; color: var(--muted); cursor: pointer; }
 </style>
 </head>
 <body>
@@ -153,6 +166,7 @@
   </table>
   <div class="empty" id="empty" hidden>Nothing here yet.</div>
   <div class="error" id="error" hidden>Couldn't load the list.  Pull down to refresh.</div>
+  <div class="getapp-row" id="getappRow"><button type="button" class="getapp" id="getApp"><img src="icon-192.png" alt="" width="28" height="28"> Put TV on your Home Screen</button></div>
 </main>
 
 <dialog id="addDlg">
@@ -324,6 +338,48 @@
   }
   load();
   document.addEventListener("visibilitychange", () => { if (!document.hidden) load(); });
+})();
+</script>
+<script>
+// Install as an app, the same way as the Suburbia Park site: offline support, a Home Screen button, and a one-time tip.
+(() => {
+  if ("serviceWorker" in navigator && location.protocol === "https:") {
+    navigator.serviceWorker.register("sw.js", { scope: "./", updateViaCache: "none" }).catch(() => {});
+  }
+  const row = document.getElementById("getappRow");
+  const standalone = matchMedia("(display-mode: standalone)").matches || navigator.standalone;
+  if (standalone) { row.remove(); return; }
+  let seen = false; try { seen = localStorage.getItem("tv-install-tip") === "1"; } catch (e) {}
+  const ua = navigator.userAgent;
+  const ios = /iphone|ipad|ipod/i.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+  let deferred = null;
+  const show = (html, onGo, remember = true) => {
+    document.querySelectorAll(".install-tip").forEach((t) => t.remove());
+    const tip = document.createElement("div");
+    tip.className = "install-tip";
+    tip.innerHTML = `<img src="icon-192.png" alt="" width="40" height="40"><p>${html}</p>${onGo ? '<button type="button" class="it-go">Install</button>' : ""}<button type="button" class="it-x" aria-label="Close">&times;</button>`;
+    document.body.appendChild(tip);
+    const close = () => { tip.remove(); if (remember) try { localStorage.setItem("tv-install-tip", "1"); } catch (e) {} };
+    tip.querySelector(".it-x").onclick = close;
+    if (onGo) tip.querySelector(".it-go").onclick = () => { onGo(); close(); };
+  };
+  const phone = /iphone|ipod/i.test(ua);
+  const iosSteps = phone
+    ? "<b>Put TV on your Home Screen</b><br>1. Tap <b>&middot;&middot;&middot;</b> next to the web address at the bottom<br>2. Tap <b>Share</b><br>3. Scroll down, tap <b>Add to Home Screen</b>, then <b>Add</b>"
+    : "<b>Put TV on your Home Screen</b><br>1. Tap <b>Share</b> at the top right<br>2. Tap <b>Add to Home Screen</b>, then <b>Add</b>";
+  const steps = () => {
+    if (ios) return iosSteps;
+    if (/Edg\//.test(ua)) return "<b>Install in Edge</b><br>Open the <b>&middot;&middot;&middot;</b> menu, then <b>Apps</b>, then <b>Install this site as an app</b>.";
+    if (/Android/.test(ua)) return "<b>Put TV on your Home Screen</b><br>Open the browser menu <b>&#8942;</b>, then tap <b>Add to Home screen</b> or <b>Install app</b>.";
+    if (/Chrome\//.test(ua)) return "<b>Install in Chrome</b><br>Open the <b>&#8942;</b> menu, then <b>Cast, save, and share</b>, then <b>Install page as app</b>.";
+    if (/Macintosh/.test(ua) && /Safari\//.test(ua)) return "<b>Install in Safari</b><br>Open the <b>File</b> menu, then <b>Add to Dock</b>.";
+    return "<b>Put TV on your Home Screen</b><br>Open this page in <b>Safari</b>, <b>Chrome</b> or <b>Edge</b> to install it.";
+  };
+  const install = () => { if (deferred) { const d = deferred; deferred = null; d.prompt(); } else show(steps(), null, false); };
+  document.getElementById("getApp").onclick = install;
+  addEventListener("appinstalled", () => row.remove());
+  addEventListener("beforeinstallprompt", (e) => { e.preventDefault(); deferred = e; if (!seen) show("<b>Put TV on your Home Screen</b> so it opens like an app.", install); });
+  if (!seen && ios) setTimeout(() => show(iosSteps), 2000);
 })();
 </script>
 </body>

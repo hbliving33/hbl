@@ -1,0 +1,16 @@
+{
+  "name": "What We're Watching",
+  "short_name": "TV",
+  "description": "What Eric and Vicki are watching, and where.",
+  "id": "/tv/",
+  "start_url": "/tv/",
+  "scope": "/tv/",
+  "display": "standalone",
+  "background_color": "#f6f7fa",
+  "theme_color": "#0a3161",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
