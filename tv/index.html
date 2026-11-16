@@ -181,6 +181,20 @@
     </table>
     <div class="empty" id="emptyShow" hidden>No shows here yet.</div>
   </section>
+  <section class="sect" id="secClassic">
+    <h2 class="sect-h"><img class="h-logo" src="icon.svg?v=5" alt="" aria-hidden="true">Classic Rewind</h2>
+    <div class="grid" id="cardsClassic"></div>
+    <table id="tableClassic" data-kind="classic" hidden>
+      <thead><tr>
+        <th data-key="title">Show <span class="arrow">&#9650;</span></th>
+        <th data-key="service">Service <span class="arrow">&#9650;</span></th>
+        <th data-key="watcher">Watching <span class="arrow">&#9650;</span></th>
+        <th data-key="avg_minutes">Avg. Length <span class="arrow">&#9650;</span></th>
+      </tr></thead>
+      <tbody id="rowsClassic"></tbody>
+    </table>
+    <div class="empty" id="emptyClassic" hidden>No classics here yet.</div>
+  </section>
   <section class="sect" id="secMovie">
     <h2 class="sect-h"><img class="h-logo" src="icon.svg?v=5" alt="" aria-hidden="true">Movies We Want to Watch</h2>
     <div class="grid" id="cardsMovie"></div>
@@ -203,8 +217,9 @@
   <form id="addForm" method="dialog" autocomplete="off">
     <h2 id="fHead">Add a Show</h2>
     <div class="field"><span class="lbl">Type</span>
-      <div class="group" role="group" aria-label="Show or movie">
+      <div class="group" role="group" aria-label="Show, classic or movie">
         <button type="button" data-fkind="show" aria-pressed="true">Show</button>
+        <button type="button" data-fkind="classic" aria-pressed="false">Classic</button>
         <button type="button" data-fkind="movie" aria-pressed="false">Movie</button>
       </div>
     </div>
@@ -238,14 +253,14 @@
   let subscribed = {};
   let subs = "active";
   let view = "cards";
-  const sorts = { show: { key: "title", dir: 1 }, movie: { key: "title", dir: 1 } };
-  const KINDS = { show: "Show", movie: "Movie" };
+  const sorts = { show: { key: "title", dir: 1 }, classic: { key: "title", dir: 1 }, movie: { key: "title", dir: 1 } };
+  const KINDS = { show: "Show", classic: "Classic", movie: "Movie" };
 
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const isOff = (s) => subscribed[String(s.service).toLowerCase()] === false;
 
-  const kindOf = (s) => s.kind === "movie" ? "movie" : "show";
+  const kindOf = (s) => s.kind === "movie" || s.kind === "classic" ? s.kind : "show";
   const runtime = (m) => { m = Number(m); if (!m) return ""; const h = Math.floor(m / 60), r = m % 60; return h ? h + " hr" + (r ? " " + r + " min" : "") : r + " min"; };
   const lenText = (s) => kindOf(s) === "movie" ? runtime(s.avg_minutes) : (s.avg_minutes ? s.avg_minutes + " min" : "");
 
@@ -309,8 +324,8 @@
   }
 
   function render() {
-    const n = renderKind("show"), m = renderKind("movie");
-    $("count").textContent = (n === 1 ? "1 show" : n + " shows") + ", " + (m === 1 ? "1 movie" : m + " movies");
+    const n = renderKind("show"), c = renderKind("classic"), m = renderKind("movie");
+    $("count").textContent = (n === 1 ? "1 show" : n + " shows") + ", " + (c === 1 ? "1 classic" : c + " classics") + ", " + (m === 1 ? "1 movie" : m + " movies");
   }
 
   document.querySelector("main").addEventListener("click", (ev) => {
@@ -341,10 +356,10 @@
   let fkind = "show";
   const setKind = (k) => {
     fkind = k; press("fkind", k);
-    $("fHead").textContent = "Add a " + KINDS[k];
-    $("fTitleLbl").textContent = KINDS[k];
-    $("fNightField").hidden = k === "movie";
-    if (k === "movie") $("fNight").value = "";
+    $("fHead").textContent = k === "classic" ? "Add a Classic Rewind Show" : "Add a " + KINDS[k];
+    $("fTitleLbl").textContent = k === "movie" ? "Movie" : "Show";
+    $("fNightField").hidden = k !== "show";
+    if (k !== "show") $("fNight").value = "";
   };
   document.querySelectorAll("[data-fkind]").forEach((b) => b.addEventListener("click", () => setKind(b.dataset.fkind)));
   document.querySelectorAll("[data-fwho]").forEach((b) => b.addEventListener("click", () => { fwho = b.dataset.fwho; press("fwho", fwho); }));
@@ -366,7 +381,7 @@
     try {
       const res = await fetch(SUPABASE_URL + "/rest/v1/rpc/tv_add_show", {
         method: "POST", headers: { apikey: SUPABASE_KEY, "Content-Type": "application/json" },
-        body: JSON.stringify({ p_pin: pin, p_title: $("fTitle").value, p_service: $("fService").value, p_watcher: fwho, p_night: fkind === "movie" ? null : ($("fNight").value || null), p_kind: fkind })
+        body: JSON.stringify({ p_pin: pin, p_title: $("fTitle").value, p_service: $("fService").value, p_watcher: fwho, p_night: fkind !== "show" ? null : ($("fNight").value || null), p_kind: fkind })
       });
       const out = res.ok ? await res.json() : "Something went wrong.  Try again.";
       if (out === "ok") {
