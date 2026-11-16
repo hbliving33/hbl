@@ -6,12 +6,12 @@
 <meta name="robots" content="noindex, nofollow">
 <title>What We're Watching</title>
 <meta name="theme-color" content="#0a3161">
-<link rel="icon" href="icon.svg?v=5" type="image/svg+xml">
-<link rel="apple-touch-icon" href="icon-180.png?v=5">
+<link rel="icon" href="icon.svg?v=6" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-180.png?v=6">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="HB TV">
+<meta name="apple-mobile-web-app-title" content="VE TV">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -149,7 +149,7 @@
 <body>
 <header>
   <div>
-    <h1><img class="h-logo" src="icon.svg?v=5" alt="" aria-hidden="true">What We're Watching</h1>
+    <h1><img class="h-logo" src="icon.svg?v=6" alt="" aria-hidden="true">What We're Watching</h1>
     <div class="count" id="count">Loading&hellip;</div>
   </div>
   <div class="controls">
@@ -167,7 +167,7 @@
 
 <main>
   <section class="sect" id="secShow">
-    <h2 class="sect-h"><img class="h-logo" src="icon.svg?v=5" alt="" aria-hidden="true">Shows</h2>
+    <h2 class="sect-h"><img class="h-logo" src="icon.svg?v=6" alt="" aria-hidden="true">Shows</h2>
     <div class="grid" id="cardsShow"></div>
     <table id="tableShow" data-kind="show" hidden>
       <thead><tr>
@@ -182,7 +182,7 @@
     <div class="empty" id="emptyShow" hidden>No shows here yet.</div>
   </section>
   <section class="sect" id="secMovie">
-    <h2 class="sect-h"><img class="h-logo" src="icon.svg?v=5" alt="" aria-hidden="true">Movies We Want to Watch</h2>
+    <h2 class="sect-h"><img class="h-logo" src="icon.svg?v=6" alt="" aria-hidden="true">Movies We Want to Watch</h2>
     <div class="grid" id="cardsMovie"></div>
     <table id="tableMovie" data-kind="movie" hidden>
       <thead><tr>
@@ -196,7 +196,7 @@
     <div class="empty" id="emptyMovie" hidden>No movies here yet.</div>
   </section>
   <section class="sect" id="secClassic">
-    <h2 class="sect-h"><img class="h-logo" src="icon.svg?v=5" alt="" aria-hidden="true">Classic Rewind</h2>
+    <h2 class="sect-h"><img class="h-logo" src="icon.svg?v=6" alt="" aria-hidden="true">Classic Rewind</h2>
     <div class="grid" id="cardsClassic"></div>
     <table id="tableClassic" data-kind="classic" hidden>
       <thead><tr>
@@ -210,7 +210,7 @@
     <div class="empty" id="emptyClassic" hidden>No classics here yet.</div>
   </section>
   <div class="error" id="error" hidden>Couldn't load the list.  Pull down to refresh.</div>
-  <div class="getapp-row" id="getappRow"><button type="button" class="getapp" id="getApp"><img src="icon-192.png?v=5" alt="" width="28" height="28"> Put HB TV on your Home Screen</button></div>
+  <div class="getapp-row" id="getappRow"><button type="button" class="getapp" id="getApp"><img src="icon-192.png?v=6" alt="" width="28" height="28"> Put VE TV on your Home Screen</button></div>
 </main>
 
 <dialog id="addDlg">
@@ -437,7 +437,7 @@
     document.querySelectorAll(".install-tip").forEach((t) => t.remove());
     const tip = document.createElement("div");
     tip.className = "install-tip";
-    tip.innerHTML = `<img src="icon-192.png?v=5" alt="" width="40" height="40"><p>${html}</p>${onGo ? '<button type="button" class="it-go">Install</button>' : ""}<button type="button" class="it-x" aria-label="Close">&times;</button>`;
+    tip.innerHTML = `<img src="icon-192.png?v=6" alt="" width="40" height="40"><p>${html}</p>${onGo ? '<button type="button" class="it-go">Install</button>' : ""}<button type="button" class="it-x" aria-label="Close">&times;</button>`;
     document.body.appendChild(tip);
     const close = () => { tip.remove(); if (remember) try { localStorage.setItem("tv-install-tip", "1"); } catch (e) {} };
     tip.querySelector(".it-x").onclick = close;
@@ -445,25 +445,25 @@
   };
   const phone = /iphone|ipod/i.test(ua);
   const iosSteps = phone
-    ? "<b>Put HB TV on your Home Screen</b><br>1. Tap <b>&middot;&middot;&middot;</b> next to the web address at the bottom<br>2. Tap <b>Share</b><br>3. Scroll down, tap <b>Add to Home Screen</b>, then <b>Add</b>"
-    : "<b>Put HB TV on your Home Screen</b><br>1. Tap <b>Share</b> at the top right<br>2. Tap <b>Add to Home Screen</b>, then <b>Add</b>";
+    ? "<b>Put VE TV on your Home Screen</b><br>1. Tap <b>&middot;&middot;&middot;</b> next to the web address at the bottom<br>2. Tap <b>Share</b><br>3. Scroll down, tap <b>Add to Home Screen</b>, then <b>Add</b>"
+    : "<b>Put VE TV on your Home Screen</b><br>1. Tap <b>Share</b> at the top right<br>2. Tap <b>Add to Home Screen</b>, then <b>Add</b>";
   const steps = () => {
     if (ios) return iosSteps;
-    if (/Android/.test(ua)) return "<b>Put HB TV on your Home Screen</b><br>Open the browser menu <b>&#8942;</b>, then tap <b>Add to Home screen</b> or <b>Install app</b>.";
-    if (/Windows|Macintosh|CrOS|Linux/.test(ua) && /Chrome\/|Edg\//.test(ua)) return "<b>HB TV may already be installed.</b><br>Look for <b>What We're Watching</b> on your desktop or Start menu.  If it's not there, reload this page and click the button again.";
+    if (/Android/.test(ua)) return "<b>Put VE TV on your Home Screen</b><br>Open the browser menu <b>&#8942;</b>, then tap <b>Add to Home screen</b> or <b>Install app</b>.";
+    if (/Windows|Macintosh|CrOS|Linux/.test(ua) && /Chrome\/|Edg\//.test(ua)) return "<b>VE TV may already be installed.</b><br>Look for <b>What We're Watching</b> on your desktop or Start menu.  If it's not there, reload this page and click the button again.";
     if (/Macintosh/.test(ua) && /Safari\//.test(ua)) return "<b>Install in Safari</b><br>Open the <b>File</b> menu, then <b>Add to Dock</b>.";
-    return "<b>Put HB TV on your Home Screen</b><br>Open this page in <b>Safari</b>, <b>Chrome</b> or <b>Edge</b> to install it.";
+    return "<b>Put VE TV on your Home Screen</b><br>Open this page in <b>Safari</b>, <b>Chrome</b> or <b>Edge</b> to install it.";
   };
   let installed = false;
-  if (navigator.getInstalledRelatedApps) navigator.getInstalledRelatedApps().then((a) => { if (a.length) { installed = true; const b = document.getElementById("getApp"); b.lastChild.textContent = " HB TV is installed on this computer"; } }).catch(() => {});
+  if (navigator.getInstalledRelatedApps) navigator.getInstalledRelatedApps().then((a) => { if (a.length) { installed = true; const b = document.getElementById("getApp"); b.lastChild.textContent = " VE TV is installed on this computer"; } }).catch(() => {});
   const install = () => {
     if (deferred) { const d = deferred; deferred = null; d.prompt(); return; }
-    if (installed) { show("<b>HB TV is already installed.</b><br>Open it from your desktop or the Start menu.", null, false); return; }
+    if (installed) { show("<b>VE TV is already installed.</b><br>Open it from your desktop or the Start menu.", null, false); return; }
     show(steps(), null, false);
   };
   document.getElementById("getApp").onclick = install;
   addEventListener("appinstalled", () => row.remove());
-  addEventListener("beforeinstallprompt", (e) => { e.preventDefault(); deferred = e; if (!seen) show("<b>Put HB TV on your Home Screen</b> so it opens like an app.", install); });
+  addEventListener("beforeinstallprompt", (e) => { e.preventDefault(); deferred = e; if (!seen) show("<b>Put VE TV on your Home Screen</b> so it opens like an app.", install); });
   if (!seen && ios) setTimeout(() => show(iosSteps), 2000);
 })();
 </script>
