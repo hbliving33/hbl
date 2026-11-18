@@ -6,8 +6,8 @@
 <meta name="robots" content="noindex, nofollow">
 <title>What We're Watching</title>
 <meta name="theme-color" content="#0a3161">
-<link rel="icon" href="icon.svg?v=7" type="image/svg+xml">
-<link rel="apple-touch-icon" href="icon-180.png?v=7">
+<link rel="icon" href="icon.svg?v=8" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-180.png?v=8">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -149,7 +149,7 @@
 <body>
 <header>
   <div>
-    <h1><img class="h-logo" src="icon.svg?v=7" alt="" aria-hidden="true">What We're Watching</h1>
+    <h1><img class="h-logo" src="icon.svg?v=8" alt="" aria-hidden="true">What We're Watching</h1>
     <div class="count" id="count">Loading&hellip;</div>
   </div>
   <div class="controls">
@@ -167,7 +167,7 @@
 
 <main>
   <section class="sect" id="secShow">
-    <h2 class="sect-h"><img class="h-logo" src="icon.svg?v=7" alt="" aria-hidden="true">Shows</h2>
+    <h2 class="sect-h"><img class="h-logo" src="icon.svg?v=8" alt="" aria-hidden="true">Shows</h2>
     <div class="grid" id="cardsShow"></div>
     <table id="tableShow" data-kind="show" hidden>
       <thead><tr>
@@ -182,7 +182,7 @@
     <div class="empty" id="emptyShow" hidden>No shows here yet.</div>
   </section>
   <section class="sect" id="secMovie">
-    <h2 class="sect-h"><img class="h-logo" src="icon.svg?v=7" alt="" aria-hidden="true">Movies We Want to Watch</h2>
+    <h2 class="sect-h"><img class="h-logo" src="icon.svg?v=8" alt="" aria-hidden="true">Movies We Want to Watch</h2>
     <div class="grid" id="cardsMovie"></div>
     <table id="tableMovie" data-kind="movie" hidden>
       <thead><tr>
@@ -196,7 +196,7 @@
     <div class="empty" id="emptyMovie" hidden>No movies here yet.</div>
   </section>
   <section class="sect" id="secClassic">
-    <h2 class="sect-h"><img class="h-logo" src="icon.svg?v=7" alt="" aria-hidden="true">Classic Rewind</h2>
+    <h2 class="sect-h"><img class="h-logo" src="icon.svg?v=8" alt="" aria-hidden="true">Classic Rewind</h2>
     <div class="grid" id="cardsClassic"></div>
     <table id="tableClassic" data-kind="classic" hidden>
       <thead><tr>
@@ -210,7 +210,7 @@
     <div class="empty" id="emptyClassic" hidden>No classics here yet.</div>
   </section>
   <div class="error" id="error" hidden>Couldn't load the list.  Pull down to refresh.</div>
-  <div class="getapp-row" id="getappRow"><button type="button" class="getapp" id="getApp"><img src="icon-192.png?v=7" alt="" width="28" height="28"> Put V&amp;E TV on your Home Screen</button></div>
+  <div class="getapp-row" id="getappRow"><button type="button" class="getapp" id="getApp"><img src="icon-192.png?v=8" alt="" width="28" height="28"> Put V&amp;E TV on your Home Screen</button></div>
 </main>
 
 <dialog id="addDlg">
@@ -437,7 +437,7 @@
     document.querySelectorAll(".install-tip").forEach((t) => t.remove());
     const tip = document.createElement("div");
     tip.className = "install-tip";
-    tip.innerHTML = `<img src="icon-192.png?v=7" alt="" width="40" height="40"><p>${html}</p>${onGo ? '<button type="button" class="it-go">Install</button>' : ""}<button type="button" class="it-x" aria-label="Close">&times;</button>`;
+    tip.innerHTML = `<img src="icon-192.png?v=8" alt="" width="40" height="40"><p>${html}</p>${onGo ? '<button type="button" class="it-go">Install</button>' : ""}<button type="button" class="it-x" aria-label="Close">&times;</button>`;
     document.body.appendChild(tip);
     const close = () => { tip.remove(); if (remember) try { localStorage.setItem("tv-install-tip", "1"); } catch (e) {} };
     tip.querySelector(".it-x").onclick = close;
