@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<title>What We're Watching</title>
+<title>V&amp;E TV</title>
 <meta name="theme-color" content="#0a3161">
 <link rel="icon" href="icon.svg?v=8" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-180.png?v=8">
@@ -32,6 +32,7 @@
   header { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 24px; }
   h1 { font-size: 40px; font-weight: 800; margin: 0; letter-spacing: -0.5px; color: var(--navy); }
   .count { color: var(--muted); font-size: 18px; font-weight: 600; margin-top: 2px; }
+  .tagline { color: var(--muted); font-size: 18px; font-style: italic; margin-top: 2px; }
   .controls { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
   .group { display: flex; border: 2px solid var(--navy); border-radius: 10px; overflow: hidden; background: var(--white); }
   .group button { appearance: none; border: 0; background: transparent; color: var(--navy); font: inherit; font-size: 19px;
@@ -116,6 +117,7 @@
     .sect { margin-bottom: 24px; }
     .sect-h { font-size: 20px; margin-bottom: 10px; }
     .count { font-size: 14px; }
+    .tagline { font-size: 14px; }
     .controls { gap: 8px; width: 100%; flex-wrap: nowrap; }
     .group button, .addbtn { padding: 8px 12px; font-size: 15px; min-height: 40px; }
     .group, .addbtn, .sumbtn { border-radius: 8px; }
@@ -149,7 +151,8 @@
 <body>
 <header>
   <div>
-    <h1><img class="h-logo" src="icon.svg?v=8" alt="" aria-hidden="true">What We're Watching</h1>
+    <h1><img class="h-logo" src="icon.svg?v=8" alt="" aria-hidden="true">V&amp;E TV</h1>
+    <div class="tagline">Vicki &amp; Eric's couch guide</div>
     <div class="count" id="count">Loading&hellip;</div>
   </div>
   <div class="controls">
@@ -167,7 +170,7 @@
 
 <main>
   <section class="sect" id="secShow">
-    <h2 class="sect-h"><img class="h-logo" src="icon.svg?v=8" alt="" aria-hidden="true">Shows</h2>
+    <h2 class="sect-h"><img class="h-logo" src="icon.svg?v=8" alt="" aria-hidden="true">What We're Watching</h2>
     <div class="grid" id="cardsShow"></div>
     <table id="tableShow" data-kind="show" hidden>
       <thead><tr>
@@ -450,7 +453,7 @@
   const steps = () => {
     if (ios) return iosSteps;
     if (/Android/.test(ua)) return "<b>Put V&amp;E TV on your Home Screen</b><br>Open the browser menu <b>&#8942;</b>, then tap <b>Add to Home screen</b> or <b>Install app</b>.";
-    if (/Windows|Macintosh|CrOS|Linux/.test(ua) && /Chrome\/|Edg\//.test(ua)) return "<b>V&amp;E TV may already be installed.</b><br>Look for <b>What We're Watching</b> on your desktop or Start menu.  If it's not there, reload this page and click the button again.";
+    if (/Windows|Macintosh|CrOS|Linux/.test(ua) && /Chrome\/|Edg\//.test(ua)) return "<b>V&amp;E TV may already be installed.</b><br>Look for <b>V&amp;E TV</b> on your desktop or Start menu.  If it's not there, reload this page and click the button again.";
     if (/Macintosh/.test(ua) && /Safari\//.test(ua)) return "<b>Install in Safari</b><br>Open the <b>File</b> menu, then <b>Add to Dock</b>.";
     return "<b>Put V&amp;E TV on your Home Screen</b><br>Open this page in <b>Safari</b>, <b>Chrome</b> or <b>Edge</b> to install it.";
   };
