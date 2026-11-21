@@ -99,7 +99,7 @@
   .field input, .field select { width: 100%; font: inherit; font-size: 21px; color: var(--ink); background: var(--white); border: 2px solid var(--line); border-radius: 4px; padding: 11px 14px; min-height: 52px; }
   .field input:focus, .field select:focus { outline: none; border-color: var(--navy); }
   .field .group { width: 100%; }
-  .field .group button { flex: 1; }
+  .field .group button { flex: 1 1 0; min-width: 0; padding-left: 6px; padding-right: 6px; }
   .field > label.remember { display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 500; color: var(--muted); margin: 10px 0 0; text-transform: none; letter-spacing: 0; }
   .remember input { width: 22px; height: 22px; min-height: 0; }
   .actions { display: flex; gap: 12px; margin-top: 24px; }
@@ -121,6 +121,10 @@
     .controls { gap: 8px; width: 100%; flex-wrap: nowrap; }
     .group button, .addbtn { padding: 8px 12px; font-size: 15px; min-height: 40px; }
     .group, .addbtn, .sumbtn { border-radius: 8px; }
+    .field .group.types { display: grid; grid-template-columns: 1fr 1fr; }
+    .field .group.types button { border-right: 1px solid var(--navy); }
+    .field .group.types button:nth-child(2n) { border-right: 0; }
+    .field .group.types button:nth-child(-n+2) { border-bottom: 1px solid var(--navy); }
     .addbtn { margin-left: auto; }
     .addbtn .long { display: none; }
     .grid { grid-template-columns: 1fr; gap: 10px; }
@@ -212,6 +216,20 @@
     </table>
     <div class="empty" id="emptyClassic" hidden>No classics here yet.</div>
   </section>
+  <section class="sect" id="secRecommend">
+    <h2 class="sect-h"><img class="h-logo" src="icon.svg?v=9" alt="" aria-hidden="true">Worth Recommending</h2>
+    <div class="grid" id="cardsRecommend"></div>
+    <table id="tableRecommend" data-kind="recommend" hidden>
+      <thead><tr>
+        <th data-key="title">Title <span class="arrow">&#9650;</span></th>
+        <th data-key="service">Service <span class="arrow">&#9650;</span></th>
+        <th data-key="watcher">Watched <span class="arrow">&#9650;</span></th>
+        <th data-key="avg_minutes">Length <span class="arrow">&#9650;</span></th>
+      </tr></thead>
+      <tbody id="rowsRecommend"></tbody>
+    </table>
+    <div class="empty" id="emptyRecommend" hidden>Nothing recommended yet.</div>
+  </section>
   <div class="error" id="error" hidden>Couldn't load the list.  Pull down to refresh.</div>
   <div class="getapp-row" id="getappRow"><button type="button" class="getapp" id="getApp"><img src="icon-192.png?v=8" alt="" width="28" height="28"> Put V&amp;E TV on your Home Screen</button></div>
 </main>
@@ -220,10 +238,11 @@
   <form id="addForm" method="dialog" autocomplete="off">
     <h2 id="fHead">Add a Show</h2>
     <div class="field"><span class="lbl">Type</span>
-      <div class="group" role="group" aria-label="Show, classic or movie">
+      <div class="group types" role="group" aria-label="Show, classic, movie or recommend">
         <button type="button" data-fkind="show" aria-pressed="true">Show</button>
         <button type="button" data-fkind="classic" aria-pressed="false">Classic</button>
         <button type="button" data-fkind="movie" aria-pressed="false">Movie</button>
+        <button type="button" data-fkind="recommend" aria-pressed="false">Recommend</button>
       </div>
     </div>
     <div class="field"><label for="fTitle" id="fTitleLbl">Show</label><input id="fTitle" maxlength="80" required autocapitalize="words"></div>
@@ -256,16 +275,16 @@
   let subscribed = {};
   let subs = "active";
   let view = "cards";
-  const sorts = { show: { key: "title", dir: 1 }, classic: { key: "title", dir: 1 }, movie: { key: "title", dir: 1 } };
-  const KINDS = { show: "Show", classic: "Classic", movie: "Movie" };
+  const sorts = { show: { key: "title", dir: 1 }, classic: { key: "title", dir: 1 }, movie: { key: "title", dir: 1 }, recommend: { key: "title", dir: 1 } };
+  const KINDS = { show: "Show", classic: "Classic", movie: "Movie", recommend: "Recommend" };
 
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const isOff = (s) => subscribed[String(s.service).toLowerCase()] === false;
 
-  const kindOf = (s) => s.kind === "movie" || s.kind === "classic" ? s.kind : "show";
+  const kindOf = (s) => s.kind === "movie" || s.kind === "classic" || s.kind === "recommend" ? s.kind : "show";
   const runtime = (m) => { m = Number(m); if (!m) return ""; const h = Math.floor(m / 60), r = m % 60; return h ? h + " hr" + (r ? " " + r + " min" : "") : r + " min"; };
-  const lenText = (s) => kindOf(s) === "movie" ? runtime(s.avg_minutes) : (s.avg_minutes ? s.avg_minutes + " min" : "");
+  const lenText = (s) => kindOf(s) === "movie" || kindOf(s) === "recommend" ? runtime(s.avg_minutes) : (s.avg_minutes ? s.avg_minutes + " min" : "");
 
   function filtered(kind) {
     const sortKey = sorts[kind].key, sortDir = sorts[kind].dir;
@@ -327,8 +346,8 @@
   }
 
   function render() {
-    const n = renderKind("show"), c = renderKind("classic"), m = renderKind("movie");
-    $("count").textContent = (n === 1 ? "1 show" : n + " shows") + ", " + (c === 1 ? "1 classic" : c + " classics") + ", " + (m === 1 ? "1 movie" : m + " movies");
+    const n = renderKind("show"), c = renderKind("classic"), m = renderKind("movie"), r = renderKind("recommend");
+    $("count").textContent = (n === 1 ? "1 show" : n + " shows") + ", " + (c === 1 ? "1 classic" : c + " classics") + ", " + (m === 1 ? "1 movie" : m + " movies") + ", " + r + " recommended";
     fitTitles();
   }
 
@@ -373,8 +392,8 @@
   let fkind = "show";
   const setKind = (k) => {
     fkind = k; press("fkind", k);
-    $("fHead").textContent = k === "classic" ? "Add a Classic Rewind Show" : "Add a " + KINDS[k];
-    $("fTitleLbl").textContent = k === "movie" ? "Movie" : "Show";
+    $("fHead").textContent = k === "classic" ? "Add a Classic Rewind Show" : k === "recommend" ? "Add to Worth Recommending" : "Add a " + KINDS[k];
+    $("fTitleLbl").textContent = k === "movie" ? "Movie" : k === "recommend" ? "Show or movie" : "Show";
     $("fNightField").hidden = k !== "show";
     if (k !== "show") $("fNight").value = "";
   };
